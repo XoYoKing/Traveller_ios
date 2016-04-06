@@ -20,6 +20,8 @@
 		AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */; };
 		AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */; };
 		AA2BC0D01CB500FB0030A0E5 /* BasicLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */; };
+		AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0D81CB53C180030A0E5 /* Reachability.m */; };
+		AA2BC0DD1CB53C220030A0E5 /* WebHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0DC1CB53C220030A0E5 /* WebHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,10 @@
 		AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AA2BC0CE1CB500FB0030A0E5 /* BasicLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicLoginViewController.h; sourceTree = "<group>"; };
 		AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicLoginViewController.m; sourceTree = "<group>"; };
+		AA2BC0D71CB53C180030A0E5 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		AA2BC0D81CB53C180030A0E5 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AA2BC0DB1CB53C220030A0E5 /* WebHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebHandler.h; sourceTree = "<group>"; };
+		AA2BC0DC1CB53C220030A0E5 /* WebHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebHandler.m; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +122,7 @@
 		AA2BC0A21CB4E1980030A0E5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AA2BC0DA1CB53C220030A0E5 /* WebHandler */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -154,6 +161,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				AA2BC0D61CB53C180030A0E5 /* Rechability */,
 				AA2BC0BF1CB4E2C00030A0E5 /* TextFieldValidator */,
 				AA2BC0AC1CB4E2900030A0E5 /* BadgeViewLibrary */,
 				AA2BC0AF1CB4E2900030A0E5 /* ParallaxViewLibrary */,
@@ -236,6 +244,24 @@
 				AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */,
 			);
 			path = BasicLogin;
+			sourceTree = "<group>";
+		};
+		AA2BC0D61CB53C180030A0E5 /* Rechability */ = {
+			isa = PBXGroup;
+			children = (
+				AA2BC0D71CB53C180030A0E5 /* Reachability.h */,
+				AA2BC0D81CB53C180030A0E5 /* Reachability.m */,
+			);
+			path = Rechability;
+			sourceTree = "<group>";
+		};
+		AA2BC0DA1CB53C220030A0E5 /* WebHandler */ = {
+			isa = PBXGroup;
+			children = (
+				AA2BC0DB1CB53C220030A0E5 /* WebHandler.h */,
+				AA2BC0DC1CB53C220030A0E5 /* WebHandler.m */,
+			);
+			path = WebHandler;
 			sourceTree = "<group>";
 		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
@@ -369,9 +395,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */,
+				AA2BC0DD1CB53C220030A0E5 /* WebHandler.m in Sources */,
 				AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */,
 				AA2BC0BD1CB4E2900030A0E5 /* JASidePanelController.m in Sources */,
 				AA2BC0BB1CB4E2900030A0E5 /* DTParallaxHeaderView.m in Sources */,
+				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
 				AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */,
