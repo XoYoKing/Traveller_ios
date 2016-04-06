@@ -20,6 +20,7 @@
 		AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */; };
 		AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */; };
 		AA2BC0CC1CB4F9D20030A0E5 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2BC0CB1CB4F9D20030A0E5 /* SDWebImage.framework */; };
+		AA2BC0D01CB500FB0030A0E5 /* BasicLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		AA2BC0C51CB4ED310030A0E5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AA2BC0CB1CB4F9D20030A0E5 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
+		AA2BC0CE1CB500FB0030A0E5 /* BasicLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicLoginViewController.h; sourceTree = "<group>"; };
+		AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicLoginViewController.m; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +150,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA2BC0CD1CB500EB0030A0E5 /* BasicLogin */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -227,6 +231,15 @@
 			children = (
 			);
 			path = ConstantFiles;
+			sourceTree = "<group>";
+		};
+		AA2BC0CD1CB500EB0030A0E5 /* BasicLogin */ = {
+			isa = PBXGroup;
+			children = (
+				AA2BC0CE1CB500FB0030A0E5 /* BasicLoginViewController.h */,
+				AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */,
+			);
+			path = BasicLogin;
 			sourceTree = "<group>";
 		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
@@ -366,6 +379,7 @@
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
 				AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */,
+				AA2BC0D01CB500FB0030A0E5 /* BasicLoginViewController.m in Sources */,
 				AA2BC0BE1CB4E2900030A0E5 /* UIViewController+JASidePanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
