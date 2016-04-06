@@ -5,12 +5,13 @@
 
 target 'Traveller_ObjC' do
 
-pod 'Google'
+pod 'google-plus-ios-sdk'
 pod 'FBSDKLoginKit'
 pod 'FBSDKCoreKit'
 pod 'AFNetworking', '~> 2.5'
 pod 'JDStatusBarNotification'
 pod 'JTProgressHUD'
 pod 'SDWebImage', '~>3.7'
+pod 'TPKeyboardAvoiding'
 end
 
