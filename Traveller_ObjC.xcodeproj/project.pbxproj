@@ -12,7 +12,6 @@
 		AA2BC0921CB4D75A0030A0E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA2BC0901CB4D75A0030A0E5 /* Main.storyboard */; };
 		AA2BC0941CB4D75A0030A0E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA2BC0931CB4D75A0030A0E5 /* Assets.xcassets */; };
 		AA2BC0971CB4D75A0030A0E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA2BC0951CB4D75A0030A0E5 /* LaunchScreen.storyboard */; };
-		AA2BC0AB1CB4E1DE0030A0E5 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2BC0AA1CB4E1DE0030A0E5 /* SDWebImage.framework */; };
 		AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0AE1CB4E2900030A0E5 /* GIBadgeView.m */; };
 		AA2BC0BB1CB4E2900030A0E5 /* DTParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0B11CB4E2900030A0E5 /* DTParallaxHeaderView.m */; };
 		AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0B31CB4E2900030A0E5 /* DTParallaxTableView.m */; };
@@ -20,6 +19,7 @@
 		AA2BC0BE1CB4E2900030A0E5 /* UIViewController+JASidePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0B91CB4E2900030A0E5 /* UIViewController+JASidePanel.m */; };
 		AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */; };
 		AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */; };
+		AA2BC0CC1CB4F9D20030A0E5 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2BC0CB1CB4F9D20030A0E5 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,6 @@
 		AA2BC0931CB4D75A0030A0E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA2BC0961CB4D75A0030A0E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA2BC0981CB4D75A0030A0E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA2BC0AA1CB4E1DE0030A0E5 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		AA2BC0AD1CB4E2900030A0E5 /* GIBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIBadgeView.h; sourceTree = "<group>"; };
 		AA2BC0AE1CB4E2900030A0E5 /* GIBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GIBadgeView.m; sourceTree = "<group>"; };
 		AA2BC0B01CB4E2900030A0E5 /* DTParallaxHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTParallaxHeaderView.h; sourceTree = "<group>"; };
@@ -46,6 +45,7 @@
 		AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldValidator.m; sourceTree = "<group>"; };
 		AA2BC0C51CB4ED310030A0E5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AA2BC0CB1CB4F9D20030A0E5 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA2BC0AB1CB4E1DE0030A0E5 /* SDWebImage.framework in Frameworks */,
+				AA2BC0CC1CB4F9D20030A0E5 /* SDWebImage.framework in Frameworks */,
 				3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,7 +108,7 @@
 		AA2BC09E1CB4E10E0030A0E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA2BC0AA1CB4E1DE0030A0E5 /* SDWebImage.framework */,
+				AA2BC0CB1CB4F9D20030A0E5 /* SDWebImage.framework */,
 				BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */,
 			);
 			name = Frameworks;
