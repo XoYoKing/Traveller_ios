@@ -20,7 +20,6 @@
 		AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */; };
 		AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */; };
 		AA2BC0D01CB500FB0030A0E5 /* BasicLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */; };
-		AA2BC0D21CB502490030A0E5 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2BC0D11CB502490030A0E5 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +47,6 @@
 		AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AA2BC0CE1CB500FB0030A0E5 /* BasicLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicLoginViewController.h; sourceTree = "<group>"; };
 		AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicLoginViewController.m; sourceTree = "<group>"; };
-		AA2BC0D11CB502490030A0E5 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,7 +56,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA2BC0D21CB502490030A0E5 /* SDWebImage.framework in Frameworks */,
 				3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,7 +108,6 @@
 		AA2BC09E1CB4E10E0030A0E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA2BC0D11CB502490030A0E5 /* SDWebImage.framework */,
 				BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */,
 			);
 			name = Frameworks;
@@ -498,6 +494,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Traveller_ObjC",
 				);
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -514,6 +511,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Traveller_ObjC",
 				);
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

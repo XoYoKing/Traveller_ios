@@ -11,5 +11,6 @@ pod 'FBSDKCoreKit'
 pod 'AFNetworking', '~> 2.5'
 pod 'JDStatusBarNotification'
 pod 'JTProgressHUD'
+pod 'SDWebImage', '~>3.7'
 end
 
