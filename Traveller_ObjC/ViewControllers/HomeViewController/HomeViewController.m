@@ -96,6 +96,14 @@
     UIImageView* avatarImageView = [self createAvatarImage];
     avatarImageView.translatesAutoresizingMaskIntoConstraints = NO; //autolayout
     views[@"avatarImageView"] = avatarImageView;
+    avatarImageView.userInteractionEnabled=YES;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageTap)];
+    tap.cancelsTouchesInView = YES;
+    tap.numberOfTapsRequired = 1;
+    [avatarImageView addGestureRecognizer:tap];
+    
+    
     [tableHeaderView addSubview:avatarImageView];
     
     /*
@@ -193,7 +201,9 @@
     
 }
 
-
+-(void)handleImageTap{
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
