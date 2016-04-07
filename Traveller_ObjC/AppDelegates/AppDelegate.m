@@ -26,7 +26,7 @@
     [[GPPSignIn sharedInstance] setClientID:@"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com"];
     [GPPSignIn sharedInstance].delegate = self;
     
-    
+
     return YES;
 }
 

@@ -6,9 +6,7 @@
 
 
 #pragma mark ------------------ data functions ---------------------
-
 #define func_paypal_ids @"/general_data_api.php?method=get_paypal_details"
-
 #define func_deviceRegistration @"/apps_settings_api.php?method=savedevice"
 #define func_signIn     @"/profile_api.php?method=signin"
 #define func_logout    @"/profile_api.php?method=logout"

@@ -1,18 +1,18 @@
 //
-//  BasicLoginViewController.m
+//  HomeViewController.m
 //  Traveller_ObjC
 //
-//  Created by Sagar Shirbhate on 06/04/16.
+//  Created by Sagar Shirbhate on 07/04/16.
 //  Copyright © 2016 Sagar Shirbhate. All rights reserved.
 //
 
-#import "BasicLoginViewController.h"
+#import "HomeViewController.h"
 
-@interface BasicLoginViewController ()
+@interface HomeViewController ()
 
 @end
 
-@implementation BasicLoginViewController
+@implementation HomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,9 +34,4 @@
 }
 */
 
-- (IBAction)fb:(id)sender {
-}
-
-- (IBAction)gmail:(id)sender {
-}
 @end

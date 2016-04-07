@@ -19,12 +19,15 @@
 		AA2BC0BE1CB4E2900030A0E5 /* UIViewController+JASidePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0B91CB4E2900030A0E5 /* UIViewController+JASidePanel.m */; };
 		AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */; };
 		AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */; };
-		AA2BC0D01CB500FB0030A0E5 /* BasicLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */; };
 		AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0D81CB53C180030A0E5 /* Reachability.m */; };
 		AA2BC0DD1CB53C220030A0E5 /* WebHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0DC1CB53C220030A0E5 /* WebHandler.m */; };
 		AA2BC0E41CB53FAB0030A0E5 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0E01CB53FAB0030A0E5 /* Toast+UIView.m */; };
 		AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0E31CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m */; };
 		AA2BC0EB1CB540010030A0E5 /* DontAllowCCP.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0EA1CB540010030A0E5 /* DontAllowCCP.m */; };
+		AA37891D1CB610B2000F151B /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA37891C1CB610B2000F151B /* NotificationsViewController.m */; };
+		AA3789201CB610C2000F151B /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA37891F1CB610C2000F151B /* MenuViewController.m */; };
+		AA3789231CB610D2000F151B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789221CB610D2000F151B /* HomeViewController.m */; };
+		AA3789261CB610E0000F151B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789251CB610E0000F151B /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,8 +53,6 @@
 		AA2BC0C11CB4E2C00030A0E5 /* TextFieldValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldValidator.m; sourceTree = "<group>"; };
 		AA2BC0C51CB4ED310030A0E5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA2BC0C61CB4ED310030A0E5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AA2BC0CE1CB500FB0030A0E5 /* BasicLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicLoginViewController.h; sourceTree = "<group>"; };
-		AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicLoginViewController.m; sourceTree = "<group>"; };
 		AA2BC0D71CB53C180030A0E5 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		AA2BC0D81CB53C180030A0E5 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AA2BC0DB1CB53C220030A0E5 /* WebHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebHandler.h; sourceTree = "<group>"; };
@@ -63,6 +64,14 @@
 		AA2BC0E61CB53FBB0030A0E5 /* TravellerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravellerConstants.h; sourceTree = "<group>"; };
 		AA2BC0E91CB540010030A0E5 /* DontAllowCCP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DontAllowCCP.h; sourceTree = "<group>"; };
 		AA2BC0EA1CB540010030A0E5 /* DontAllowCCP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DontAllowCCP.m; sourceTree = "<group>"; };
+		AA37891B1CB610B2000F151B /* NotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsViewController.h; sourceTree = "<group>"; };
+		AA37891C1CB610B2000F151B /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsViewController.m; sourceTree = "<group>"; };
+		AA37891E1CB610C2000F151B /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		AA37891F1CB610C2000F151B /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		AA3789211CB610D2000F151B /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		AA3789221CB610D2000F151B /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		AA3789241CB610E0000F151B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		AA3789251CB610E0000F151B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,7 +175,10 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AA2BC0CD1CB500EB0030A0E5 /* BasicLogin */,
+				AA3789131CB6109A000F151B /* NotificationsViewController */,
+				AA3789141CB6109A000F151B /* MenuViewController */,
+				AA3789151CB6109A000F151B /* HomeViewController */,
+				AA3789161CB6109A000F151B /* LoginViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -251,15 +263,6 @@
 			path = ConstantFiles;
 			sourceTree = "<group>";
 		};
-		AA2BC0CD1CB500EB0030A0E5 /* BasicLogin */ = {
-			isa = PBXGroup;
-			children = (
-				AA2BC0CE1CB500FB0030A0E5 /* BasicLoginViewController.h */,
-				AA2BC0CF1CB500FB0030A0E5 /* BasicLoginViewController.m */,
-			);
-			path = BasicLogin;
-			sourceTree = "<group>";
-		};
 		AA2BC0D61CB53C180030A0E5 /* Rechability */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +306,42 @@
 				AA2BC0EA1CB540010030A0E5 /* DontAllowCCP.m */,
 			);
 			path = DontAllowCopyPaste;
+			sourceTree = "<group>";
+		};
+		AA3789131CB6109A000F151B /* NotificationsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA37891B1CB610B2000F151B /* NotificationsViewController.h */,
+				AA37891C1CB610B2000F151B /* NotificationsViewController.m */,
+			);
+			path = NotificationsViewController;
+			sourceTree = "<group>";
+		};
+		AA3789141CB6109A000F151B /* MenuViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA37891E1CB610C2000F151B /* MenuViewController.h */,
+				AA37891F1CB610C2000F151B /* MenuViewController.m */,
+			);
+			path = MenuViewController;
+			sourceTree = "<group>";
+		};
+		AA3789151CB6109A000F151B /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA3789211CB610D2000F151B /* HomeViewController.h */,
+				AA3789221CB610D2000F151B /* HomeViewController.m */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		AA3789161CB6109A000F151B /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA3789241CB610E0000F151B /* LoginViewController.h */,
+				AA3789251CB610E0000F151B /* LoginViewController.m */,
+			);
+			path = LoginViewController;
 			sourceTree = "<group>";
 		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
@@ -438,8 +477,12 @@
 				AA2BC0E41CB53FAB0030A0E5 /* Toast+UIView.m in Sources */,
 				AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */,
 				AA2BC0DD1CB53C220030A0E5 /* WebHandler.m in Sources */,
+				AA37891D1CB610B2000F151B /* NotificationsViewController.m in Sources */,
+				AA3789201CB610C2000F151B /* MenuViewController.m in Sources */,
 				AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */,
 				AA2BC0BD1CB4E2900030A0E5 /* JASidePanelController.m in Sources */,
+				AA3789261CB610E0000F151B /* LoginViewController.m in Sources */,
+				AA3789231CB610D2000F151B /* HomeViewController.m in Sources */,
 				AA2BC0EB1CB540010030A0E5 /* DontAllowCCP.m in Sources */,
 				AA2BC0BB1CB4E2900030A0E5 /* DTParallaxHeaderView.m in Sources */,
 				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
@@ -447,7 +490,6 @@
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
 				AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */,
 				AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */,
-				AA2BC0D01CB500FB0030A0E5 /* BasicLoginViewController.m in Sources */,
 				AA2BC0BE1CB4E2900030A0E5 /* UIViewController+JASidePanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
