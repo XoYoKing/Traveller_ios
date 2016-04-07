@@ -28,6 +28,10 @@
 		AA3789201CB610C2000F151B /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA37891F1CB610C2000F151B /* MenuViewController.m */; };
 		AA3789231CB610D2000F151B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789221CB610D2000F151B /* HomeViewController.m */; };
 		AA3789261CB610E0000F151B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789251CB610E0000F151B /* LoginViewController.m */; };
+		AA37892A1CB62D71000F151B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */; };
+		AA37892E1CB62D79000F151B /* alpes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892B1CB62D79000F151B /* alpes.jpg */; };
+		AA37892F1CB62D79000F151B /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892C1CB62D79000F151B /* avatar.jpg */; };
+		AA3789301CB62D79000F151B /* vegetation.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892D1CB62D79000F151B /* vegetation.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +76,11 @@
 		AA3789221CB610D2000F151B /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		AA3789241CB610E0000F151B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		AA3789251CB610E0000F151B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		AA3789281CB62D71000F151B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		AA37892B1CB62D79000F151B /* alpes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alpes.jpg; sourceTree = "<group>"; };
+		AA37892C1CB62D79000F151B /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
+		AA37892D1CB62D79000F151B /* vegetation.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vegetation.jpg; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +150,7 @@
 		AA2BC0A21CB4E1980030A0E5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AA3789271CB62D71000F151B /* ImageEffects */,
 				AA2BC0E81CB540010030A0E5 /* DontAllowCopyPaste */,
 				AA2BC0DE1CB53FAB0030A0E5 /* ToastView */,
 				AA2BC0E11CB53FAB0030A0E5 /* StoryBord */,
@@ -159,6 +169,9 @@
 		AA2BC0A41CB4E1980030A0E5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AA37892B1CB62D79000F151B /* alpes.jpg */,
+				AA37892C1CB62D79000F151B /* avatar.jpg */,
+				AA37892D1CB62D79000F151B /* vegetation.jpg */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -344,6 +357,15 @@
 			path = LoginViewController;
 			sourceTree = "<group>";
 		};
+		AA3789271CB62D71000F151B /* ImageEffects */ = {
+			isa = PBXGroup;
+			children = (
+				AA3789281CB62D71000F151B /* UIImage+ImageEffects.h */,
+				AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */,
+			);
+			path = ImageEffects;
+			sourceTree = "<group>";
+		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,8 +436,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA2BC0971CB4D75A0030A0E5 /* LaunchScreen.storyboard in Resources */,
+				AA37892F1CB62D79000F151B /* avatar.jpg in Resources */,
+				AA37892E1CB62D79000F151B /* alpes.jpg in Resources */,
 				AA2BC0941CB4D75A0030A0E5 /* Assets.xcassets in Resources */,
 				AA2BC0921CB4D75A0030A0E5 /* Main.storyboard in Resources */,
+				AA3789301CB62D79000F151B /* vegetation.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +513,7 @@
 				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
+				AA37892A1CB62D71000F151B /* UIImage+ImageEffects.m in Sources */,
 				AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */,
 				AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */,
 				AA2BC0BE1CB4E2900030A0E5 /* UIViewController+JASidePanel.m in Sources */,

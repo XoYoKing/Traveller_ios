@@ -237,13 +237,13 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     if (title != nil) {
         titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
-        if (IS_IPAD) {
-            titleLabel.font = [UIFont systemFontOfSize:CSToastFontSizeForiPad];
-        }
-        else{
+//        if (IS_IPAD) {
+//            titleLabel.font = [UIFont systemFontOfSize:CSToastFontSizeForiPad];
+//        }
+//        else{
         
             titleLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
-        }
+//        }
         
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -262,13 +262,13 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         messageLabel = [[UILabel alloc] init] ;
         messageLabel.numberOfLines = CSToastMaxMessageLines;
 //        messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
-        if (IS_IPAD) {
+//        if (IS_IPAD) {
             messageLabel.font = [UIFont systemFontOfSize:CSToastFontSizeForiPad];
-        }
-        else{
-            
+//        }
+//        else{
+        
             messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
-        }
+//        }
         messageLabel.textAlignment = NSTextAlignmentCenter;
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
         messageLabel.textColor = [UIColor whiteColor];

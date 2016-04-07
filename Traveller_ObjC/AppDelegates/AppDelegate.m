@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
-
+#import "HomeViewController.h"
 @interface AppDelegate ()<GPPSignInDelegate>
 
 @end
@@ -26,7 +26,11 @@
     [[GPPSignIn sharedInstance] setClientID:@"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com"];
     [GPPSignIn sharedInstance].delegate = self;
     
-
+ //   HomeViewController * homeVC = [[HomeViewController alloc]init];
+   // UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:homeVC];
+   // self.window.rootViewController=nav;
+    
+    
     return YES;
 }
 
