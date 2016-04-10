@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TravellerConstants.h"
+#import "GIBadgeView.h"
+#import "Notification1TableViewCell.h"
+#import "Notification2TableViewCell.h"
+#import "Notification3TableViewCell.h"
+#import "Notification4TableViewCell.h"
 @interface NotificationsViewController : UIViewController
-
+{
+    
+    __weak IBOutlet UIScrollView *myScrollView;
+    NSMutableArray * buttonArray;
+    NSInteger selectedIndex;
+    __weak IBOutlet UITableView *notificationTableView;
+}
+@property(assign)BOOL fromMenu;
 @end
