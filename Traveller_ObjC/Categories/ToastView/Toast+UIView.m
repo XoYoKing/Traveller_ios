@@ -24,7 +24,7 @@ static const CGFloat CSToastVerticalPadding     = 10.0;
 static const CGFloat CSToastTopCentrePadding    = 100.0;
 static const CGFloat CSToastCornerRadius        = 10.0;
 static const CGFloat CSToastOpacity             = 0.8;
-static const CGFloat CSToastFontSize            = 17.0;
+static const CGFloat CSToastFontSize            = 13.0;
 static const CGFloat CSToastFontSizeForiPad      = 22.0;
 static const CGFloat CSToastMaxTitleLines       = 0;
 static const CGFloat CSToastMaxMessageLines     = 0;
@@ -49,6 +49,9 @@ static const CGFloat CSToastActivityWidth       = 100.0;
 static const CGFloat CSToastActivityHeight      = 100.0;
 static const NSString * CSToastActivityDefaultPosition = @"center";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
+
+//color
+
 
 
 @interface UIView (ToastPrivate)

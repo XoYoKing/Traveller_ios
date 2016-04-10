@@ -15,6 +15,8 @@
 #import "LikeViewController.h"
 #import "CommentsViewController.h"
 #import "Toast+UIView.h"
+#import "UIImageView+WebCache.h"
+
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     CGFloat _headerHeight;
@@ -78,19 +80,33 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated{
+
+-(void)setViewForFirstTime{
     if (badgeView==nil) {
-          [self addNotificationView];
+        [self addNotificationView];
     }
     [self setupTableAfterClick];
-  }
+    [JTProgressHUD hide];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+  
+    if (self.tableView==nil) {
+          [JTProgressHUD show];
+    [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self configureNavBar];
+    homeFeedData=[NSMutableArray new];
     selectedIndex=0;
-    
+    homeFeedPage=1;
+    homeFeedPageShouldDoPaging=YES;
+}
+
+-(void)setHomeView{
+     [self configureNavBar];
     _headerHeight = 150.0;
     _subHeaderHeight = 100.0;
     _avatarImageSize = 100;
@@ -98,7 +114,7 @@
     _barIsCollapsed = false;
     _barAnimationComplete = false;
     
-  
+    
     self.tableView.estimatedRowHeight=50;
     self.tableView.rowHeight=UITableViewAutomaticDimension;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -120,6 +136,7 @@
     tableView.dataSource = self;
     self.tableView = tableView;
     [self.view addSubview:tableView];
+    self.tableView.hidden=YES;
     views[@"tableView"] = tableView;
     
     UIImage* bgImage = [UIImage imageNamed:@"alpes.jpg"];
@@ -255,8 +272,15 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self fillBlurredImageCache];
     });
-    
+
+    [self.tableView reloadData];
+    [self performSelector:@selector(showTableView) withObject:nil afterDelay:0.2];
+     [self performSelector:@selector(setViewForFirstTime) withObject:nil afterDelay:0.2];
 }
+-(void)showTableView{
+    self.tableView.hidden=NO;
+}
+
 
 -(void)handleImageTap{
     
@@ -280,6 +304,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (selectedIndex==0) {
+        return homeFeedData.count;
+    }else
     return 25;
 }
 
@@ -292,15 +319,49 @@
         [self.tableView registerNib:nib forCellReuseIdentifier:@"FeedsTableViewCell"];
         FeedsTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FeedsTableViewCell"];
         
-        cell.mainTitle.numberOfLines = 0;
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        //mainstr have title
+        NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
         
-        //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to shopping at🚩Tulshibag , Pune";
+      mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
+                                       withString:@"to eat 🍕 "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to visit"
+                                                                withString:@"to visit 🌄  "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to shopping"
+                                                                withString:@"to shopping 👗 "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to stay"
+                                                                withString:@"to stay 🏠 "];
+        
+        cell.mainTitle.numberOfLines = 0;
+        //detail text
+        NSString * details =[dataDict valueForKey:@"activity_description"];
+        cell.extraFeedLabel.text=details;
+        
+        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+        if (![urlStringForProfileImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForProfileImage];
+            [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"avatar.jpg"]];
+        }
+        
+        NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
+        if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
+            [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"alpes.jpg"]];
+        }
+        NSString *userName;
+        NSString *cityName;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+        }
+ 
         NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_family_regular size:12]};
-        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
+        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:mainTitleStr attributes:attributes];
         
         void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-            if ([substring isEqualToString:@"Sagar Shirbhate"]) {
+            if ([substring isEqualToString:userName]) {
                 [self openUserProfile];
             }else{
                 [self openLocationFeedView];
@@ -309,12 +370,105 @@
 
 
         //Step 3: Add link substrings
-        [cell.mainTitle setLinksForSubstrings:@[@"Tulshibag , Pune", @"Sagar Shirbhate"] withLinkHandler:handler];
+        if (cityName!=nil && userName!=nil) {
+            NSMutableArray * substringArr =[NSMutableArray new];
+            if (![cityName isKindOfClass:[NSNull class]]) {
+                [substringArr addObject:cityName];
+            }
+            if (![userName isKindOfClass:[NSNull class]]) {
+                [substringArr addObject:userName];
+            }
+            [substringArr addObject:@"to eat 🍕"];
+              [substringArr addObject:@"to visit 🌄  "];
+              [substringArr addObject:@"to shopping 👗 "];
+              [substringArr addObject:@"to stay 🏠 "];
+            [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
+        }
+
+        int isCommentByYou=[[dataDict valueForKey:@"is_my"]intValue];
+        int coments =[[dataDict valueForKey:@"total_comments"]intValue];
+        if (isCommentByYou==1) {
+            if (coments==0) {
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"No Comments Yet !"];
+                cell.comentMenuTextLbl.textColor=[UIColor lightGrayColor];
+                cell.comentMenuLbl.textColor =[UIColor lightGrayColor];
+            }else if(coments==1){
+                cell.comentMenuLbl.text =[NSString stringWithFormat:@"You had Commented"];
+                cell.comentMenuLbl.textColor =[UIColor redColor];
+                cell.comentMenuTextLbl.textColor=[UIColor blackColor];
+            }else{
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"%d Comments + 1 You",coments-1];
+                cell.comentMenuLbl.textColor =[UIColor redColor];
+                cell.comentMenuTextLbl.textColor=[UIColor blackColor];
+            }
+            
+        }else{
+    
+            if (coments==0) {
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"No Comments Yet !"];
+                cell.comentMenuTextLbl.textColor=[UIColor lightGrayColor];;
+                cell.comentMenuLbl.textColor =[UIColor lightGrayColor];
+            }else if(coments==1){
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"%d Comment",coments];
+                cell.comentMenuTextLbl.textColor=[UIColor blackColor];
+                cell.comentMenuLbl.textColor =[UIColor blackColor];
+            }else{
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"%d Comments",coments];
+                cell.comentMenuTextLbl.textColor=[UIColor blackColor];
+                cell.comentMenuLbl.textColor =[UIColor blackColor];
+            }
+        }
+
+        
+        
+        
+        int isLikedByYou=[[dataDict valueForKey:@"is_like"]intValue];
+        if (isLikedByYou==1) {
+            int like =[[dataDict valueForKey:@"total_like"]intValue];
+            if (like==0) {
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"No Likes Yet !"];
+                cell.likeMenuTxtLbl.textColor=[UIColor lightGrayColor];
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }else if(like==1){
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Your Like",like];
+                cell.likeMenuLogoLbl.textColor =[UIColor redColor];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+            }else{
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Likes + 1 You",like-1];
+                cell.likeMenuLogoLbl.textColor =[UIColor redColor];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+            }
+            
+        }else{
+            int like =[[dataDict valueForKey:@"total_like"]intValue];
+            if (like==0) {
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"No Likes Yet !"];
+                cell.likeMenuTxtLbl.textColor=[UIColor lightGrayColor];;
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }else if(like==1){
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Like",like];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }else{
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Likes",like];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }
+        }
+        
+      
+        cell.likeBtn.tag=indexPath.row;
         
         [cell.likeBtn addTarget:self action:@selector(openLikeMenu:) forControlEvents:UIControlEventTouchUpInside];
           [cell.commentBtn addTarget:self action:@selector(openCommentMenu:) forControlEvents:UIControlEventTouchUpInside];
         [cell.likeThumbBtn addTarget:self action:@selector(justDoLike:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView layoutIfNeeded];
+        if (indexPath.row==homeFeedData.count -3) {
+            if (homeFeedPageShouldDoPaging==YES) {
+                homeFeedPage++;
+                [self performSelectorInBackground:@selector(getHomeFeedDataForPaging) withObject:nil];
+            }
+        }
         return cell;
     }else if (selectedIndex==1){
         UINib *nib = [UINib nibWithNibName:@"WishedToTableViewCell" bundle:nil];
@@ -733,14 +887,72 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)openLikeMenu:(UIButton*)btn{
+    BOOL shouldOpenMenu =NO;
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
+    int isLikedByYou=[[dataDict valueForKey:@"is_like"]intValue];
+    if (isLikedByYou==1) {
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        if (like==0) {
+            shouldOpenMenu=NO;
+             [self.view makeToast:@"No one like the post yet"duration:toastDuration position:toastPositionBottomUp];
+        }else if(like==1){
+            shouldOpenMenu=NO;
+             [self.view makeToast:@"Only you had liked the post"duration:toastDuration position:toastPositionBottomUp];
+        }else{
+            shouldOpenMenu=YES;
+        }
+        
+    }else{
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        if (like==0) {
+            shouldOpenMenu=NO;
+              [self.view makeToast:@"No one like the post yet" duration:toastDuration position:toastPositionBottomUp];
+        }else if(like==1){
+            shouldOpenMenu=YES;
+        }else{
+          shouldOpenMenu=YES;
+        }
+    }
+    if (shouldOpenMenu==YES) {
+        
     LikeViewController *newVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LikeViewController"];
     [self setPresentationStyleForSelfController:self presentingController:newVC];
       UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:newVC];
     [self presentViewController:nav animated:YES completion:nil];
+    }
 }
 
 -(void)justDoLike:(UIButton*)btn{
-    [self.view makeToast:@"You liked the post"];
+ 
+    
+    FeedsTableViewCell *cell = (FeedsTableViewCell *)btn.superview.superview.superview.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+    
+    if ([[dataDict valueForKey:@"is_like"]intValue] == 1) {
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"0" forKey:@"is_like"];
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        like--;
+        [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
+        [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+           [self.view makeToast:@"You removed your like of the post"duration:toastDuration position:toastPositionBottomUp];
+
+    }else{
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"1" forKey:@"is_like"];
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        like++;
+        [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
+        [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+           [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
+    }
+    
+    
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
   }
 
 -(void)openCommentMenu:(UIButton*)btn{
@@ -766,4 +978,39 @@
         [selfController.navigationController setModalPresentationStyle:UIModalPresentationCurrentContext];
     }
 }
+
+
+
+
+-(void)getHomeFeedData{
+    NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
+    NSDictionary * userDict =[defaults objectForKey:@"UserDict"];
+    
+    NSString * userID =[[[userDict valueForKey:@"data"]lastObject]valueForKey:@"id"];
+      NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [homeFeedData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
+}
+
+-(void)getHomeFeedDataForPaging{
+    NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
+    NSDictionary * userDict =[defaults objectForKey:@"UserDict"];
+    NSString * userID =[[[userDict valueForKey:@"data"]lastObject]valueForKey:@"id"];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        homeFeedPageShouldDoPaging=NO;
+    }else{
+            [homeFeedData addObjectsFromArray:data];
+        homeFeedPageShouldDoPaging=YES;
+    }
+
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+-(void)reloadTable{
+     [self.tableView reloadData];
+}
+
 @end

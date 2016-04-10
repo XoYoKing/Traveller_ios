@@ -7,6 +7,7 @@
 
 #import "WebHandler.h"
 #import "AppDelegate.h"
+#import "Toast+UIView.h"
 @implementation WebHandler
 
 #pragma mark call url
@@ -106,5 +107,29 @@
     
     return mimetype;
 }
+
+-(NSDictionary *)getDataFromWebservice:(NSString *)urlString{
+    
+    if ([self connected]) {
+    NSURL * url =[NSURL URLWithString:urlString];
+        if (url==nil) {
+            return nil;
+        }
+    NSData * data = [NSData dataWithContentsOfURL:url];
+    NSError *e = nil;
+        
+        if (data!=nil) {
+               NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &e];
+             return dict;
+        }else{
+            return nil;
+        }
+
+       
+    }else{
+        return nil;
+    }
+}
+
 
 @end

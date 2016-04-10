@@ -350,7 +350,7 @@
         cell.mainTitle.numberOfLines = 0;
         
         //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to accomodation 🏠 at Tulshibag , Pune";
+        NSString *string = @"Sagar Shirbhate recommand to accomodation 🏠 👗at Tulshibag , Pune";
         NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_family_regular size:12]};
         cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
         
@@ -376,7 +376,7 @@
         cell.mainTitle.numberOfLines = 0;
         
         //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to routing 🌄  at Tulshibag , Pune";
+        NSString *string = @"Sagar Shirbhate recommand to routing 🌄 🏠 👗 at Tulshibag , Pune";
         NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_family_regular size:12]};
         cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
         

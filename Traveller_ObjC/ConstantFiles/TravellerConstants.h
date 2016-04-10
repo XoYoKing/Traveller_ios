@@ -39,7 +39,7 @@
 
 
 
-// 3f729b
+
 
 #define font_family_regular @"Avenir Next"
 #define font_family_regular_size 17
@@ -50,8 +50,15 @@
 #define toastPosition @"center"
 #define toastPositionBottom @"bottom"
 #define toastPositionBottomUp @"topcenter"
-#define toastDuration 2.0f
+#define toastDuration 3.0f
 
+
+#define SUCESS @1
+#define FAIL @0
+#define URL_CONST @"http://trasquare.com/traveller_api/checkurl.php?"
+#define LOGIN_ACTION @"login"
+#define SIGNUP_ACTION @"signUp"
+#define GET_MY_ACTIVITY @"getMyActivity"
 
 
 #define seriesColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
@@ -111,3 +118,4 @@
 #define ERROR @"Error!"
 #define SUCCESS_MESSAGE_TITLE @"Success!"
 #define SIGN_UP_SUCCESS_MESSAGE @"Your registration is successful."
+#define NO_INTERNET_MESSAGE @"Your internet connection is not working"

@@ -14,6 +14,8 @@
 #import "WishedToTableViewCell.h"
 #import "FollowingTableViewCell.h"
 #import "FRHyperLabel.h"
+#import "WebHandler.h"
+#import "JTProgressHUD.h"
 
 @interface HomeViewController : UIViewController
 {
@@ -22,6 +24,9 @@
     UIScrollView * myScrollView;
     GIBadgeView * badgeView;
     
+    NSMutableArray * homeFeedData;
+    int homeFeedPage;
+    BOOL homeFeedPageShouldDoPaging;
 }
 
 @end

@@ -19,4 +19,6 @@ typedef void (^requestCompletionBlock)(NSURLResponse *response, NSDictionary *js
 
 -(void)sendFile:(NSString *)filePath toURL:(NSURL *)url withParameters:(NSDictionary *)params completion:(requestCompletionBlock)completionBlock;
 
+-(NSDictionary *)getDataFromWebservice:(NSString *)urlString;
+
 @end
