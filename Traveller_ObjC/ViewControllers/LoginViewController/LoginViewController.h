@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface LoginViewController : UIViewController
+#import "ABCIntroView.h"
+@interface LoginViewController : UIViewController<ABCIntroViewDelegate>
 {
     IBOutlet UIImageView *logoImage;
     IBOutlet TextFieldValidator *userNameTextField;
@@ -24,6 +24,7 @@
     IBOutlet UIButton *faceBookButton;
     IBOutlet NSLayoutConstraint *aboveConstraint;
 }
+@property ABCIntroView *introView;
 
 - (IBAction)facebookClick:(id)sender;
 - (IBAction)googleClick:(id)sender;

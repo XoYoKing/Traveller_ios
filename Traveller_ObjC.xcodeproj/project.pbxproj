@@ -69,6 +69,7 @@
 		AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32B1CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m */; };
 		AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32D1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m */; };
 		AA96D3351CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32F1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m */; };
+		AA96D33E1CBBD04800B2CDDA /* ABCIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D33D1CBBD04800B2CDDA /* ABCIntroView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -187,6 +188,8 @@
 		AA96D32E1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
 		AA96D32F1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
 		AA96D33A1CBBAA2D00B2CDDA /* Traveller_ObjCPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traveller_ObjCPrefixHeader.pch; sourceTree = "<group>"; };
+		AA96D33C1CBBD04800B2CDDA /* ABCIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABCIntroView.h; sourceTree = "<group>"; };
+		AA96D33D1CBBD04800B2CDDA /* ABCIntroView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCIntroView.m; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -453,6 +456,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				AA96D33B1CBBD04800B2CDDA /* IntroView */,
 				AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */,
 				39CE42F31CBA1DFD000B371C /* GrowTextView */,
 				399691531CB92904000A3A4A /* FRHyperLabel */,
@@ -653,6 +657,15 @@
 			path = ImageShowLibrary;
 			sourceTree = "<group>";
 		};
+		AA96D33B1CBBD04800B2CDDA /* IntroView */ = {
+			isa = PBXGroup;
+			children = (
+				AA96D33C1CBBD04800B2CDDA /* ABCIntroView.h */,
+				AA96D33D1CBBD04800B2CDDA /* ABCIntroView.m */,
+			);
+			path = IntroView;
+			sourceTree = "<group>";
+		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +805,7 @@
 			files = (
 				39F187BA1CB7BD26001ABFB0 /* icomoon.ttf in Sources */,
 				AA2BC0E41CB53FAB0030A0E5 /* Toast+UIView.m in Sources */,
+				AA96D33E1CBBD04800B2CDDA /* ABCIntroView.m in Sources */,
 				AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */,
 				AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */,
 				39CE42E91CBA08C1000B371C /* LikeViewController.m in Sources */,

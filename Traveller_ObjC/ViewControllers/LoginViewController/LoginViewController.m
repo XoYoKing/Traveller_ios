@@ -21,6 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:@"intro_screen_viewed"]) {
+        self.introView = [[ABCIntroView alloc] initWithFrame:self.view.frame];
+        self.introView.delegate = self;
+        self.introView.backgroundColor = [UIColor colorWithWhite:0.149 alpha:1.000];
+        [self.view addSubview:self.introView];
+    }
+    
     [self setUpView];// To set up View Properly
 }
 
@@ -209,6 +218,21 @@
 
 
 
+#pragma mark - ABCIntroViewDelegate Methods
+
+-(void)onDoneButtonPressed{
+    
+    
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
+        [defaults synchronize];
+    
+    [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.introView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.introView removeFromSuperview];
+    }];
+}
 
 
 
