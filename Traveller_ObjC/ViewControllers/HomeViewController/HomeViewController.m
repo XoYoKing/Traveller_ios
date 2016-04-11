@@ -877,7 +877,7 @@
 #pragma mark====================Get HomeFeed Data From Webservice=============================
 -(void)getHomeFeedData{
     NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
-    NSDictionary * userDict =[defaults objectForKey:@"UserDict"];
+    NSDictionary * userDict =[defaults objectForKey:user_Data];
     
     NSString * userID =[[[userDict valueForKey:@"data"]lastObject]valueForKey:@"id"];
       NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
@@ -888,7 +888,7 @@
 
 -(void)getHomeFeedDataForPaging{
     NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
-    NSDictionary * userDict =[defaults objectForKey:@"UserDict"];
+    NSDictionary * userDict =[defaults objectForKey:user_Data];
     NSString * userID =[[[userDict valueForKey:@"data"]lastObject]valueForKey:@"id"];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
