@@ -13,23 +13,28 @@
 
 @interface HomeViewController : UIViewController
 {
-    NSMutableArray * buttonArray;
-    NSInteger selectedIndex;
-    UIScrollView * myScrollView;
-    GIBadgeView * badgeView;
+        UIScrollView * myScrollView;
+        GIBadgeView * badgeView;
     
-    NSMutableArray * homeFeedData;
-    int homeFeedPage;
-    BOOL homeFeedPageShouldDoPaging;
+        NSMutableArray * buttonArray;
+        NSMutableArray * homeFeedData;
 
         CGFloat _headerHeight;
         CGFloat _subHeaderHeight;
         CGFloat _headerSwitchOffset;
         CGFloat _avatarImageSize;
         CGFloat _avatarImageCompressedSize;
+    
         BOOL _barIsCollapsed;
         BOOL _barAnimationComplete;
-        
+        BOOL homeFeedPageShouldDoPaging;
+    
+        int homeFeedPage;
+        //int homeFeedPage;
+        //int homeFeedPage;
+        //int homeFeedPage;
+        int selectedIndex;
+    
     }
     
     @property (weak) UITableView *tableView;

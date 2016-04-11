@@ -7,13 +7,10 @@
 //
 
 #import "HomeViewController.h"
-#import "UIImage+ImageEffects.h"
-#import "JASidePanelController.h"
 #import "ViewProfileController.h"
 #import "LocationFeedViewController.h"
 #import "LikeViewController.h"
 #import "CommentsViewController.h"
-#import "Toast+UIView.h"
 
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource>
