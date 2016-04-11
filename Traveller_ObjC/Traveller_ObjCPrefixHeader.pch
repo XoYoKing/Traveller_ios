@@ -1,0 +1,63 @@
+//
+//  TrawellerPrefixHeader.pch
+//  Traveller_ObjC
+//
+//  Created by Sagar Shirbhate on 11/04/16.
+//  Copyright © 2016 Sagar Shirbhate. All rights reserved.
+//
+
+#ifndef TrawellerPrefixHeader_pch
+#define TrawellerPrefixHeader_pch
+#endif /* TrawellerPrefixHeader_pch */
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+#import "TravellerConstants.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MapKit/MapKit.h>
+#import "TextFieldValidator.h"
+#import "UITextField+PaddingText.h"
+#import "WebHandler.h"
+#import "JTProgressHUD.h"
+#import "JASidePanelController.h"
+#import "Toast+UIView.h"
+#import "UITextField+PaddingText.h"
+#import "DontAllowCCP.h"
+#import "UIStoryboard+BTAdditions.h"
+#import "AppDelegate.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
+#import "JASidePanelController.h"
+#import "GIBadgeView.h"
+#import "NotificationsViewController.h"
+#import "FRHyperLabel.h"
+#import "UIImageView+WebCache.h"
+#endif
+
+#define iPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+
+#define Device (IS_IPAD ? @"_iPad" : @"")
+
+#define DeviceName [[UIDevice currentDevice] name]
+
+#define DeviceSystemName [[UIDevice currentDevice] systemName]
+
+#define DeviceUUID [[[UIDevice currentDevice]identifierForVendor]UUIDString]
+
+#define AppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+
+#define IS_IOS8 ([[[UIDevice currentDevice] systemVersion]floatValue] >= 8.0f)
+
+#define IS_IOS9 ([[[UIDevice currentDevice] systemVersion]floatValue] >= 9.0f)
+
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT)
+#define IS_IPHONE_6 (SCREEN_MAX_LENGTH >= 667.0)
+#define iPhone4s  ([[UIScreen mainScreen] bounds].size.height == 480)?TRUE:FALSE
+#define iPhone5or5s  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+#define iPhone6plus  ([[UIScreen mainScreen] bounds].size.height == 736)?TRUE:FALSE
+#define iPhone6  ([[UIScreen mainScreen] bounds].size.height == 667)?TRUE:FALSE

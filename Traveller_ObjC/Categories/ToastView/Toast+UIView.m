@@ -336,4 +336,26 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     return wrapperView;
 }
 
+//Custom Method By Sagar Shirbhate
+-(void)addShaddow{
+    self.layer.shadowOffset = CGSizeMake(1, 1);
+    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.layer.shadowRadius = 4.0f;
+    self.layer.shadowOpacity = 0.80f;
+}
+-(void)addWhiteLayerAndCornerRadius:(int)radius AndWidth:(int)Width {
+    self.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.layer.borderWidth=Width;
+    self.layer.cornerRadius=radius;
+}
+-(void)addBlackLayerAndCornerRadius:(int)radius AndWidth:(int)Width{
+    self.layer.borderColor=[UIColor blackColor].CGColor;
+    self.layer.borderWidth=Width;
+    self.layer.cornerRadius=radius;
+}
+
+-(void)showToastWithMessage:(NSString*)msg{
+    [JTProgressHUD hide];
+    [self makeToast:msg duration:toastDuration position:toastPositionBottomUp];
+}
 @end

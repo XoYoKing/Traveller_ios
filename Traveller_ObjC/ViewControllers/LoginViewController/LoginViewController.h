@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TextFieldValidator.h"
-#import "UITextField+PaddingText.h"
-#import "WebHandler.h"
-#import "JTProgressHUD.h"
+
 @interface LoginViewController : UIViewController
 {
     IBOutlet UIImageView *logoImage;

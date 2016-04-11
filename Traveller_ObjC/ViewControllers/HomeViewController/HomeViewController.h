@@ -6,18 +6,10 @@
 //  Copyright © 2016 Sagar Shirbhate. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "JASidePanelController.h"
-#import "GIBadgeView.h"
-#import "NotificationsViewController.h"
+
 #import "FeedsTableViewCell.h"
 #import "WishedToTableViewCell.h"
 #import "FollowingTableViewCell.h"
-#import "FRHyperLabel.h"
-#import "WebHandler.h"
-#import "JTProgressHUD.h"
-#import "JTSImageViewController.h"
-#import "JTSImageInfo.h"
 
 @interface HomeViewController : UIViewController
 {
@@ -29,6 +21,22 @@
     NSMutableArray * homeFeedData;
     int homeFeedPage;
     BOOL homeFeedPageShouldDoPaging;
-}
+
+        CGFloat _headerHeight;
+        CGFloat _subHeaderHeight;
+        CGFloat _headerSwitchOffset;
+        CGFloat _avatarImageSize;
+        CGFloat _avatarImageCompressedSize;
+        BOOL _barIsCollapsed;
+        BOOL _barAnimationComplete;
+        
+    }
+    
+    @property (weak) UITableView *tableView;
+    @property (weak) UIImageView *imageHeaderView;
+    @property (weak) UIVisualEffectView *visualEffectView;
+    @property (strong,nonatomic) UIView *customTitleView;
+    @property (strong) UIImage *originalBackgroundImage;
+    @property (strong) NSMutableDictionary* blurredImageCache;
 
 @end

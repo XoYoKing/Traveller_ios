@@ -1,15 +1,5 @@
-#import "AppDelegate.h"
 
-
-#define iPhone4s  ([[UIScreen mainScreen] bounds].size.height == 480)?TRUE:FALSE
-#define iPhone5or5s  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
-#define iPhone6  ([[UIScreen mainScreen] bounds].size.height == 667)?TRUE:FALSE
-#define iPhone6plus  ([[UIScreen mainScreen] bounds].size.height == 736)?TRUE:FALSE
-#define iPad  ([[UIScreen mainScreen] bounds].size.height >= 800)?TRUE:FALSE
-
-
-
-
+#pragma mark --------------------------Icomoon Constants-------------------------------
 #define  ICOMOON_BELL "\ue900"
 #define  ICOMOON_CHECK "\ue901"
  #define  ICOMOON_UNCHECK "\ue903"
@@ -37,56 +27,72 @@
 #define  ICOMOON_LIKE "\ue918"
 
 
+#pragma mark --------------------------Font Details-------------------------------
+#define font_regular @"Avenir Next"
+#define font_button @"Avenir Next"
+#define font_bold @"Futura"
+#define fontIcomoon @"icomoon"
+
+#define font_size_normal_regular iPAD ? 20 : (IS_IPHONE_6 ? 17.0f : 12.0f)
+#define font_size_normal_bold iPAD ? 20 : (IS_IPHONE_6 ? 17.0f : 12.0f)
+#define font_size_bold iPAD ? 25 : (IS_IPHONE_6 ? 22.0f : 20.0f)
+#define font_size_button iPAD ? 20 : (IS_IPHONE_6 ? 18.0f : 14.0f)
+#define logo_Size_Big iPAD ? 35 : (IS_IPHONE_6 ? 30.0f : 22.0f)
+#define logo_Size_Small iPAD ? 30 : (IS_IPHONE_6 ? 24.0f : 20.0f)
+
+#pragma mark --------------------------Corner Radius/Border Width/Padding-------------------------------
+#define cornerRadius_Button 4
+#define cornerRadius_Image 8
+#define borderWidth_Button 1
+#define borderWidth_Image 4
+#define leftPadding 35
+#define rightPadding 35
 
 
-
-
-#define font_family_regular @"Avenir Next"
-#define font_family_regular_size 17
-#define fontIcomoon         @"icomoon"
-#define fontIcoMoonSize_30  [UIFont fontWithName:@"icomoon" size:30.0f]
-
-
+#pragma mark --------------------------Toast Constants-------------------------------
 #define toastPosition @"center"
 #define toastPositionBottom @"bottom"
 #define toastPositionBottomUp @"topcenter"
 #define toastDuration 3.0f
 
 
+
+#pragma mark --------------------------Webservice Codes-------------------------------
 #define SUCESS @1
 #define FAIL @0
+
+
+
+#pragma mark --------------------------Webservice Constants-------------------------------
 #define URL_CONST @"http://trasquare.com/traveller_api/checkurl.php?"
 #define LOGIN_ACTION @"login"
 #define SIGNUP_ACTION @"signUp"
 #define GET_MY_ACTIVITY @"getMyActivity"
 
 
-#define seriesColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
-#define payPalColor [UIColor colorWithRed:2.0f/255.0f green:92.0f/255.0f blue:201.0f/255.0f alpha:1.0f]
 
+#pragma mark --------------------------Color Codes-------------------------------
+#define userShouldDOButoonColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
+#define userShouldNOTDOButoonColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
+#define disabledColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
+#define whiteBorderColor [UIColor WhiteColor].CGColor
+#define blackBorderColor [UIColor WhiteColor].CGColor
+#define Check_Color [UIColor colorWithRed:51.0/255 green:139.0/255 blue:20.0/255 alpha:1]
+#define Uncheck_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define Like_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define comment_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define share_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define segment_selected_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define segment_disselected_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define menu_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define menu_background_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 
-#define TEXTFIELD_BORDER_COLOR [UIColor colorWithRed:236.0/255 green:236.0/255 blue:236.0/255 alpha:1.0]
-#define Place_Picker_Button_Color [UIColor colorWithRed:131.0/255 green:131.0/255 blue:131.0/255 alpha:1]
-#define Check_All_Button_Color [UIColor colorWithRed:51.0/255 green:139.0/255 blue:20.0/255 alpha:1]
-#define Uncheck_All_Button_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
-#define Date_Picker_Button_Color [UIColor colorWithRed:234.0/255 green:40.0/255 blue:42.0/255 alpha:1]
+#pragma mark --------------------------User Defaults-------------------------------
+#define user_Data @"User_Data"
 
-#pragma mark - validation
-#define ACCEPTABLE_NUMERICS_WITH_DECIMAL @"1234567890."
-#define ACCEPTABLE_CHARECTERS @" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-'"
-#define ALPHANUMERIC_CHARECTERS @" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-#define EMAIL_ACCEPTABLE_CHARECTERS @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@._"
-#define MAX_CHAR_PASSWORD 15
-#define MAX_DIGIT_ZIPCODE 5
-#define MAX_CHAR_NAME 15
-#define MAX_CHAR_FIRSTNAME_AND_LASTNAME 30
-#define MAX_CHAR_EMAIL 50
-#define MAX_CHAR_SUBJECT 255
-#define MAX_CHAR_MESSAGE 500
-
-
-#pragma mark - validation messages
-
+#pragma mark --------------------------Validation messages-------------------------------
+#define no_internet_message @"Please check your internet connection"
+#define no_connection_message @"We are unable to connect you to server"
 #define validation_required_Field @"Please fill all the required field"
 #define validation_UsernameWrong @"Please enter valid username"
 #define validation_Username @"Please enter username"
@@ -113,9 +119,3 @@
 #define validation_NewPasswordDigits @"New password must have minimum 6 characters and maximum 15 characters"
 #define validation_RetypePasswordDigits @"Retype password must have minimum 6 characters and maximum 15 characters"
 #define validation_NewPasswordMatch @"New password and confirm password does not match"
-
-#pragma mark - AlertView messages
-#define ERROR @"Error!"
-#define SUCCESS_MESSAGE_TITLE @"Success!"
-#define SIGN_UP_SUCCESS_MESSAGE @"Your registration is successful."
-#define NO_INTERNET_MESSAGE @"Your internet connection is not working"

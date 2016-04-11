@@ -49,7 +49,7 @@
     lbl.textAlignment=NSTextAlignmentCenter;
     
     
-    if (iPhone6||iPhone6plus||iPad) {
+    if (iPhone6||iPhone6plus||iPAD) {
         lbl.font=[UIFont fontWithName:fontIcomoon size:23];
     }else{
         lbl.font=[UIFont fontWithName:fontIcomoon size:20];
@@ -67,7 +67,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MenuCell * cell =[menuTableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
-    if (iPhone6||iPhone6plus||iPad) {
+    if (iPhone6||iPhone6plus||iPAD) {
         cell.menuImgLbl.font=[UIFont fontWithName:fontIcomoon size:25];
     }else{
         cell.menuImgLbl.font=[UIFont fontWithName:fontIcomoon size:20];

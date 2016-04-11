@@ -10,77 +10,54 @@
 #import "TravellerConstants.h"
 #import "HomeViewController.h"
 #import "MenuViewController.h"
-#import "JASidePanelController.h"
-#import "Toast+UIView.h"
+
+
 @interface LoginViewController ()
 
 @end
 
 @implementation LoginViewController
+#pragma mark====================View Controller Life Cycles===============================
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setUpView];
+    [self setUpView];// To set up View Properly
 }
 
+#pragma mark====================Set Up View===============================
 
 -(void)setUpView{
-    if (iPhone6||iPhone6plus||iPad) {
+    // Check Whether its lower size or bigger size
+    if (iPhone6||iPhone6plus||iPAD) {
         aboveConstraint.constant =100;
         [self.view layoutIfNeeded];
-        forgetPasswordBtn.titleLabel.font=[UIFont fontWithName:font_family_regular size:14];
-        needAnAccountBtn.titleLabel.font=[UIFont fontWithName:font_family_regular size:14];
-    }else{
-        forgetPasswordBtn.titleLabel.font=[UIFont fontWithName:font_family_regular size:12];
-        needAnAccountBtn.titleLabel.font=[UIFont fontWithName:font_family_regular size:12];
     }
-    
-    usernameLogo.font=[UIFont fontWithName:fontIcomoon size:font_family_regular_size];
-    passwordLogo.font=[UIFont fontWithName:fontIcomoon size:font_family_regular_size];
-    showHidePasswordBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
-    loginButton.titleLabel.font=[UIFont fontWithName:font_family_regular size:font_family_regular_size];
- 
-    orLbl.font=[UIFont fontWithName:font_family_regular size:font_family_regular_size];
+    forgetPasswordBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_button];
+    needAnAccountBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_button];
+    usernameLogo.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    passwordLogo.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    showHidePasswordBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    loginButton.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    orLbl.font=[UIFont fontWithName:font_bold size:font_size_bold];
     googleBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:50];
     faceBookButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:50];
     usernameLogo.text =[NSString stringWithUTF8String:ICOMOON_USER];
     passwordLogo.text =[NSString stringWithUTF8String:ICOMOON_KEY];
-     [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYE_CLOSED] forState:UIControlStateNormal];
+    [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYE_CLOSED] forState:UIControlStateNormal];
     [googleBtn setTitle:[NSString stringWithUTF8String:ICOMOON_GOOGLE] forState:UIControlStateNormal];
     [faceBookButton setTitle:[NSString stringWithUTF8String:ICOMOON_FACEBOOK] forState:UIControlStateNormal];
-    [userNameTextField setLeftPadding:35];
-    [passwordTextField setLeftPadding:35];
-     [passwordTextField setRightPadding:35];
-    loginButton.layer.borderColor=[UIColor blackColor].CGColor;
-    loginButton.layer.borderWidth=1;
-    loginButton.layer.cornerRadius=4;
-    [self addShaddowToView:loginButton];
-    
+    [userNameTextField setLeftPadding:leftPadding];
+    [passwordTextField setLeftPadding:leftPadding];
+     [passwordTextField setRightPadding:leftPadding];
+    [loginButton addBlackLayerAndCornerRadius:cornerRadius_Button AndWidth:borderWidth_Button];
+    [loginButton addShaddow];
     [userNameTextField addRegx:@"^.{3,30}$" withMsg:@"User name charaters limit should be come between 3-30"];
     [passwordTextField addRegx:@"[A-Za-z0-9]{6,20}" withMsg:@"Password must be alpha numeric"];
-
-}
--(void)addShaddowToView:(UIView *)view{
-    view.layer.shadowOffset = CGSizeMake(1, 1);
-    view.layer.shadowColor = [[UIColor blackColor] CGColor];
-    view.layer.shadowRadius = 4.0f;
-    view.layer.shadowOpacity = 0.80f;
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+#pragma mark====================Login With Facebook===============================
 
 - (IBAction)facebookClick:(id)sender {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
@@ -118,13 +95,35 @@
          }
      }];
 }
-
-
-- (IBAction)googleClick:(id)sender {
+// its in developement phase
+-(void)loginForFacebook:(NSDictionary*)FBDict{
+    NSString * name=[FBDict valueForKey:@"name"];
+    NSString * email=[FBDict valueForKey:@"email"];
+    NSString * fb_id=[FBDict valueForKey:@"fb_id"];
+    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,SIGNUP_ACTION];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
+        }else{
+            NSString * msg =[dict valueForKey:@"message"];
+            [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:msg waitUntilDone:YES];
+        }
+    }else{
+        [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:no_internet_message waitUntilDone:YES];
+    }
 }
 
-- (IBAction)loginClick:(id)sender {
+#pragma mark====================Login With Google===============================
 
+- (IBAction)googleClick:(id)sender {
+    
+}
+
+
+#pragma mark====================Login With Email===============================
+- (IBAction)loginClick:(id)sender {
     
 #if DEBUG
     userNameTextField.text=@"satishsolan7@gmail.com";
@@ -139,33 +138,32 @@
  
 }
 
-
 -(void)callLoginWebservice{
     NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTextField.text,passwordTextField.text,LOGIN_ACTION];
    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
-        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
         
-        NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
-        [defaults setObject:dict forKey:@"UserDict"];
-        [defaults synchronize];
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
         
         if ( [status isEqual: SUCESS]) {
             
-            
+            NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
+            [defaults setObject:dict forKey:user_Data];
+            [defaults synchronize];
               [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
         }else{
             NSString * msg =[dict valueForKey:@"message"];
-            [self performSelectorOnMainThread:@selector(errorAlert:) withObject:msg waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:msg waitUntilDone:YES];
         }
     }else{
-        [self performSelectorOnMainThread:@selector(errorAlert:) withObject:NO_INTERNET_MESSAGE waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:no_internet_message waitUntilDone:YES];
     }
 }
 
 
+#pragma mark====================Open Home Page===============================
+
 -(void)loginSuccessful{
-    
       [JTProgressHUD hide];
     
     JASidePanelController * vc = [[JASidePanelController alloc] init];
@@ -181,6 +179,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+#pragma mark====================Show Hide Password===============================
+
 - (IBAction)showHidePasswordClick:(id)sender {
     if( passwordTextField.secureTextEntry==YES){
         passwordTextField.secureTextEntry=NO;
@@ -191,10 +192,14 @@
     }
 }
 
+
+#pragma mark====================Forget Password Click===============================
+
 - (IBAction)forgetClick:(id)sender {
     
-    
 }
+
+#pragma mark====================SinUp Click===============================
 
 - (IBAction)signUpClick:(id)sender {
     
@@ -205,33 +210,10 @@
 
 
 
--(void)errorAlert:(NSString*)msg{
-    [JTProgressHUD hide];
-    [self.view makeToast:msg duration:toastDuration position:toastPositionBottomUp];
-}
 
 
 
-// its in developement phase
--(void)loginForFacebook:(NSDictionary*)FBDict{
-    NSString * name=[FBDict valueForKey:@"name"];
-    NSString * email=[FBDict valueForKey:@"email"];
-    NSString * fb_id=[FBDict valueForKey:@"fb_id"];
-    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,SIGNUP_ACTION];
-    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
-    if (dict!=nil) {
-        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-        if ( [status isEqual: SUCESS]) {
-            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
-        }else{
-            NSString * msg =[dict valueForKey:@"message"];
-            [self performSelectorOnMainThread:@selector(errorAlert:) withObject:msg waitUntilDone:YES];
-        }
-    }else{
-        [self performSelectorOnMainThread:@selector(errorAlert:) withObject:NO_INTERNET_MESSAGE waitUntilDone:YES];
-    }
 
-}
 
 
 @end

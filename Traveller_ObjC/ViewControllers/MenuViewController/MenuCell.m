@@ -13,7 +13,7 @@
     _menuBGView.layer.borderColor=[UIColor blackColor].CGColor;
     _menuBGView.layer.borderWidth=1;
     [self addShaddowToView:_menuBGView];
-    _menuBGView.backgroundColor=Date_Picker_Button_Color;
+    _menuBGView.backgroundColor=menu_Color;
     _menuImgLbl.textColor=[UIColor whiteColor];
     _menuTitleLbl.textColor=[UIColor whiteColor];
 }

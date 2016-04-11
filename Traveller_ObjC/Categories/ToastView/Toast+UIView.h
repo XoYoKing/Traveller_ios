@@ -48,4 +48,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 - (void)showToast:(UIView *)toast;
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point;
 
+-(void)addShaddow;
+-(void)addWhiteLayerAndCornerRadius:(int)radius AndWidth:(int)Width ;
+-(void)addBlackLayerAndCornerRadius:(int)radius AndWidth:(int)Width;
+-(void)showToastWithMessage:(NSString*)msg;
 @end

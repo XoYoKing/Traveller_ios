@@ -117,7 +117,6 @@
         }
     NSData * data = [NSData dataWithContentsOfURL:url];
     NSError *e = nil;
-        
         if (data!=nil) {
                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &e];
              return dict;
