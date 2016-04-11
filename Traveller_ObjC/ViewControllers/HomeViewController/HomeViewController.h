@@ -16,6 +16,8 @@
 #import "FRHyperLabel.h"
 #import "WebHandler.h"
 #import "JTProgressHUD.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
 
 @interface HomeViewController : UIViewController
 {

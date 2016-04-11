@@ -349,6 +349,12 @@
             NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
             [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"alpes.jpg"]];
         }
+        
+        cell.postImage.userInteractionEnabled=YES;
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] init];
+        [tapRecognizer addTarget:self action:@selector(clickedOnPostImage:)];
+        [cell.postImage addGestureRecognizer:tapRecognizer];
+        
         NSString *userName;
         NSString *cityName;
         NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
@@ -1011,6 +1017,29 @@
 }
 -(void)reloadTable{
      [self.tableView reloadData];
+}
+
+-(void)clickedOnPostImage:(UITapGestureRecognizer *)sender {
+    
+    UIImageView * imageview =(UIImageView *) sender.view;
+    
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = imageview.image;
+    imageInfo.referenceRect = imageview.frame;
+    imageInfo.referenceView = self.view;
+    imageInfo.referenceContentMode = imageview.contentMode;
+    imageInfo.referenceCornerRadius = imageview.layer.cornerRadius;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+
 }
 
 @end

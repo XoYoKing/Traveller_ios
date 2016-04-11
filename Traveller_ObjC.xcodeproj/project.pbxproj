@@ -63,6 +63,12 @@
 		AA37892E1CB62D79000F151B /* alpes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892B1CB62D79000F151B /* alpes.jpg */; };
 		AA37892F1CB62D79000F151B /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892C1CB62D79000F151B /* avatar.jpg */; };
 		AA3789301CB62D79000F151B /* vegetation.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892D1CB62D79000F151B /* vegetation.jpg */; };
+		AA96D3301CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */; };
+		AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3271CBB9E5500B2CDDA /* JTSImageInfo.m */; };
+		AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3291CBB9E5500B2CDDA /* JTSImageViewController.m */; };
+		AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32B1CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m */; };
+		AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32D1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m */; };
+		AA96D3351CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32F1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -168,6 +174,18 @@
 		AA37892B1CB62D79000F151B /* alpes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alpes.jpg; sourceTree = "<group>"; };
 		AA37892C1CB62D79000F151B /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		AA37892D1CB62D79000F151B /* vegetation.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vegetation.jpg; sourceTree = "<group>"; };
+		AA96D3241CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
+		AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
+		AA96D3261CBB9E5500B2CDDA /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
+		AA96D3271CBB9E5500B2CDDA /* JTSImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageInfo.m; sourceTree = "<group>"; };
+		AA96D3281CBB9E5500B2CDDA /* JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageViewController.h; sourceTree = "<group>"; };
+		AA96D3291CBB9E5500B2CDDA /* JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageViewController.m; sourceTree = "<group>"; };
+		AA96D32A1CBB9E5500B2CDDA /* JTSSimpleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSSimpleImageDownloader.h; sourceTree = "<group>"; };
+		AA96D32B1CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSSimpleImageDownloader.m; sourceTree = "<group>"; };
+		AA96D32C1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JTSImageViewController.h"; sourceTree = "<group>"; };
+		AA96D32D1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JTSImageViewController.m"; sourceTree = "<group>"; };
+		AA96D32E1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
+		AA96D32F1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -434,6 +452,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */,
 				39CE42F31CBA1DFD000B371C /* GrowTextView */,
 				399691531CB92904000A3A4A /* FRHyperLabel */,
 				AA2BC0D61CB53C180030A0E5 /* Rechability */,
@@ -613,6 +632,25 @@
 			path = ImageEffects;
 			sourceTree = "<group>";
 		};
+		AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				AA96D3241CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.h */,
+				AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */,
+				AA96D3261CBB9E5500B2CDDA /* JTSImageInfo.h */,
+				AA96D3271CBB9E5500B2CDDA /* JTSImageInfo.m */,
+				AA96D3281CBB9E5500B2CDDA /* JTSImageViewController.h */,
+				AA96D3291CBB9E5500B2CDDA /* JTSImageViewController.m */,
+				AA96D32A1CBB9E5500B2CDDA /* JTSSimpleImageDownloader.h */,
+				AA96D32B1CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m */,
+				AA96D32C1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.h */,
+				AA96D32D1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m */,
+				AA96D32E1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.h */,
+				AA96D32F1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m */,
+			);
+			path = ImageShowLibrary;
+			sourceTree = "<group>";
+		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,6 +791,7 @@
 				39F187BA1CB7BD26001ABFB0 /* icomoon.ttf in Sources */,
 				AA2BC0E41CB53FAB0030A0E5 /* Toast+UIView.m in Sources */,
 				AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */,
+				AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */,
 				39CE42E91CBA08C1000B371C /* LikeViewController.m in Sources */,
 				AA2BC0DD1CB53C220030A0E5 /* WebHandler.m in Sources */,
 				39F187C11CB7E088001ABFB0 /* MenuCell.m in Sources */,
@@ -760,6 +799,7 @@
 				397A6E5A1CB7A18D004050F5 /* SplashScreenViewController.m in Sources */,
 				399691461CB90D93000A3A4A /* WishedToTableViewCell.m in Sources */,
 				AA3789201CB610C2000F151B /* MenuViewController.m in Sources */,
+				AA96D3351CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m in Sources */,
 				39CE42FC1CBA26EC000B371C /* CommentsViewController.m in Sources */,
 				AA2BC0C71CB4ED310030A0E5 /* AppDelegate.m in Sources */,
 				399691401CB90A30000A3A4A /* FeedsTableViewCell.m in Sources */,
@@ -774,6 +814,7 @@
 				AA3789231CB610D2000F151B /* HomeViewController.m in Sources */,
 				39F187BE1CB7C358001ABFB0 /* UITextField+PaddingText.m in Sources */,
 				395994E01CB814BB001E2118 /* SettingViewController.m in Sources */,
+				AA96D3301CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m in Sources */,
 				AA2BC0EB1CB540010030A0E5 /* DontAllowCCP.m in Sources */,
 				AA2BC0BB1CB4E2900030A0E5 /* DTParallaxHeaderView.m in Sources */,
 				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
@@ -786,10 +827,13 @@
 				395994E91CB8156B001E2118 /* ViewProfileController.m in Sources */,
 				AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */,
 				399691561CB92904000A3A4A /* FRHyperLabel.m in Sources */,
+				AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */,
+				AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */,
 				3996912F1CB8F64C000A3A4A /* Notification1TableViewCell.m in Sources */,
 				395994E61CB81558001E2118 /* TravellingToViewController.m in Sources */,
 				399691521CB90F56000A3A4A /* FollowingTableViewCell.m in Sources */,
 				39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */,
+				AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */,
 				395994DD1CB814AA001E2118 /* SearchViewController.m in Sources */,
 				39CE42EC1CBA111A000B371C /* LikeTableViewCell.m in Sources */,
 				39CE42EF1CBA167C000B371C /* ComentTableViewCell.m in Sources */,
