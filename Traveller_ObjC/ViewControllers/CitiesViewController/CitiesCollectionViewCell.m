@@ -13,14 +13,14 @@
 -(void)awakeFromNib{
     _cityImageView.clipsToBounds=NO;
     [_cityImageView layoutIfNeeded];
-    _bgView.layer.borderColor=Uncheck_All_Button_Color.CGColor;
+    _bgView.layer.borderColor=segment_selected_Color.CGColor;
     _bgView.layer.borderWidth=3;
     _bgView.layer.cornerRadius=8;
     [self addShaddowToView:_bgView];
     
     _wishLogo.font=[UIFont fontWithName:fontIcomoon size:20];
     _wishLogo.text=[NSString stringWithUTF8String:ICOMOON_FAVORITE];
-    _wishLogo.textColor=Date_Picker_Button_Color;
+    _wishLogo.textColor=segment_selected_Color;
     
     _placesLogo.font=[UIFont fontWithName:fontIcomoon size:20];
     _placesLogo.text=[NSString stringWithUTF8String:ICOMOON_CHECK];

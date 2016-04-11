@@ -74,7 +74,7 @@
     {
         NSString * name =[namesOfMenus objectAtIndex:j];
         CGSize size = [name sizeWithAttributes:
-                       @{NSFontAttributeName: [UIFont fontWithName:font_family_regular size:17]}];
+                       @{NSFontAttributeName: [UIFont fontWithName:font_regular size:17]}];
         CGSize textSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
         CGFloat strikeWidth = textSize.width;
         CGRect frame = CGRectMake(scrollWidth, 5,strikeWidth+20, 40);
@@ -92,22 +92,22 @@
         scrollWidth= scrollWidth+strikeWidth+20;
         
         if (j==selectedIndex) {
-            button.backgroundColor= Check_All_Button_Color;
+            button.backgroundColor= segment_selected_Color ;
             button.layer.borderColor=[UIColor whiteColor].CGColor;
             [self addShaddowToView:button];
             if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_family_regular size:17];
+                button.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
             }else {
-                button.titleLabel.font=[UIFont fontWithName:font_family_regular size:15];
+                button.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
             }
         }else {
             button.backgroundColor= [UIColor blackColor];
             [self removeShaddowToView:button];
             button.layer.borderColor=[UIColor whiteColor].CGColor;
             if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_family_regular size:17];
+                button.titleLabel.font=[UIFont fontWithName:font_button size:17];
             }else{
-                button.titleLabel.font=[UIFont fontWithName:font_family_regular size:15];
+                button.titleLabel.font=[UIFont fontWithName:font_button size:15];
             }
         }
         
@@ -134,7 +134,7 @@
         if(i==index)
         {
             UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-            btn.backgroundColor= Check_All_Button_Color;
+            btn.backgroundColor= segment_selected_Color;
             [self addShaddowToView:btn];
             
         }

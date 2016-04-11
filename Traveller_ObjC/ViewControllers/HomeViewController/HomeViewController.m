@@ -709,7 +709,7 @@
 -(void)buttonEvent:(UIButton*)sender
 {
     NSInteger index= sender.tag;
-    selectedIndex=index;
+    selectedIndex= (int) index;
     
     for(int i=0;i<buttonArray.count;i++)
             {
@@ -722,7 +722,7 @@
                 }
                 else{
                     UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-                     btn.backgroundColor=segment_disselected_share_Color;
+                     btn.backgroundColor=segment_disselected_Color;
                    // [self removeShaddowToView:btn];
                 }
             }

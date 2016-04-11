@@ -49,7 +49,7 @@
     
     //Step 1: Define a normal attributed string for non-link texts
     NSString *string = @"Sagar Shirbhate commented Feels so go Here.. ";
-    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_family_regular size:12]};
+    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:12]};
     cell.commentLbl.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
     
     void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
