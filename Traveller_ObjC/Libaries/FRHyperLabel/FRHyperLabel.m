@@ -56,7 +56,7 @@ static UIColor *FRHyperLabelLinkColorHighlight;
 	}
 	
 	if (!self.linkAttributeDefault) {
-        UIFont * font =[UIFont boldSystemFontOfSize:12];
+        UIFont * font =[UIFont fontWithName:font_bold size:font_size_normal_regular];
 		self.linkAttributeDefault = @{NSForegroundColorAttributeName: FRHyperLabelLinkColorDefault,
 									  NSFontAttributeName: font};
 	}

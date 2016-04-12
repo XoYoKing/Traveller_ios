@@ -69,10 +69,10 @@
     
      [self configureNavBar];
     
-    _headerHeight = 150.0;
-    _subHeaderHeight = 100.0;
-    _avatarImageSize = 100;
-    _avatarImageCompressedSize = 44;
+    _headerHeight = feed_headerHeight;
+    _subHeaderHeight = feed_subHeaderHeight;
+    _avatarImageSize = feed_avatarImageSize;
+    _avatarImageCompressedSize = feed_avatarImageCompressedSize;
     _barIsCollapsed = false;
     _barAnimationComplete = false;
     
@@ -127,6 +127,12 @@
     tableView.tableHeaderView = tableHeaderView;
     
     UIImageView* avatarImageView = [self createAvatarImage];
+    
+    NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
+    if (profileUrl) {
+           [avatarImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"avatar.jpg"]];
+    }
+
     avatarImageView.translatesAutoresizingMaskIntoConstraints = NO; //autolayout
     views[@"avatarImageView"] = avatarImageView;
     avatarImageView.userInteractionEnabled=YES;
@@ -288,11 +294,9 @@
     }
 }
 - (UIImageView*) createAvatarImage {
-    UIImageView* avatarView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar.jpg"]];
+    UIImageView* avatarView = [[UIImageView alloc] init];
     avatarView.contentMode = UIViewContentModeScaleToFill;
-    avatarView.layer.cornerRadius = 8.0;
-    avatarView.layer.borderWidth = 3.0f;
-    avatarView.layer.borderColor = [UIColor whiteColor].CGColor;
+    [avatarView addWhiteLayerAndCornerRadius:mainUserProfileICornerRadius AndWidth:borderWidth_Image];
     avatarView.clipsToBounds = YES;
     return avatarView;
 }
@@ -300,16 +304,16 @@
     if(!_customTitleView){
         UILabel* myLabel = [UILabel new];
         myLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        myLabel.text = @"Sagar Shirbhate";
+        myLabel.text = [UserData getUserName];
         myLabel.numberOfLines =1;
         [myLabel setTextColor:[UIColor whiteColor]];
-        [myLabel setFont:[UIFont boldSystemFontOfSize:15.0f]];
+        [myLabel setFont:[UIFont fontWithName:font_bold size:font_size_button]];
         UILabel* smallText = [UILabel new];
         smallText.translatesAutoresizingMaskIntoConstraints = NO;
-        smallText.text = @"";
+        smallText.text =  [UserData getUserCity];;
         smallText.numberOfLines =1;
         [smallText setTextColor:[UIColor whiteColor]];
-        [smallText setFont:[UIFont boldSystemFontOfSize:10.0f]];
+        [smallText setFont:[UIFont fontWithName:font_regular size:font_size_normal_regular]];
         UIView* wrapper = [UIView new];
         [wrapper addSubview:myLabel];
         [wrapper addSubview:smallText];
@@ -336,9 +340,9 @@
     [view addSubview:followButton];
     UILabel* nameLabel = [UILabel new];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    nameLabel.text = @"Sagar Shirbhate";
+    nameLabel.text = [UserData getUserName];
     nameLabel.numberOfLines =1;
-    [nameLabel setFont:[UIFont fontWithName:@"Futura" size:18]];
+    [nameLabel setFont:[UIFont fontWithName:font_bold size:font_size_bold]];
     views[@"nameLabel"] = nameLabel;
     [view addSubview:nameLabel];
     NSArray* constraints;
@@ -456,6 +460,8 @@
             NSURL * profileUrl =[NSURL URLWithString:urlStringForProfileImage];
             [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"avatar.jpg"]];
         }
+        cell.profileImage.clipsToBounds=YES;
+        [cell.profileImage addShaddow];
         
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
@@ -463,6 +469,7 @@
             NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
             [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"alpes.jpg"]];
         }
+         cell.postImage.clipsToBounds=YES;
         
         //On Click of Image Should Open
         cell.postImage.userInteractionEnabled=YES;
@@ -658,7 +665,12 @@
                 CGSize size = [name sizeWithAttributes:
                                @{NSFontAttributeName: [UIFont fontWithName:font_bold size:font_size_button]}];
                 CGSize textSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
-                CGFloat strikeWidth = textSize.width;
+                CGFloat strikeWidth;
+                  if (iPAD) {
+                      strikeWidth = self.view.frame.size.width/5.5;
+                  }else{
+                      strikeWidth = textSize.width;
+                  }
                 CGRect frame = CGRectMake(scrollWidth, 0,strikeWidth+20, 40);
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 [button setTag:j];
@@ -876,20 +888,18 @@
 
 #pragma mark====================Get HomeFeed Data From Webservice=============================
 -(void)getHomeFeedData{
-    NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
-    NSDictionary * userDict =[defaults objectForKey:user_Data];
-    
-    NSString * userID =[[[userDict valueForKey:@"data"]lastObject]valueForKey:@"id"];
+
+    NSString * userID =[UserData getUserID];
       NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [homeFeedData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
+    
 }
 
 -(void)getHomeFeedDataForPaging{
-    NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
-    NSDictionary * userDict =[defaults objectForKey:user_Data];
-    NSString * userID =[[[userDict valueForKey:@"data"]lastObject]valueForKey:@"id"];
+
+    NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];

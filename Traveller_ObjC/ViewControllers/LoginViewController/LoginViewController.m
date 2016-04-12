@@ -21,9 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults objectForKey:@"intro_screen_viewed"]) {
+
+    //For Intro View
+    if ([[UserData checkIntroViewShown]isEqualToString:@"No"]) {
         self.introView = [[ABCIntroView alloc] initWithFrame:self.view.frame];
         self.introView.delegate = self;
         self.introView.backgroundColor = [UIColor colorWithWhite:0.149 alpha:1.000];
@@ -39,6 +39,9 @@
     // Check Whether its lower size or bigger size
     if (iPhone6||iPhone6plus||iPAD) {
         aboveConstraint.constant =100;
+        if(iPAD){
+            aboveConstraint.constant =200;
+        }
         [self.view layoutIfNeeded];
     }
     forgetPasswordBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_button];
@@ -134,6 +137,8 @@
 #pragma mark====================Login With Email===============================
 - (IBAction)loginClick:(id)sender {
     
+
+    
 #if DEBUG
     userNameTextField.text=@"satishsolan7@gmail.com";
     passwordTextField.text=@"234";
@@ -149,17 +154,12 @@
 
 -(void)callLoginWebservice{
     NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTextField.text,passwordTextField.text,LOGIN_ACTION];
-   NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
-        
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-        
         if ( [status isEqual: SUCESS]) {
-            
-            NSUserDefaults * defaults =[NSUserDefaults standardUserDefaults];
-            [defaults setObject:dict forKey:user_Data];
-            [defaults synchronize];
-              [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
+            [UserData saveUserDict:dict];
+            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
         }else{
             NSString * msg =[dict valueForKey:@"message"];
             [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:msg waitUntilDone:YES];
@@ -169,12 +169,9 @@
     }
 }
 
-
 #pragma mark====================Open Home Page===============================
-
 -(void)loginSuccessful{
       [JTProgressHUD hide];
-    
     JASidePanelController * vc = [[JASidePanelController alloc] init];
     vc.leftPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"MenuViewController"];
     HomeViewController * homeVc = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
@@ -221,12 +218,7 @@
 #pragma mark - ABCIntroViewDelegate Methods
 
 -(void)onDoneButtonPressed{
-    
-    
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
-        [defaults synchronize];
-    
+    [UserData setIntroShown];
     [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.introView.alpha = 0;
     } completion:^(BOOL finished) {

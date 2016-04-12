@@ -133,7 +133,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="GSi-eX-tfq">
-                                <rect key="frame" x="10" y="304" width="483" height="41"/>
+                                <rect key="frame" x="10" y="345" width="483" height="0.0"/>
                                 <string key="text">UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
 The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.
 2016-04-09 19:57:34.211 Traveller_ObjC[17178:212407] Unable to simultaneously satisfy constraints.
@@ -164,7 +164,7 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" misplaced="YES" image="alpes.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
                                 <rect key="frame" x="0.0" y="95" width="503" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="d74-ie-qne"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="d74-ie-qne"/>
                                 </constraints>
                             </imageView>
                         </subviews>

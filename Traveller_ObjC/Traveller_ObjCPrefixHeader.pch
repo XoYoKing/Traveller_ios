@@ -35,6 +35,7 @@
 #import "FRHyperLabel.h"
 #import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
+#import "UserData.h"
 #endif
 
 #define iPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3904198F1CBC1ACD00879650 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3904198E1CBC1ACD00879650 /* UserData.plist */; };
+		390419921CBC1AEF00879650 /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 390419911CBC1AEF00879650 /* UserData.m */; };
 		390B295D1CB82FFC00227B84 /* CitiesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 390B295C1CB82FFC00227B84 /* CitiesCollectionViewCell.m */; };
 		395994DA1CB81495001E2118 /* CitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994D91CB81495001E2118 /* CitiesViewController.m */; };
 		395994DD1CB814AA001E2118 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994DC1CB814AA001E2118 /* SearchViewController.m */; };
@@ -73,6 +75,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3904198E1CBC1ACD00879650 /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
+		390419901CBC1AEF00879650 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
+		390419911CBC1AEF00879650 /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
 		390B295B1CB82FFC00227B84 /* CitiesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesCollectionViewCell.h; sourceTree = "<group>"; };
 		390B295C1CB82FFC00227B84 /* CitiesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesCollectionViewCell.m; sourceTree = "<group>"; };
 		395994D81CB81495001E2118 /* CitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesViewController.h; sourceTree = "<group>"; };
@@ -534,6 +539,9 @@
 			isa = PBXGroup;
 			children = (
 				AA2BC0E61CB53FBB0030A0E5 /* TravellerConstants.h */,
+				3904198E1CBC1ACD00879650 /* UserData.plist */,
+				390419901CBC1AEF00879650 /* UserData.h */,
+				390419911CBC1AEF00879650 /* UserData.m */,
 			);
 			path = ConstantFiles;
 			sourceTree = "<group>";
@@ -745,6 +753,7 @@
 				39F187B31CB7A363001ABFB0 /* Storyboard.storyboard in Resources */,
 				399691481CB90EBA000A3A4A /* WishedToTableViewCell.xib in Resources */,
 				AA3789301CB62D79000F151B /* vegetation.jpg in Resources */,
+				3904198F1CBC1ACD00879650 /* UserData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,6 +855,7 @@
 				AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */,
 				AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */,
 				3996912F1CB8F64C000A3A4A /* Notification1TableViewCell.m in Sources */,
+				390419921CBC1AEF00879650 /* UserData.m in Sources */,
 				395994E61CB81558001E2118 /* TravellingToViewController.m in Sources */,
 				399691521CB90F56000A3A4A /* FollowingTableViewCell.m in Sources */,
 				39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */,

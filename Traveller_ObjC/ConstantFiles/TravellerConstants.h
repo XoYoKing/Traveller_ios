@@ -47,6 +47,8 @@
 #define borderWidth_Image 4
 #define leftPadding 35
 #define rightPadding 35
+#define mainUserProfileICornerRadius  8
+
 
 
 #pragma mark --------------------------Toast Constants-------------------------------
@@ -87,8 +89,12 @@
 #define menu_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 #define menu_background_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 
-#pragma mark --------------------------User Defaults-------------------------------
-#define user_Data @"User_Data"
+#pragma mark --------------------------For Parallax Effect on Feed View-------------------------------
+#define feed_headerHeight iPAD ? 350 : (IS_IPHONE_6 ? 300.0 : 220.0)
+#define feed_subHeaderHeight  iPAD ? 100 : (IS_IPHONE_6 ? 100 : 100.0)
+#define feed_avatarImageSize iPAD ? 150 : (IS_IPHONE_6 ? 120 : 100)
+#define feed_avatarImageCompressedSize iPAD ? 60 : (IS_IPHONE_6 ? 55 : 45)
+
 
 #pragma mark --------------------------Validation messages-------------------------------
 #define no_internet_message @"Please check your internet connection"

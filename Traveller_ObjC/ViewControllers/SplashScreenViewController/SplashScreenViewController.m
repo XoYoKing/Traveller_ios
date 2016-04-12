@@ -8,6 +8,7 @@
 
 #import "SplashScreenViewController.h"
 #import "LoginViewController.h"
+#import "HomeViewController.h"
 @interface SplashScreenViewController ()
 {
     NSTimer * timer;
@@ -51,8 +52,22 @@
 
 
 -(void)pushLoginView{
-    LoginViewController * loginVC =[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    [self.navigationController pushViewController:loginVC animated:YES];
+    
+    if ([[UserData getUserLoginStatus]isEqualToString:@"Yes"]) {
+        JASidePanelController * vc = [[JASidePanelController alloc] init];
+        vc.leftPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"MenuViewController"];
+        HomeViewController * homeVc = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+        AppDelegate *d = [[UIApplication sharedApplication] delegate];
+        d.drawerView=vc;
+        d.drawerView.panningLimitedToTopViewController=NO;
+        d.drawerView.recognizesPanGesture=NO;
+        d.drawerView.leftFixedWidth=self.view.frame.size.width/1.5;
+        vc.centerPanel = [[UINavigationController alloc] initWithRootViewController:homeVc];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        LoginViewController * loginVC =[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
