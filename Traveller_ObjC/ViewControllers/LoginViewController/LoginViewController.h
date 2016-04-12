@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ABCIntroView.h"
-@interface LoginViewController : UIViewController<ABCIntroViewDelegate>
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>
+@interface LoginViewController : UIViewController<ABCIntroViewDelegate,GPPSignInDelegate>
 {
     IBOutlet UIImageView *logoImage;
     IBOutlet TextFieldValidator *userNameTextField;

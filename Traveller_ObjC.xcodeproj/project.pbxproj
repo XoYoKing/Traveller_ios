@@ -43,6 +43,8 @@
 		39F187BE1CB7C358001ABFB0 /* UITextField+PaddingText.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F187BD1CB7C358001ABFB0 /* UITextField+PaddingText.m */; };
 		39F187C11CB7E088001ABFB0 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F187C01CB7E088001ABFB0 /* MenuCell.m */; };
 		3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */; };
+		AA19148B1CBD06430039C2FB /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19148A1CBD06430039C2FB /* MarqueeLabel.m */; };
+		AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */; };
 		AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0881CB4D75A0030A0E5 /* main.m */; };
 		AA2BC0941CB4D75A0030A0E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA2BC0931CB4D75A0030A0E5 /* Assets.xcassets */; };
 		AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0AE1CB4E2900030A0E5 /* GIBadgeView.m */; };
@@ -137,6 +139,10 @@
 		39F187BF1CB7E088001ABFB0 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		39F187C01CB7E088001ABFB0 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		3C43B7F232D644E47068A78B /* Pods-Traveller_ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.debug.xcconfig"; sourceTree = "<group>"; };
+		AA1914891CBD06430039C2FB /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
+		AA19148A1CBD06430039C2FB /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
+		AA19148D1CBD1FDD0039C2FB /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
+		AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		AA2BC0841CB4D75A0030A0E5 /* Traveller_ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traveller_ObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2BC0881CB4D75A0030A0E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA2BC0931CB4D75A0030A0E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -352,6 +358,24 @@
 			path = TextFieldPadding;
 			sourceTree = "<group>";
 		};
+		AA1914881CBD06430039C2FB /* MarqueLabel */ = {
+			isa = PBXGroup;
+			children = (
+				AA1914891CBD06430039C2FB /* MarqueeLabel.h */,
+				AA19148A1CBD06430039C2FB /* MarqueeLabel.m */,
+			);
+			path = MarqueLabel;
+			sourceTree = "<group>";
+		};
+		AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA19148D1CBD1FDD0039C2FB /* ForgetPasswordViewController.h */,
+				AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */,
+			);
+			path = ForgetPasswordViewController;
+			sourceTree = "<group>";
+		};
 		AA2BC07B1CB4D75A0030A0E5 = {
 			isa = PBXGroup;
 			children = (
@@ -440,6 +464,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */,
 				39CE42E61CBA08AB000B371C /* LikeAndCommentView */,
 				399691571CB94491000A3A4A /* LocationFeedView */,
 				3996913D1CB90A20000A3A4A /* TableCellsForHomePage */,
@@ -461,6 +486,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				AA1914881CBD06430039C2FB /* MarqueLabel */,
 				AA96D33B1CBBD04800B2CDDA /* IntroView */,
 				AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */,
 				39CE42F31CBA1DFD000B371C /* GrowTextView */,
@@ -853,6 +879,8 @@
 				AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */,
 				399691561CB92904000A3A4A /* FRHyperLabel.m in Sources */,
 				AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */,
+				AA19148B1CBD06430039C2FB /* MarqueeLabel.m in Sources */,
+				AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */,
 				AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */,
 				3996912F1CB8F64C000A3A4A /* Notification1TableViewCell.m in Sources */,
 				390419921CBC1AEF00879650 /* UserData.m in Sources */,

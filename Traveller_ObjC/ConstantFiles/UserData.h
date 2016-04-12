@@ -9,30 +9,56 @@
 #import <Foundation/Foundation.h>
 
 @interface UserData : NSObject
+
 +(NSString *)filePath;
+
 +(void)saveUserDict :(NSDictionary *)fromServiceDict ;
+
 +(NSString *) getUserID;
+
 +(NSString *) getUserCreated_On;
+
 +(NSString *) getUserCity;
+
 +(NSString *) getUserCountry;
+
 +(NSString *) getUserEmail;
+
 +(NSString *) getUserName;
+
 +(NSString *) getUserFb_id;
+
 +(NSString *) getUsergcm_regid;
+
 +(NSString *) getUserGender;
+
 +(NSString *) getUserGoogle_id;
+
 +(NSString *) getUserMobile;
+
 +(NSString *) getUserMyStatus;
+
 +(NSString *) getUserDestimation;
+
 +(NSString *) getUserPassword;
+
 +(NSString *) getUserSignupType;
+
 +(NSString *) getUserStatus;
+
 +(NSString *) getUserState;
+
 +(NSString *) getUserWeburl;
+
 +(NSString *) getUser_type;
+
 +(NSString *) getUserImageUrl;
+
 +(NSString *) getUserLoginStatus;
+
 +(NSString *) checkIntroViewShown;
+
 +(void )setIntroShown;
+
 +(void ) setLogOutStatus;
 @end

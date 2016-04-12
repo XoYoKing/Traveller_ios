@@ -67,9 +67,10 @@
 
 #pragma mark --------------------------Webservice Constants-------------------------------
 #define URL_CONST @"http://trasquare.com/traveller_api/checkurl.php?"
-#define LOGIN_ACTION @"login"
-#define SIGNUP_ACTION @"signUp"
-#define GET_MY_ACTIVITY @"getMyActivity"
+#define ACTION_LOGIN @"login"
+#define ACTION_SIGNUP @"signUp"
+#define ACTION_GET_MY_ACTIVITY @"getMyActivity"
+#define ACTION_FORGET_PASSWORD @"forgotPassword"
 
 
 

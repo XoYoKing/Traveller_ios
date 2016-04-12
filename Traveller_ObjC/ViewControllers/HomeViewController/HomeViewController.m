@@ -308,12 +308,18 @@
         myLabel.numberOfLines =1;
         [myLabel setTextColor:[UIColor whiteColor]];
         [myLabel setFont:[UIFont fontWithName:font_bold size:font_size_button]];
-        UILabel* smallText = [UILabel new];
+        MarqueeLabel* smallText = [MarqueeLabel new];
         smallText.translatesAutoresizingMaskIntoConstraints = NO;
-        smallText.text =  [UserData getUserCity];;
+        smallText.text = [UserData getUserCity];;
         smallText.numberOfLines =1;
         [smallText setTextColor:[UIColor whiteColor]];
         [smallText setFont:[UIFont fontWithName:font_regular size:font_size_normal_regular]];
+//        smallText.marqueeType = MLRightLeft;
+//        smallText.textAlignment = NSTextAlignmentCenter;
+//        smallText.lineBreakMode = NSLineBreakByTruncatingHead;
+//        smallText.tapToScroll = NO;
+//        smallText.animationDelay = 0.0f;
+//        smallText.trailingBuffer = 20.0f;
         UIView* wrapper = [UIView new];
         [wrapper addSubview:myLabel];
         [wrapper addSubview:smallText];
@@ -890,7 +896,7 @@
 -(void)getHomeFeedData{
 
     NSString * userID =[UserData getUserID];
-      NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
+      NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [homeFeedData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
@@ -900,7 +906,7 @@
 -(void)getHomeFeedDataForPaging{
 
     NSString * userID =[UserData getUserID];
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,GET_MY_ACTIVITY,userID,homeFeedPage];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {

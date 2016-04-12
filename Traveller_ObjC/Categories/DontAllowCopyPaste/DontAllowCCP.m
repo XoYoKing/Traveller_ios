@@ -24,6 +24,7 @@
     if (action == @selector(cut:))
         return NO;
    
+
     return [super canPerformAction:nil withSender:sender];
 }
 

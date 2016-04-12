@@ -9,22 +9,39 @@
 #import "UserData.h"
 
 @implementation UserData
+
+#pragma mark======================= Get File Path======================
 +(NSString *)filePath
 {
     NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //1
-    NSString *documentsDirectory = [paths objectAtIndex:0]; //2
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"UserData.plist"]; //3
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"UserData.plist"];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    if (![fileManager fileExistsAtPath: path]) //4
+    if (![fileManager fileExistsAtPath: path])
     {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"UserData" ofType:@"plist"]; //5
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"UserData" ofType:@"plist"];
         
-        [fileManager copyItemAtPath:bundle toPath: path error:&error]; //6
+        [fileManager copyItemAtPath:bundle toPath: path error:&error];
     }
     return path;
+}
+
+
+#pragma mark======================= Setter Methods======================
+
++(void ) setLogOutStatus{
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:@"No"  forKey:@"UserLoggedIn"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
+}
+
++(void )setIntroShown{
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:@"Yes"  forKey:@"StartUpShown"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
 }
 +(void)saveUserDict :(NSDictionary *)fromServiceDict{
     NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
@@ -54,6 +71,8 @@
     [plistDict writeToFile:[self filePath] atomically:YES];
   }
 
+
+#pragma mark======================= Getter Methods======================
 +(NSString *) getUserID{
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
     return [dict valueForKey:@"UserId"];
@@ -145,15 +164,5 @@
     return [dict valueForKey:@"StartUpShown"];
 }
 
-+(void ) setLogOutStatus{
-    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
-    [plistDict setObject:@"No"  forKey:@"UserLoggedIn"];
-    [plistDict writeToFile:[self filePath] atomically:YES];
-}
 
-+(void )setIntroShown{
-    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
-    [plistDict setObject:@"Yes"  forKey:@"StartUpShown"];
-    [plistDict writeToFile:[self filePath] atomically:YES];
-}
 @end

@@ -36,6 +36,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
 #import "UserData.h"
+#import "MarqueeLabel.h"
 #endif
 
 #define iPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)

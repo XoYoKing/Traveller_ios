@@ -10,7 +10,7 @@
 #import "TravellerConstants.h"
 #import "HomeViewController.h"
 #import "MenuViewController.h"
-
+#import "ForgetPasswordViewController.h"
 
 @interface LoginViewController ()
 
@@ -112,7 +112,7 @@
     NSString * name=[FBDict valueForKey:@"name"];
     NSString * email=[FBDict valueForKey:@"email"];
     NSString * fb_id=[FBDict valueForKey:@"fb_id"];
-    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,SIGNUP_ACTION];
+    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,ACTION_SIGNUP];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
@@ -130,9 +130,68 @@
 #pragma mark====================Login With Google===============================
 
 - (IBAction)googleClick:(id)sender {
-    
+    [GPPSignIn sharedInstance].clientID = @"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com";
+    [GPPSignIn sharedInstance].scopes= [NSArray arrayWithObjects:kGTLAuthScopePlusLogin, nil];
+    [GPPSignIn sharedInstance].shouldFetchGoogleUserID=YES;
+    [GPPSignIn sharedInstance].shouldFetchGoogleUserEmail=YES;
+    [GPPSignIn sharedInstance].shouldFetchGooglePlusUser = YES;
+    [[GPPSignIn sharedInstance] authenticate];
 }
 
+- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
+                   error: (NSError *) error {
+    NSLog(@"Received error %@ and auth object %@",error, auth);
+    if (error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Error: %@", [error localizedDescription]);
+            
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
+            NSLog(@"email %@ ", [NSString stringWithFormat:@"Email: %@",[GPPSignIn sharedInstance].authentication.userEmail]);
+            NSLog(@"Received error %@ and auth object %@",error, auth);
+            GTLServicePlus* plusService = [[GTLServicePlus alloc] init] ;
+            plusService.retryEnabled = YES;
+            [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+            plusService.apiVersion = @"v1";
+            [plusService executeQuery:query
+                    completionHandler:^(GTLServiceTicket *ticket,
+                                        GTLPlusPerson *person,
+                                        NSError *error) {
+                        if (error) {
+                            
+                        } else {
+                            
+                            NSDictionary *dictOfData = [NSDictionary dictionaryWithObjectsAndKeys:[GPPSignIn sharedInstance].authentication.userEmail,@"email",person.image.url,@"image",person.displayName,@"username",@"",@"DOB",@"",@"place",@"",@"mobile", nil];
+                            [self performSelectorOnMainThread:@selector(loginForGoogle:) withObject:dictOfData waitUntilDone:YES];
+                        }
+                    }];
+            
+        });
+        
+        
+    }
+}
+
+-(void)loginForGoogle:(NSDictionary*)googleDict{
+    NSString * name=[googleDict valueForKey:@"name"];
+    NSString * email=[googleDict valueForKey:@"email"];
+    NSString * fb_id=[googleDict valueForKey:@"fb_id"];
+    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,ACTION_SIGNUP];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
+        }else{
+            NSString * msg =[dict valueForKey:@"message"];
+            [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:msg waitUntilDone:YES];
+        }
+    }else{
+        [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:no_internet_message waitUntilDone:YES];
+    }
+}
 
 #pragma mark====================Login With Email===============================
 - (IBAction)loginClick:(id)sender {
@@ -153,7 +212,7 @@
 }
 
 -(void)callLoginWebservice{
-    NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTextField.text,passwordTextField.text,LOGIN_ACTION];
+    NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTextField.text,passwordTextField.text,ACTION_LOGIN];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
@@ -203,6 +262,17 @@
 
 - (IBAction)forgetClick:(id)sender {
     
+    ForgetPasswordViewController *newVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ForgetPasswordViewController"];
+    [self setPresentationStyleForSelfController:self presentingController:newVC];
+    [self presentViewController:newVC animated:YES completion:nil];
+
+}
+
+- (void)setPresentationStyleForSelfController:(UIViewController *)selfController presentingController:(UIViewController *)presentingController
+{
+    presentingController.providesPresentationContextTransitionStyle = YES;
+    presentingController.definesPresentationContext = YES;
+    [presentingController setModalPresentationStyle:UIModalPresentationOverCurrentContext];
 }
 
 #pragma mark====================SinUp Click===============================

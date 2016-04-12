@@ -36,7 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
 -(void)targetMethod{
@@ -84,5 +83,41 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (void)upload {
+    
+    // !!! only JPG, PNG not covered! Have to cover PNG as well
+    NSString *fileName = [NSString stringWithFormat:@"%ld%c%c.jpg", (long)[[NSDate date] timeIntervalSince1970], arc4random_uniform(26) + 'a', arc4random_uniform(26) + 'a'];
+    // NSLog(@"FileName == %@", fileName);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSDictionary *parameters = @{
+                                 @"name": @"Sagar Post",
+                                 @"email": @"sagarpost@ymail.com",
+                                 @"password": @"2ertereere",
+                                 @"action": @"signUp",
+                                 };
+    // BASIC AUTH (if you need):
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+  //  [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:@"foo" password:@"bar"];
+    // BASIC AUTH END
+    
+    NSString *URLString = URL_CONST;
+    
+    /// !!! only jpg, have to cover png as well
+    NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"avatar.jpg"], 0.5); // image size ca. 50 KB
+    [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failure %@, %@", error, operation.responseString);
+    }];
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
 
 @end
