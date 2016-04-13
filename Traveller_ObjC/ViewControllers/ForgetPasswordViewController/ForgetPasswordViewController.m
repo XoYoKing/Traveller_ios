@@ -28,7 +28,7 @@
             submitBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
             [submitBtn setBackgroundColor:userShouldDOButoonColor];
             [cancelBtn setBackgroundColor:userShouldNOTDOButoonColor];
-            titleLbl.font=[UIFont fontWithName:font_button size:font_size_button];
+            titleLbl.font=[UIFont fontWithName:font_bold size:font_size_button];
             subTitleLbl.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
             [emailTF addRegx:@"[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" withMsg:@"Enter valid email."];
 }

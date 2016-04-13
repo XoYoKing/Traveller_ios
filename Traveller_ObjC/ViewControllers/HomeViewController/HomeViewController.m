@@ -24,17 +24,30 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    if (self.tableView==nil) {
-        [JTProgressHUD show];
+    
+    if (firstTimePageOpen==YES) {
+        [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
     }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    homeFeedData=[NSMutableArray new];
-    selectedIndex=0;
+    
     homeFeedPage=1;
+    followerPage=1;
+    followingPage=1;
+    wishToPage=1;
+    visitedCitiesPage=1;
+    selectedIndex=0;
+    
+    homeFeedData=[NSMutableArray new];
+    followerData=[NSMutableArray new];
+    followingData=[NSMutableArray new];
+    wishToData=[NSMutableArray new];
+    visitedCitiesData=[NSMutableArray new];
+    
+    firstTimePageOpen=YES;
     homeFeedPageShouldDoPaging=YES;
 }
 
@@ -80,10 +93,6 @@
     self.tableView.estimatedRowHeight=50;
     self.tableView.rowHeight=UITableViewAutomaticDimension;
     
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.separatorColor = [UIColor clearColor];
-    [self.tableView reloadData];
-    
     UIApplication* sharedApplication = [UIApplication sharedApplication];
     CGFloat kStatusBarHeight = sharedApplication.statusBarFrame.size.height;
     CGFloat kNavBarHeight =  self.navigationController.navigationBar.frame.size.height;
@@ -102,7 +111,7 @@
     self.tableView.hidden=YES;
     views[@"tableView"] = tableView;
     
-    UIImage* bgImage = [UIImage imageNamed:@"alpes.jpg"];
+    UIImage* bgImage = [UIImage imageNamed:@"Place"];
     _originalBackgroundImage = bgImage;
     
     UIImageView* headerImageView = [[UIImageView alloc] initWithImage:bgImage];
@@ -130,7 +139,7 @@
     
     NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
     if (profileUrl) {
-           [avatarImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"avatar.jpg"]];
+           [avatarImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
     }
 
     avatarImageView.translatesAutoresizingMaskIntoConstraints = NO; //autolayout
@@ -227,6 +236,7 @@
 // To Show Hide Table View at the time of Data Downloading
 -(void)showTableView{
     self.tableView.hidden=NO;
+    self.tableView.tableFooterView=[UIView new];
 }
 
 // Set up View for First Time
@@ -436,12 +446,49 @@
 
 
 #pragma mark====================Table view data source===============================
+-(void)reloadTable{
+    [self.tableView reloadData];
+    [self.view hideLoader];
+    [self performSelector:@selector(afterReloadScroll) withObject:nil afterDelay:0.3];
+    
+    if (selectedIndex==0) {
+        if(homeFeedData.count==0){
+            [self.view makeToast:@"No Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==1) {
+        if( visitedCitiesData.count==0){
+             [self.view makeToast:@"None of city you had visited." duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==2) {
+        if(wishToData.count==0){
+             [self.view makeToast:@"No cities is found in your wishlist destinations" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==3) {
+        if( followerData.count==0){
+             [self.view makeToast:@"No one is following you" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==4) {
+        if(followingData.count==0){
+             [self.view makeToast:@" You dont follow anyone" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }
+    
+    
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (selectedIndex==0) {
         return homeFeedData.count;
+    }else   if (selectedIndex==1) {
+        return visitedCitiesData.count;
+    }else   if (selectedIndex==2) {
+        return wishToData.count;
+    }else   if (selectedIndex==3) {
+        return followerData.count;
+    }else   if (selectedIndex==4) {
+        return followingData.count;
     }else
-    return 25;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -464,18 +511,17 @@
         NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
         if (![urlStringForProfileImage isKindOfClass:[NSNull class]]) {
             NSURL * profileUrl =[NSURL URLWithString:urlStringForProfileImage];
-            [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"avatar.jpg"]];
+            [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
         }
-        cell.profileImage.clipsToBounds=YES;
         [cell.profileImage addShaddow];
         
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
         if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
             NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
-            [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"alpes.jpg"]];
+            [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
         }
-         cell.postImage.clipsToBounds=YES;
+        
         
         //On Click of Image Should Open
         cell.postImage.userInteractionEnabled=YES;
@@ -630,6 +676,36 @@
         UINib *nib = [UINib nibWithNibName:@"WishedToTableViewCell" bundle:nil];
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"WishedToTableViewCell"];
         WishedToTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"WishedToTableViewCell"];
+        NSDictionary * dataDict =[visitedCitiesData objectAtIndex:indexPath.row];
+        
+        NSString * city =[dataDict valueForKey:@"city"];
+        NSString * country =[dataDict valueForKey:@"country"];
+        NSString * state =[dataDict valueForKey:@"state"];
+        
+        if (![city isKindOfClass:[NSNull class]]&&![state isKindOfClass:[NSNull class]]) {
+            if ([city isEqualToString:state]) {
+                cell.mainTitle.text =[NSString stringWithFormat:@" %@ ",city];
+            }else {
+                cell.mainTitle.text =[NSString stringWithFormat:@" %@ , %@ ",city , state];
+            }
+        }else{
+            cell.mainTitle.text =@"City Name Not Available Now";
+        }
+        
+         if (![country isKindOfClass:[NSNull class]]) {
+        cell.subTitleLbl.text=country;
+         }else {
+            cell.subTitleLbl.text=@"Country Name Not Available Now";
+         }
+        
+        //Checked for post Image
+        NSString * urlStringForImage =[dataDict valueForKey:@"image"];
+        if (![urlStringForImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
+            [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+        }
+       
+    
         return cell;
         
     }else if (selectedIndex==2){
@@ -637,6 +713,37 @@
         UINib *nib = [UINib nibWithNibName:@"WishedToTableViewCell" bundle:nil];
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"WishedToTableViewCell"];
         WishedToTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"WishedToTableViewCell"];
+        
+        NSDictionary * dataDict =[wishToData objectAtIndex:indexPath.row];
+        
+        NSString * city =[dataDict valueForKey:@"city"];
+        NSString * country =[dataDict valueForKey:@"country"];
+        NSString * state =[dataDict valueForKey:@"state"];
+        
+        if (![city isKindOfClass:[NSNull class]]&&![state isKindOfClass:[NSNull class]]) {
+            if ([city isEqualToString:state]) {
+                cell.mainTitle.text =[NSString stringWithFormat:@" %@ ",city];
+            }else {
+                cell.mainTitle.text =[NSString stringWithFormat:@" %@ , %@ ",city , state];
+            }
+        }else{
+            cell.mainTitle.text =@"City Name Not Available Now";
+        }
+        
+        if (![country isKindOfClass:[NSNull class]]) {
+            cell.subTitleLbl.text=country;
+        }else {
+            cell.subTitleLbl.text=@"Country Name Not Available Now";
+        }
+        
+        //Checked for post Image
+        NSString * urlStringForImage =[dataDict valueForKey:@"image"];
+        if (![urlStringForImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
+            [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+        }
+        
+        
         return cell;
         
     }else if (selectedIndex==3){
@@ -644,6 +751,35 @@
         UINib *nib = [UINib nibWithNibName:@"FollowingTableViewCell" bundle:nil];
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
         FollowingTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FollowingTableViewCell"];
+        
+        NSDictionary * dataDict =[followerData objectAtIndex:indexPath.row];
+        NSString * city =[dataDict valueForKey:@"city"];
+        NSString * country =[dataDict valueForKey:@"country"];
+        NSString * name =[dataDict valueForKey:@"name"];
+        
+        if (![city isKindOfClass:[NSNull class]]&&![country isKindOfClass:[NSNull class]]) {
+            if ([city isEqualToString:country]) {
+                cell.addressLbl.text =[NSString stringWithFormat:@" %@ ",city];
+            }else {
+                cell.addressLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city , country];
+            }
+        }else{
+            cell.addressLbl.text =@"City Name Not Available Now";
+        }
+        
+        if (![name isKindOfClass:[NSNull class]]) {
+            cell.nameLbl.text=name;
+        }else {
+            cell.nameLbl.text=@"Country Name Not Available Now";
+        }
+        
+        //Checked for post Image
+        NSString * urlStringForImage =[dataDict valueForKey:@"image"];
+        if (![urlStringForImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
+            [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+        }
+    
         return cell;
         
     }else if (selectedIndex==4){
@@ -656,6 +792,7 @@
     }
     return cell;
 }
+
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -731,21 +868,27 @@
     
     for(int i=0;i<buttonArray.count;i++)
             {
-                if(i==index)
-                {
-                    UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-                    btn.backgroundColor= segment_selected_Color;
-                    [btn addShaddow];
-
-                }
-                else{
-                    UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-                     btn.backgroundColor=segment_disselected_Color;
-                   // [self removeShaddowToView:btn];
+                UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
+                if (i==selectedIndex) {
+                    button.backgroundColor= Check_Color;
+                    [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+                    [button addShaddow];
+                    if (iPhone6||iPhone6plus) {
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }else {
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }
+                }else {
+                    button.backgroundColor= [UIColor blackColor];
+                    //[self removeShaddowToView:button];
+                    button.layer.borderColor=[UIColor whiteColor].CGColor;
+                    if (iPhone6||iPhone6plus) {
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }else{
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }
                 }
             }
-
-    
     
     CGRect frame1 = myScrollView.frame;
     UIButton * bt=(UIButton*)[buttonArray objectAtIndex:index];
@@ -763,29 +906,95 @@
     if (selectedIndex==0) {
         self.tableView.estimatedRowHeight=200;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        self.tableView.separatorColor = [UIColor clearColor];
+          self.imageHeaderView.image=[UIImage imageNamed:@"Place"];
     }else if (selectedIndex==1){
         self.tableView.estimatedRowHeight=130;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];;
+          self.imageHeaderView.image=[UIImage imageNamed:@"Food"];
     }else if (selectedIndex==2){
         self.tableView.estimatedRowHeight=130;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+          self.imageHeaderView.image=[UIImage imageNamed:@"Visited"];
     }else if (selectedIndex==3){
         self.tableView.estimatedRowHeight=130;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+          self.imageHeaderView.image=[UIImage imageNamed:@"Follower"];
     }else if (selectedIndex==4){
         self.tableView.estimatedRowHeight=130;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+          self.imageHeaderView.image=[UIImage imageNamed:@"Following"];
     }
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.separatorColor = [UIColor clearColor];
-    [self.tableView reloadData];
-    [self performSelector:@selector(afterReloadScroll) withObject:nil afterDelay:0.3];
+    [self.view showLoader];
+    [self performSelector:@selector(callWebservicesAsButtonClick) withObject:nil afterDelay:0.3];
 }
 -(void)afterReloadScroll{
     CGRect frame1 = myScrollView.frame;
     UIButton * bt=(UIButton*)[buttonArray objectAtIndex:selectedIndex];
     frame1 =bt.frame ;
     [myScrollView scrollRectToVisible:frame1 animated:YES];
+}
+-(void)callWebservicesAsButtonClick{
+    switch (selectedIndex) {
+  //=====================1st click ====================
+        case 0:
+        {
+            if (homeFeedData.count==0) {
+                [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                  [self reloadTable];
+            }
+        }break;
+   //=====================2st click ====================
+        case 1:
+            if (visitedCitiesData.count==0) {
+                [self performSelectorInBackground:@selector(getVisitedCitiesData) withObject:nil];
+            }
+            else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+            break;
+//=====================3st click ====================
+        case 2:
+            if (wishToData.count==0) {
+                [self performSelectorInBackground:@selector(getWishData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+            break;
+//=====================4st click ====================
+        case 3:
+            if (followerData.count==0) {
+                [self performSelectorInBackground:@selector(getFollowerData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+            break;
+//=====================5st click ====================
+        case 4:
+            if (followingData.count==0) {
+                [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark====================Open User Profile=============================
@@ -899,8 +1108,11 @@
       NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [homeFeedData addObjectsFromArray:[homefeed valueForKey:@"data"]];
-    [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
     
+    if (firstTimePageOpen==YES) {
+         [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
+        firstTimePageOpen=NO;
+    }
 }
 
 -(void)getHomeFeedDataForPaging{
@@ -915,11 +1127,109 @@
             [homeFeedData addObjectsFromArray:data];
         homeFeedPageShouldDoPaging=YES;
     }
-
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
 }
--(void)reloadTable{
-     [self.tableView reloadData];
+
+#pragma mark====================Get Follower Data Data From Webservice=============================
+-(void)getFollowerData{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followerPage];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [followerData addObjectsFromArray:[dict valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+-(void)getFollowerDataForPaging{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followerPage];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[dict valueForKey:@"data"];
+    if (data.count==0) {
+        followerPageShouldDoPaging=NO;
+    }else{
+        [followerData addObjectsFromArray:data];
+        followerPageShouldDoPaging=YES;
+    }
+    
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Follow List Data From Webservice=============================
+-(void)getFollowListData{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOW_LIST,userID,followingPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+    
+}
+
+-(void)getFollowListDataForPaging{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOW_LIST,userID,followingPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        followingPageShouldDoPaging=NO;
+    }else{
+        [followingData addObjectsFromArray:data];
+        followingPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Wish Data From Webservice=============================
+-(void)getWishData{
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_WISH_TO,userID,wishToPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [wishToData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+   [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+-(void)getWishDataForPaging{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_WISH_TO,userID,wishToPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        wishToPageShouldDoPaging=NO;
+    }else{
+        [wishToData addObjectsFromArray:data];
+        wishToPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Visited Cities From Webservice=============================
+-(void)getVisitedCitiesData{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_VISITED_CITIES,userID,visitedCitiesPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [visitedCitiesData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+      [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+    
+}
+
+-(void)getVisitedCitiesDataForPaging{
+    
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_VISITED_CITIES,userID,visitedCitiesPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        visitedCitiesPageShouldDoPaging=NO;
+    }else{
+        [visitedCitiesData addObjectsFromArray:data];
+        visitedCitiesPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
 }
 
 
@@ -946,5 +1256,7 @@
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
 
 }
+
+
 
 @end

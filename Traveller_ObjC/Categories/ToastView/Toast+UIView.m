@@ -353,7 +353,12 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     self.layer.borderWidth=Width;
     self.layer.cornerRadius=radius;
 }
-
+-(void)hideLoader{
+    [JTProgressHUD hide];
+}
+-(void)showLoader{
+    [JTProgressHUD show];
+}
 -(void)showToastWithMessage:(NSString*)msg{
     [JTProgressHUD hide];
     [self makeToast:msg duration:toastDuration position:toastPositionBottomUp];

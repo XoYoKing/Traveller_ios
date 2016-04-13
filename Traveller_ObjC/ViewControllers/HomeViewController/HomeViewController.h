@@ -18,6 +18,10 @@
     
         NSMutableArray * buttonArray;
         NSMutableArray * homeFeedData;
+        NSMutableArray * followerData;
+        NSMutableArray * followingData;
+        NSMutableArray * wishToData;
+        NSMutableArray * visitedCitiesData;
 
         CGFloat _headerHeight;
         CGFloat _subHeaderHeight;
@@ -27,13 +31,20 @@
     
         BOOL _barIsCollapsed;
         BOOL _barAnimationComplete;
+        BOOL firstTimePageOpen;
         BOOL homeFeedPageShouldDoPaging;
+        BOOL visitedCitiesPageShouldDoPaging;
+        BOOL wishToPageShouldDoPaging;
+        BOOL followerPageShouldDoPaging;
+        BOOL followingPageShouldDoPaging;
     
         int homeFeedPage;
-        //int homeFeedPage;
-        //int homeFeedPage;
-        //int homeFeedPage;
+        int followerPage;
+        int followingPage;
+        int wishToPage;
+        int visitedCitiesPage;
         int selectedIndex;
+    
     
     }
     

@@ -52,4 +52,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -(void)addWhiteLayerAndCornerRadius:(int)radius AndWidth:(int)Width ;
 -(void)addBlackLayerAndCornerRadius:(int)radius AndWidth:(int)Width;
 -(void)showToastWithMessage:(NSString*)msg;
+-(void)hideLoader;
+-(void)showLoader;
+
+
 @end

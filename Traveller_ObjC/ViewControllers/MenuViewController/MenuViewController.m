@@ -137,6 +137,7 @@
     appdelegate.drawerView.centerPanel=nav;
 }
 -(void)logOutClick{
+    [UserData setLogOutStatus];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void)openHomeMenu{

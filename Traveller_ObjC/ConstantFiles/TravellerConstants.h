@@ -71,7 +71,10 @@
 #define ACTION_SIGNUP @"signUp"
 #define ACTION_GET_MY_ACTIVITY @"getMyActivity"
 #define ACTION_FORGET_PASSWORD @"forgotPassword"
-
+#define ACTION_GET_FOLLOWER_LIST @"getFollowerList"
+#define ACTION_GET_FOLLOW_LIST @"getFollowList"
+#define ACTION_GET_WISH_TO @"getWishTo"
+#define ACTION_GET_VISITED_CITIES @"getVisitedCities"
 
 
 #pragma mark --------------------------Color Codes-------------------------------

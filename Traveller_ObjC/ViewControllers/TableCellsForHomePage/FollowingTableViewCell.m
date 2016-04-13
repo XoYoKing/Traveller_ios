@@ -10,13 +10,7 @@
 #import "TravellerConstants.h"
 @implementation FollowingTableViewCell
 -(void)awakeFromNib{
-    _bgView.layer.borderColor=[UIColor blackColor].CGColor;
-    _bgView.layer.borderWidth=1;
-    [self addShaddowToView:_bgView];
-    
-    _profileImageView.layer.borderColor=[UIColor whiteColor].CGColor;
-    _profileImageView.layer.borderWidth=2;
-    _profileImageView.layer.cornerRadius=8;
+   
     [self addShaddowToView:_profileImageView];
     
     _followButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
