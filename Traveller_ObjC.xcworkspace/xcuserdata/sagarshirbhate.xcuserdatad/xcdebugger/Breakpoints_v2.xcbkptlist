@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-            timestampString = "482074775.797664"
+            timestampString = "482245976.965975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "-finishedWithAuth:error:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,7 +90,7 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sagarshirbhate/Workspace/Demos/Traveller_ObjC/Traveller_ObjC/Categories/WebHandler/WebHandler.m"
-                  timestampString = "482235964.069954"
+                  timestampString = "482246524.339966"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "68"
@@ -105,7 +105,7 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sagarshirbhate/Workspace/Demos/Traveller_ObjC/Traveller_ObjC/Categories/WebHandler/WebHandler.m"
-                  timestampString = "482235964.070256"
+                  timestampString = "482246524.34021"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "68"
@@ -113,6 +113,22 @@
                   offsetFromSymbolStart = "44">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/SignUpViewController/SignUpViewController.m"
+            timestampString = "482245983.329833"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-hidePicker"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

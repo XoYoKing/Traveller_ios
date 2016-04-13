@@ -10,7 +10,8 @@
 #import "TextFieldValidator.h"
 #import "FRHyperLabel.h"
 #import "TravellerConstants.h"
-@interface SignUpViewController : UIViewController
+#import "CountryPicker.h"
+@interface SignUpViewController : UIViewController<CountryPickerDelegate>
 {
     __weak IBOutlet UITextField *countryTF;
     __weak IBOutlet TextFieldValidator *statusTF;
@@ -23,6 +24,7 @@
     __weak IBOutlet TextFieldValidator *confirmPasswordTF;
     __weak IBOutlet TextFieldValidator *phoneNoTF;
     
+    __weak IBOutlet UIImageView *countryImageView;
     __weak IBOutlet UILabel *maleChk;
     __weak IBOutlet UILabel *maleLBL;
     __weak IBOutlet UILabel *femaleChk;
@@ -32,6 +34,9 @@
     __weak IBOutlet UIButton *registerBtn;
     __weak IBOutlet UIButton *cancelBtn;
     __weak IBOutlet UIButton *updateBtn;
+    
+    CountryPicker * countryPicker;
+    
     __weak IBOutlet NSLayoutConstraint *registerHeightConstraint;
     
 }

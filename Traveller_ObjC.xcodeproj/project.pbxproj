@@ -73,6 +73,8 @@
 		AA807B181CBE181600D1E665 /* MVPlaceSearchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B111CBE181600D1E665 /* MVPlaceSearchTextField.m */; };
 		AA807B191CBE181600D1E665 /* PlaceDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B131CBE181600D1E665 /* PlaceDetail.m */; };
 		AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B151CBE181600D1E665 /* PlaceObject.m */; };
+		AA807B471CBE7AAF00D1E665 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA807B441CBE7AAF00D1E665 /* CountryPicker.bundle */; };
+		AA807B481CBE7AAF00D1E665 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B461CBE7AAF00D1E665 /* CountryPicker.m */; };
 		AA96D3301CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */; };
 		AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3271CBB9E5500B2CDDA /* JTSImageInfo.m */; };
 		AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3291CBB9E5500B2CDDA /* JTSImageViewController.m */; };
@@ -206,6 +208,9 @@
 		AA807B131CBE181600D1E665 /* PlaceDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetail.m; sourceTree = "<group>"; };
 		AA807B141CBE181600D1E665 /* PlaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceObject.h; sourceTree = "<group>"; };
 		AA807B151CBE181600D1E665 /* PlaceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceObject.m; sourceTree = "<group>"; };
+		AA807B441CBE7AAF00D1E665 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
+		AA807B451CBE7AAF00D1E665 /* CountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryPicker.h; sourceTree = "<group>"; };
+		AA807B461CBE7AAF00D1E665 /* CountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryPicker.m; sourceTree = "<group>"; };
 		AA96D3241CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
 		AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
 		AA96D3261CBB9E5500B2CDDA /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
@@ -500,6 +505,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				AA807B431CBE7AAF00D1E665 /* CountryPicker */,
 				AA807B071CBE181600D1E665 /* MVPlaceSearchTextField */,
 				AA96D33B1CBBD04800B2CDDA /* IntroView */,
 				AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */,
@@ -723,6 +729,16 @@
 			path = MLPAutoCompleteTextField;
 			sourceTree = "<group>";
 		};
+		AA807B431CBE7AAF00D1E665 /* CountryPicker */ = {
+			isa = PBXGroup;
+			children = (
+				AA807B441CBE7AAF00D1E665 /* CountryPicker.bundle */,
+				AA807B451CBE7AAF00D1E665 /* CountryPicker.h */,
+				AA807B461CBE7AAF00D1E665 /* CountryPicker.m */,
+			);
+			path = CountryPicker;
+			sourceTree = "<group>";
+		};
 		AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,6 +846,7 @@
 				39F187B31CB7A363001ABFB0 /* Storyboard.storyboard in Resources */,
 				399691481CB90EBA000A3A4A /* WishedToTableViewCell.xib in Resources */,
 				AA3789301CB62D79000F151B /* vegetation.jpg in Resources */,
+				AA807B471CBE7AAF00D1E665 /* CountryPicker.bundle in Resources */,
 				3904198F1CBC1ACD00879650 /* UserData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -941,6 +958,7 @@
 				390419921CBC1AEF00879650 /* UserData.m in Sources */,
 				395994E61CB81558001E2118 /* TravellingToViewController.m in Sources */,
 				399691521CB90F56000A3A4A /* FollowingTableViewCell.m in Sources */,
+				AA807B481CBE7AAF00D1E665 /* CountryPicker.m in Sources */,
 				39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */,
 				AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */,
 				AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */,

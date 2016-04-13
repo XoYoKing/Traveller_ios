@@ -11,6 +11,7 @@
 #import "HomeViewController.h"
 #import "MenuViewController.h"
 #import "ForgetPasswordViewController.h"
+#import "SignUpViewController.h"
 
 @interface LoginViewController ()
 
@@ -278,7 +279,8 @@
 #pragma mark====================SinUp Click===============================
 
 - (IBAction)signUpClick:(id)sender {
-    
+    SignUpViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SignUpViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

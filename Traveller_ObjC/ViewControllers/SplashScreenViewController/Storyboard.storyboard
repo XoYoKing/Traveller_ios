@@ -1573,6 +1573,13 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qPJ-qM-Zl1">
+                                        <rect key="frame" x="25" y="505" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="bAd-aS-7QT"/>
+                                            <constraint firstAttribute="height" constant="25" id="ks1-Ew-bjo"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Nr6-RE-JKx" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="00Z-9q-4hf"/>
@@ -1584,6 +1591,7 @@
                                     <constraint firstItem="SWy-In-sCu" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="1YO-jQ-Ib2"/>
                                     <constraint firstItem="CBf-S3-1fw" firstAttribute="top" secondItem="gWh-eK-MKV" secondAttribute="bottom" id="1fc-Up-lan"/>
                                     <constraint firstItem="DNW-Ta-reO" firstAttribute="top" secondItem="kP4-4c-KgA" secondAttribute="bottom" id="2hC-kb-gAP"/>
+                                    <constraint firstItem="qPJ-qM-Zl1" firstAttribute="centerY" secondItem="wMZ-bt-tAB" secondAttribute="centerY" id="2si-KF-tb2"/>
                                     <constraint firstItem="Nr6-RE-JKx" firstAttribute="centerX" secondItem="WIT-Ad-mbt" secondAttribute="centerX" id="2ys-N1-gB2"/>
                                     <constraint firstAttribute="trailing" secondItem="65U-0R-I5n" secondAttribute="trailing" constant="20" id="3DI-C3-HgL"/>
                                     <constraint firstItem="P59-iQ-F0u" firstAttribute="top" secondItem="9cP-14-VJI" secondAttribute="bottom" constant="8" id="3Nk-bv-obA"/>
@@ -1595,6 +1603,7 @@
                                     <constraint firstAttribute="trailing" secondItem="yOM-GB-1AI" secondAttribute="trailing" constant="20" id="7l2-V6-E1a"/>
                                     <constraint firstItem="Pes-oA-NXF" firstAttribute="top" secondItem="cDd-JC-i6j" secondAttribute="bottom" id="Bjx-36-qER"/>
                                     <constraint firstItem="Iqs-4y-Say" firstAttribute="top" secondItem="Nr6-RE-JKx" secondAttribute="bottom" constant="8" id="CP1-Lw-pRb"/>
+                                    <constraint firstItem="qPJ-qM-Zl1" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="25" id="Cch-WC-wYG"/>
                                     <constraint firstItem="CBf-S3-1fw" firstAttribute="top" secondItem="gWh-eK-MKV" secondAttribute="bottom" id="DlX-g1-u2d"/>
                                     <constraint firstAttribute="trailing" secondItem="DNW-Ta-reO" secondAttribute="trailing" constant="20" id="E6T-1L-9kB"/>
                                     <constraint firstItem="gWh-eK-MKV" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="E9f-hG-hLn"/>
@@ -1684,6 +1693,7 @@
                         <outlet property="cancelBtn" destination="vyw-cu-QHV" id="Wa2-cG-0Wb"/>
                         <outlet property="cityTF" destination="9qn-Vi-vHN" id="rNa-ci-0Ij"/>
                         <outlet property="confirmPasswordTF" destination="Pes-oA-NXF" id="uFz-KQ-4xc"/>
+                        <outlet property="countryImageView" destination="qPJ-qM-Zl1" id="I5b-Pc-dwi"/>
                         <outlet property="countryTF" destination="wMZ-bt-tAB" id="ARD-QM-oak"/>
                         <outlet property="emailTF" destination="qnW-3o-fZi" id="52C-x7-Ell"/>
                         <outlet property="femaleChk" destination="cLl-3E-cdv" id="EEb-yB-A4b"/>
