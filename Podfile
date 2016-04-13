@@ -13,5 +13,6 @@ pod 'JDStatusBarNotification'
 pod 'JTProgressHUD'
 pod 'SDWebImage', '~>3.7'
 pod 'TPKeyboardAvoiding'
+pod 'GoogleMaps'
 end
 

@@ -43,7 +43,6 @@
 		39F187BE1CB7C358001ABFB0 /* UITextField+PaddingText.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F187BD1CB7C358001ABFB0 /* UITextField+PaddingText.m */; };
 		39F187C11CB7E088001ABFB0 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F187C01CB7E088001ABFB0 /* MenuCell.m */; };
 		3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */; };
-		AA19148B1CBD06430039C2FB /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19148A1CBD06430039C2FB /* MarqueeLabel.m */; };
 		AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */; };
 		AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0881CB4D75A0030A0E5 /* main.m */; };
 		AA2BC0941CB4D75A0030A0E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA2BC0931CB4D75A0030A0E5 /* Assets.xcassets */; };
@@ -67,6 +66,13 @@
 		AA37892E1CB62D79000F151B /* alpes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892B1CB62D79000F151B /* alpes.jpg */; };
 		AA37892F1CB62D79000F151B /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892C1CB62D79000F151B /* avatar.jpg */; };
 		AA3789301CB62D79000F151B /* vegetation.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892D1CB62D79000F151B /* vegetation.jpg */; };
+		AA807B041CBE17C200D1E665 /* AddPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B031CBE17C200D1E665 /* AddPostViewController.m */; };
+		AA807B061CBE17D300D1E665 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA807B051CBE17D200D1E665 /* MapKit.framework */; };
+		AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */; };
+		AA807B171CBE181600D1E665 /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B0F1CBE181600D1E665 /* NSString+Levenshtein.m */; };
+		AA807B181CBE181600D1E665 /* MVPlaceSearchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B111CBE181600D1E665 /* MVPlaceSearchTextField.m */; };
+		AA807B191CBE181600D1E665 /* PlaceDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B131CBE181600D1E665 /* PlaceDetail.m */; };
+		AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B151CBE181600D1E665 /* PlaceObject.m */; };
 		AA96D3301CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */; };
 		AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3271CBB9E5500B2CDDA /* JTSImageInfo.m */; };
 		AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3291CBB9E5500B2CDDA /* JTSImageViewController.m */; };
@@ -139,8 +145,6 @@
 		39F187BF1CB7E088001ABFB0 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		39F187C01CB7E088001ABFB0 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		3C43B7F232D644E47068A78B /* Pods-Traveller_ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.debug.xcconfig"; sourceTree = "<group>"; };
-		AA1914891CBD06430039C2FB /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
-		AA19148A1CBD06430039C2FB /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
 		AA19148D1CBD1FDD0039C2FB /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		AA2BC0841CB4D75A0030A0E5 /* Traveller_ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traveller_ObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +190,22 @@
 		AA37892B1CB62D79000F151B /* alpes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alpes.jpg; sourceTree = "<group>"; };
 		AA37892C1CB62D79000F151B /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		AA37892D1CB62D79000F151B /* vegetation.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vegetation.jpg; sourceTree = "<group>"; };
+		AA807B021CBE17C200D1E665 /* AddPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPostViewController.h; sourceTree = "<group>"; };
+		AA807B031CBE17C200D1E665 /* AddPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPostViewController.m; sourceTree = "<group>"; };
+		AA807B051CBE17D200D1E665 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		AA807B091CBE181600D1E665 /* MLPAutoCompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextField.h; sourceTree = "<group>"; };
+		AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPAutoCompleteTextField.m; sourceTree = "<group>"; };
+		AA807B0B1CBE181600D1E665 /* MLPAutoCompleteTextFieldDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextFieldDataSource.h; sourceTree = "<group>"; };
+		AA807B0C1CBE181600D1E665 /* MLPAutoCompleteTextFieldDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextFieldDelegate.h; sourceTree = "<group>"; };
+		AA807B0D1CBE181600D1E665 /* MLPAutoCompletionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompletionObject.h; sourceTree = "<group>"; };
+		AA807B0E1CBE181600D1E665 /* NSString+Levenshtein.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Levenshtein.h"; sourceTree = "<group>"; };
+		AA807B0F1CBE181600D1E665 /* NSString+Levenshtein.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Levenshtein.m"; sourceTree = "<group>"; };
+		AA807B101CBE181600D1E665 /* MVPlaceSearchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVPlaceSearchTextField.h; sourceTree = "<group>"; };
+		AA807B111CBE181600D1E665 /* MVPlaceSearchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVPlaceSearchTextField.m; sourceTree = "<group>"; };
+		AA807B121CBE181600D1E665 /* PlaceDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetail.h; sourceTree = "<group>"; };
+		AA807B131CBE181600D1E665 /* PlaceDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetail.m; sourceTree = "<group>"; };
+		AA807B141CBE181600D1E665 /* PlaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceObject.h; sourceTree = "<group>"; };
+		AA807B151CBE181600D1E665 /* PlaceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceObject.m; sourceTree = "<group>"; };
 		AA96D3241CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
 		AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
 		AA96D3261CBB9E5500B2CDDA /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
@@ -210,6 +230,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA807B061CBE17D300D1E665 /* MapKit.framework in Frameworks */,
 				3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,15 +379,6 @@
 			path = TextFieldPadding;
 			sourceTree = "<group>";
 		};
-		AA1914881CBD06430039C2FB /* MarqueLabel */ = {
-			isa = PBXGroup;
-			children = (
-				AA1914891CBD06430039C2FB /* MarqueeLabel.h */,
-				AA19148A1CBD06430039C2FB /* MarqueeLabel.m */,
-			);
-			path = MarqueLabel;
-			sourceTree = "<group>";
-		};
 		AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +433,7 @@
 		AA2BC09E1CB4E10E0030A0E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA807B051CBE17D200D1E665 /* MapKit.framework */,
 				BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */,
 			);
 			name = Frameworks;
@@ -464,6 +477,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA807B011CBE17B400D1E665 /* AddPostViewController */,
 				AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */,
 				39CE42E61CBA08AB000B371C /* LikeAndCommentView */,
 				399691571CB94491000A3A4A /* LocationFeedView */,
@@ -486,7 +500,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
-				AA1914881CBD06430039C2FB /* MarqueLabel */,
+				AA807B071CBE181600D1E665 /* MVPlaceSearchTextField */,
 				AA96D33B1CBBD04800B2CDDA /* IntroView */,
 				AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */,
 				39CE42F31CBA1DFD000B371C /* GrowTextView */,
@@ -672,6 +686,43 @@
 			path = ImageEffects;
 			sourceTree = "<group>";
 		};
+		AA807B011CBE17B400D1E665 /* AddPostViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA807B021CBE17C200D1E665 /* AddPostViewController.h */,
+				AA807B031CBE17C200D1E665 /* AddPostViewController.m */,
+			);
+			path = AddPostViewController;
+			sourceTree = "<group>";
+		};
+		AA807B071CBE181600D1E665 /* MVPlaceSearchTextField */ = {
+			isa = PBXGroup;
+			children = (
+				AA807B081CBE181600D1E665 /* MLPAutoCompleteTextField */,
+				AA807B101CBE181600D1E665 /* MVPlaceSearchTextField.h */,
+				AA807B111CBE181600D1E665 /* MVPlaceSearchTextField.m */,
+				AA807B121CBE181600D1E665 /* PlaceDetail.h */,
+				AA807B131CBE181600D1E665 /* PlaceDetail.m */,
+				AA807B141CBE181600D1E665 /* PlaceObject.h */,
+				AA807B151CBE181600D1E665 /* PlaceObject.m */,
+			);
+			path = MVPlaceSearchTextField;
+			sourceTree = "<group>";
+		};
+		AA807B081CBE181600D1E665 /* MLPAutoCompleteTextField */ = {
+			isa = PBXGroup;
+			children = (
+				AA807B091CBE181600D1E665 /* MLPAutoCompleteTextField.h */,
+				AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */,
+				AA807B0B1CBE181600D1E665 /* MLPAutoCompleteTextFieldDataSource.h */,
+				AA807B0C1CBE181600D1E665 /* MLPAutoCompleteTextFieldDelegate.h */,
+				AA807B0D1CBE181600D1E665 /* MLPAutoCompletionObject.h */,
+				AA807B0E1CBE181600D1E665 /* NSString+Levenshtein.h */,
+				AA807B0F1CBE181600D1E665 /* NSString+Levenshtein.m */,
+			);
+			path = MLPAutoCompleteTextField;
+			sourceTree = "<group>";
+		};
 		AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,6 +893,7 @@
 				AA2BC0E41CB53FAB0030A0E5 /* Toast+UIView.m in Sources */,
 				AA96D33E1CBBD04800B2CDDA /* ABCIntroView.m in Sources */,
 				AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */,
+				AA807B041CBE17C200D1E665 /* AddPostViewController.m in Sources */,
 				AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */,
 				39CE42E91CBA08C1000B371C /* LikeViewController.m in Sources */,
 				AA2BC0DD1CB53C220030A0E5 /* WebHandler.m in Sources */,
@@ -861,6 +913,7 @@
 				399691351CB8F677000A3A4A /* Notification3TableViewCell.m in Sources */,
 				399691381CB8F69B000A3A4A /* Notification4TableViewCell.m in Sources */,
 				3996915A1CB944A6000A3A4A /* LocationFeedViewController.m in Sources */,
+				AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */,
 				3996912C1CB8D055000A3A4A /* SearchCollectionViewCell.m in Sources */,
 				AA3789231CB610D2000F151B /* HomeViewController.m in Sources */,
 				39F187BE1CB7C358001ABFB0 /* UITextField+PaddingText.m in Sources */,
@@ -877,16 +930,19 @@
 				AA2BC0C21CB4E2C00030A0E5 /* TextFieldValidator.m in Sources */,
 				395994E91CB8156B001E2118 /* ViewProfileController.m in Sources */,
 				AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */,
+				AA807B181CBE181600D1E665 /* MVPlaceSearchTextField.m in Sources */,
 				399691561CB92904000A3A4A /* FRHyperLabel.m in Sources */,
 				AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */,
-				AA19148B1CBD06430039C2FB /* MarqueeLabel.m in Sources */,
+				AA807B171CBE181600D1E665 /* NSString+Levenshtein.m in Sources */,
 				AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */,
 				AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */,
 				3996912F1CB8F64C000A3A4A /* Notification1TableViewCell.m in Sources */,
+				AA807B191CBE181600D1E665 /* PlaceDetail.m in Sources */,
 				390419921CBC1AEF00879650 /* UserData.m in Sources */,
 				395994E61CB81558001E2118 /* TravellingToViewController.m in Sources */,
 				399691521CB90F56000A3A4A /* FollowingTableViewCell.m in Sources */,
 				39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */,
+				AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */,
 				AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */,
 				395994DD1CB814AA001E2118 /* SearchViewController.m in Sources */,
 				39CE42EC1CBA111A000B371C /* LikeTableViewCell.m in Sources */,

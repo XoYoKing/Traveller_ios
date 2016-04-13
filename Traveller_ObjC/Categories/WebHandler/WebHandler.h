@@ -10,15 +10,9 @@
 #import "Reachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 
-typedef void (^requestCompletionBlock)(NSURLResponse *response, NSDictionary *jsonData, NSError *error);
-@interface WebHandler : NSObject<NSURLConnectionDelegate,NSURLConnectionDataDelegate,NSURLSessionDelegate>
 
-@property(nonatomic,strong) NSMutableDictionary *paramsDictionary;
-
+@interface WebHandler : NSObject
 +(id)sharedHandler;
-
--(void)sendFile:(NSString *)filePath toURL:(NSURL *)url withParameters:(NSDictionary *)params completion:(requestCompletionBlock)completionBlock;
-
 -(NSDictionary *)getDataFromWebservice:(NSString *)urlString;
-
+-(BOOL)uploadDataWithImage:(UIImage *)image forKey:(NSString *)key andParameters:(NSDictionary *)dict OnUrl:(NSString *)url completion:(void(^)(NSDictionary *dict))completionBlock;
 @end
