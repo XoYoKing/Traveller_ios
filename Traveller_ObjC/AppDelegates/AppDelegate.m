@@ -25,16 +25,44 @@
     // For Google+
     [[GPPSignIn sharedInstance] setClientID:@"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com"];
     [GPPSignIn sharedInstance].delegate = self;
-    
     [GMSServices provideAPIKey:@"AIzaSyBuQ0Z76oO7IJBaYxF7pWziTZ8-17LWosc"];
- //   HomeViewController * homeVC = [[HomeViewController alloc]init];
-   // UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:homeVC];
-   // self.window.rootViewController=nav;
-    
+
+    // For Notifications
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
+    [application registerUserNotificationSettings:settings];
     
     return YES;
 }
 
+#pragma mark push notification methods
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+}
+-(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    // Prepare the Device Token for Registration (remove spaces and < >)
+    NSString *devToken = [[[[deviceToken description]
+                            stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                           stringByReplacingOccurrencesOfString:@">" withString:@""]
+                          stringByReplacingOccurrencesOfString: @" " withString: @""];
+    NSLog(@"My token is: %@", devToken);
+    
+    NSError*error;
+    NSString *stringToWrite = devToken;
+    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"myfile.txt"];
+    [stringToWrite writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+}
+-(void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+
+{
+    NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+}
 
 #pragma mark = openURL
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

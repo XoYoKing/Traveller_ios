@@ -151,6 +151,9 @@
 }
 -(void)logOutClick{
     [UserData setLogOutStatus];
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    [imageCache clearMemory];
+    [imageCache clearDisk];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void)openHomeMenu{
