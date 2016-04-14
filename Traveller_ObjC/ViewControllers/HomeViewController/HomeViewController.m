@@ -543,12 +543,19 @@
         //
         NSString *userName;
         NSString *cityName;
+        NSString * userID;
         NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
         if (refertitle!=nil) {
             userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
             cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
         }
  
+        if([userID isEqualToString:[UserData getUserID]]){
+            cell.menuBtnOfPost.hidden=NO;
+        }else{
+            cell.menuBtnOfPost.hidden=YES;
+        }
         
         //mainstr have title and Also Links Managed.
         NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
@@ -665,10 +672,13 @@
         cell.likeBtn.tag=indexPath.row;
         cell.commentBtn.tag=indexPath.row;
         cell.likeThumbBtn.tag=indexPath.row;
+        cell.menuBtnOfPost.tag=indexPath.row;
         
         [cell.likeBtn addTarget:self action:@selector(openLikeMenu:) forControlEvents:UIControlEventTouchUpInside];
         [cell.commentBtn addTarget:self action:@selector(openCommentMenu:) forControlEvents:UIControlEventTouchUpInside];
         [cell.likeThumbBtn addTarget:self action:@selector(justDoLike:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.menuBtnOfPost addTarget:self action:@selector(editPost:) forControlEvents:UIControlEventTouchUpInside];
+        
         
         [cell.contentView layoutIfNeeded];
         
@@ -1007,6 +1017,13 @@
             break;
     }
 }
+
+#pragma mark====================Edit User Feed Post=============================
+-(void)editPost:(UIButton*)btn{
+    
+}
+
+
 
 #pragma mark====================Open User Profile=============================
 -(void)openUserProfile{
