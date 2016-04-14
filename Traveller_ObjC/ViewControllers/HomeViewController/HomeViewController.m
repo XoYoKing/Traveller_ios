@@ -28,6 +28,10 @@
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+        
+        if ([UserData getNotificationDict].count==0) {
+              [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
+        }
     }
 }
 
@@ -49,6 +53,13 @@
     
     firstTimePageOpen=YES;
     homeFeedPageShouldDoPaging=YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
 }
 
 
@@ -230,7 +241,7 @@
     });
 
     [self.tableView reloadData];
-    [self performSelector:@selector(showTableView) withObject:nil afterDelay:0.2];
+    [self performSelector:@selector(showTableView) withObject:nil afterDelay:0.3];
      [self performSelector:@selector(setViewForFirstTime) withObject:nil afterDelay:0.2];
 }
 // To Show Hide Table View at the time of Data Downloading
@@ -248,7 +259,7 @@
     [JTProgressHUD hide];
 }
 - (void) configureNavBar {
-    self.view.backgroundColor = [UIColor blueColor];
+    self.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     UIButton *btn =  [UIButton buttonWithType:UIButtonTypeCustom];
@@ -340,12 +351,16 @@
     UIView* view = [UIView new];
     NSMutableDictionary* views = [NSMutableDictionary new];
     views[@"super"] = self.view;
-    UIButton* followButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton* followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     followButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [followButton setTitle:@"" forState:UIControlStateNormal];
-    followButton.layer.cornerRadius = 0;
-    followButton.layer.borderWidth = 0;
-    followButton.layer.borderColor = [UIColor blueColor].CGColor;
+    [followButton setTitle:@"  View Profile  " forState:UIControlStateNormal];
+    followButton.layer.cornerRadius = cornerRadius_Button;
+    followButton.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    followButton.layer.borderWidth =1;
+    [followButton addShaddow];
+    followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    followButton.backgroundColor=userShouldDOButoonColor;
+    [followButton addTarget:self action:@selector(tappedOnUserImage) forControlEvents:UIControlEventTouchUpInside];
     views[@"followButton"] = followButton;
     [view addSubview:followButton];
     UILabel* nameLabel = [UILabel new];
@@ -419,7 +434,9 @@
 #pragma mark====================Tapped On User Profile Image===============================
 
 -(void)tappedOnUserImage{
-    
+    ViewUserProfileViewController *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewUserProfileViewController"];
+    vc.userID=[UserData getUserID];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark====================Memory Release===============================
@@ -1067,7 +1084,7 @@
         like++;
         [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
         [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
-           [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
+        [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
     }
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
   }
@@ -1080,6 +1097,43 @@
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:v];
     [self presentViewController:nav animated:YES completion:nil];
 }
+
+#pragma mark ====================FollowMechanism=============================
+-(void)followButtonClick:(UIButton *)btn{
+    selectedUserIdex =(int)btn.tag;
+    [self.view showLoader];
+    [self performSelectorInBackground:@selector(followWebservice) withObject:nil];
+}
+-(void)followWebservice{
+    NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
+    NSString * publicId =[dataDict valueForKey:@"id"];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    if (homefeed) {
+        if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"1" forKey:@"follow"];
+            [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+            [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
+        }else{
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"0" forKey:@"follow"];
+            [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+            [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
+        }
+    }
+    [self performSelectorOnMainThread:@selector(reloadTableRow) withObject:nil waitUntilDone:YES];
+}
+
+-(void)reloadTableRow{
+    NSIndexPath * path =[NSIndexPath indexPathForRow:selectedUserIdex inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.view hideLoader];
+}
+
 
 #pragma mark====================For Presenting Like/Comment Menu Proper=============================
 - (void)setPresentationStyleForSelfController:(UIViewController *)selfController presentingController:(UIViewController *)presentingController
@@ -1249,6 +1303,40 @@
     // Present the view controller.
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
 
+}
+
+#pragma mark====================getAllNotifications  =============================
+
+-(void)getAllNotifications{
+    NSString * userID =[UserData getUserID];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@",URL_CONST,ACTION_GET_NOTIFICATION,userID];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            int totalCount =[[dict valueForKey:@"tip_count"]intValue];
+            [UserData setNotificationCount:totalCount];
+            
+            NSArray * invitation =[[NSArray alloc]initWithArray:[dict valueForKey:@"invitation"]];
+            NSArray * ask_for_tip =[[NSArray alloc]initWithArray:[dict valueForKey:@"ask_for_tip"]];
+            NSArray * follow =[[NSArray alloc]initWithArray:[dict valueForKey:@"follow"]];
+            NSArray * message =[[NSArray alloc]initWithArray:[dict valueForKey:@"message"]];
+            
+            NSDictionary * dict =@{
+                                   @"invitation":invitation,
+                                   @"ask_for_tip":ask_for_tip,
+                                   @"follow":follow,
+                                   @"message":message
+                                   };
+            [UserData setNotificationDict:dict];
+            
+            NSDictionary * not_Dict=@{@"tip_count":[NSString stringWithFormat:@"%d",totalCount]};
+            [[NSNotificationCenter defaultCenter] postNotificationName:throwNotificationStatus object:not_Dict];
+        }
+    }else{
+        
+    }
+    
 }
 
 

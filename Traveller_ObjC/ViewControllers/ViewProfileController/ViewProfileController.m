@@ -255,6 +255,13 @@
         [self fillBlurredImageCache];
     });
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
 }
 
 -(void)handleImageTap{

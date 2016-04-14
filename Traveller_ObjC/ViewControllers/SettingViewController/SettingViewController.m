@@ -18,6 +18,13 @@
     [super viewDidLoad];
     self.title=@"Settings";
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
 }
 
 -(void)addShaddowToView:(UIView *)view{

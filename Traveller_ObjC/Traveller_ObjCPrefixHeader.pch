@@ -36,6 +36,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
 #import "UserData.h"
+#import "ViewUserProfileViewController.h"
 
 #endif
 

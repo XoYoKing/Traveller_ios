@@ -43,6 +43,8 @@
 		39F187BE1CB7C358001ABFB0 /* UITextField+PaddingText.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F187BD1CB7C358001ABFB0 /* UITextField+PaddingText.m */; };
 		39F187C11CB7E088001ABFB0 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F187C01CB7E088001ABFB0 /* MenuCell.m */; };
 		3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */; };
+		AA0321CB1CBF79AB00B38B76 /* WIshedToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0321CA1CBF79AB00B38B76 /* WIshedToViewController.m */; };
+		AA0321CF1CBF971100B38B76 /* ViewUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0321CE1CBF971100B38B76 /* ViewUserProfileViewController.m */; };
 		AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */; };
 		AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2BC0881CB4D75A0030A0E5 /* main.m */; };
 		AA2BC0941CB4D75A0030A0E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA2BC0931CB4D75A0030A0E5 /* Assets.xcassets */; };
@@ -63,9 +65,6 @@
 		AA3789231CB610D2000F151B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789221CB610D2000F151B /* HomeViewController.m */; };
 		AA3789261CB610E0000F151B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789251CB610E0000F151B /* LoginViewController.m */; };
 		AA37892A1CB62D71000F151B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */; };
-		AA37892E1CB62D79000F151B /* alpes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892B1CB62D79000F151B /* alpes.jpg */; };
-		AA37892F1CB62D79000F151B /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892C1CB62D79000F151B /* avatar.jpg */; };
-		AA3789301CB62D79000F151B /* vegetation.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA37892D1CB62D79000F151B /* vegetation.jpg */; };
 		AA807B041CBE17C200D1E665 /* AddPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B031CBE17C200D1E665 /* AddPostViewController.m */; };
 		AA807B061CBE17D300D1E665 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA807B051CBE17D200D1E665 /* MapKit.framework */; };
 		AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */; };
@@ -147,6 +146,10 @@
 		39F187BF1CB7E088001ABFB0 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		39F187C01CB7E088001ABFB0 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		3C43B7F232D644E47068A78B /* Pods-Traveller_ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.debug.xcconfig"; sourceTree = "<group>"; };
+		AA0321C91CBF79AB00B38B76 /* WIshedToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIshedToViewController.h; sourceTree = "<group>"; };
+		AA0321CA1CBF79AB00B38B76 /* WIshedToViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIshedToViewController.m; sourceTree = "<group>"; };
+		AA0321CD1CBF971100B38B76 /* ViewUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewUserProfileViewController.h; sourceTree = "<group>"; };
+		AA0321CE1CBF971100B38B76 /* ViewUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewUserProfileViewController.m; sourceTree = "<group>"; };
 		AA19148D1CBD1FDD0039C2FB /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		AA19148E1CBD1FDD0039C2FB /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		AA2BC0841CB4D75A0030A0E5 /* Traveller_ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traveller_ObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,9 +192,6 @@
 		AA3789251CB610E0000F151B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		AA3789281CB62D71000F151B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
-		AA37892B1CB62D79000F151B /* alpes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alpes.jpg; sourceTree = "<group>"; };
-		AA37892C1CB62D79000F151B /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
-		AA37892D1CB62D79000F151B /* vegetation.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vegetation.jpg; sourceTree = "<group>"; };
 		AA807B021CBE17C200D1E665 /* AddPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPostViewController.h; sourceTree = "<group>"; };
 		AA807B031CBE17C200D1E665 /* AddPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPostViewController.m; sourceTree = "<group>"; };
 		AA807B051CBE17D200D1E665 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -250,6 +250,8 @@
 				395994D91CB81495001E2118 /* CitiesViewController.m */,
 				390B295B1CB82FFC00227B84 /* CitiesCollectionViewCell.h */,
 				390B295C1CB82FFC00227B84 /* CitiesCollectionViewCell.m */,
+				AA0321C91CBF79AB00B38B76 /* WIshedToViewController.h */,
+				AA0321CA1CBF79AB00B38B76 /* WIshedToViewController.m */,
 			);
 			path = CitiesViewController;
 			sourceTree = "<group>";
@@ -384,6 +386,15 @@
 			path = TextFieldPadding;
 			sourceTree = "<group>";
 		};
+		AA0321CC1CBF970100B38B76 /* ViewUserProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA0321CD1CBF971100B38B76 /* ViewUserProfileViewController.h */,
+				AA0321CE1CBF971100B38B76 /* ViewUserProfileViewController.m */,
+			);
+			path = ViewUserProfileViewController;
+			sourceTree = "<group>";
+		};
 		AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,7 +429,6 @@
 				AA2BC0C41CB4E3230030A0E5 /* ConstantFiles */,
 				AA2BC0A91CB4E1BA0030A0E5 /* Other Supporting Files */,
 				AA2BC0A21CB4E1980030A0E5 /* Categories */,
-				AA2BC0A41CB4E1980030A0E5 /* Images */,
 				AA2BC0A51CB4E1980030A0E5 /* Interfaces */,
 				AA2BC0A61CB4E1980030A0E5 /* ViewControllers */,
 				AA2BC0A71CB4E1980030A0E5 /* Libaries */,
@@ -457,16 +467,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		AA2BC0A41CB4E1980030A0E5 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				AA37892B1CB62D79000F151B /* alpes.jpg */,
-				AA37892C1CB62D79000F151B /* avatar.jpg */,
-				AA37892D1CB62D79000F151B /* vegetation.jpg */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 		AA2BC0A51CB4E1980030A0E5 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,6 +482,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA0321CC1CBF970100B38B76 /* ViewUserProfileViewController */,
 				AA807B011CBE17B400D1E665 /* AddPostViewController */,
 				AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */,
 				39CE42E61CBA08AB000B371C /* LikeAndCommentView */,
@@ -836,16 +837,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA37892F1CB62D79000F151B /* avatar.jpg in Resources */,
 				3996913A1CB909AC000A3A4A /* FeedsTableViewCell.xib in Resources */,
 				39F187B91CB7BCA1001ABFB0 /* icomoon.ttf in Resources */,
-				AA37892E1CB62D79000F151B /* alpes.jpg in Resources */,
 				AA2BC0941CB4D75A0030A0E5 /* Assets.xcassets in Resources */,
 				39F187B51CB7A44D001ABFB0 /* LaunchScreen.storyboard in Resources */,
 				3996914C1CB90F29000A3A4A /* FollowingTableViewCell.xib in Resources */,
 				39F187B31CB7A363001ABFB0 /* Storyboard.storyboard in Resources */,
 				399691481CB90EBA000A3A4A /* WishedToTableViewCell.xib in Resources */,
-				AA3789301CB62D79000F151B /* vegetation.jpg in Resources */,
 				AA807B471CBE7AAF00D1E665 /* CountryPicker.bundle in Resources */,
 				3904198F1CBC1ACD00879650 /* UserData.plist in Resources */,
 			);
@@ -940,6 +938,7 @@
 				AA2BC0BB1CB4E2900030A0E5 /* DTParallaxHeaderView.m in Sources */,
 				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
 				399691321CB8F666000A3A4A /* Notification2TableViewCell.m in Sources */,
+				AA0321CF1CBF971100B38B76 /* ViewUserProfileViewController.m in Sources */,
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
 				390B295D1CB82FFC00227B84 /* CitiesCollectionViewCell.m in Sources */,
@@ -959,6 +958,7 @@
 				395994E61CB81558001E2118 /* TravellingToViewController.m in Sources */,
 				399691521CB90F56000A3A4A /* FollowingTableViewCell.m in Sources */,
 				AA807B481CBE7AAF00D1E665 /* CountryPicker.m in Sources */,
+				AA0321CB1CBF79AB00B38B76 /* WIshedToViewController.m in Sources */,
 				39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */,
 				AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */,
 				AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */,

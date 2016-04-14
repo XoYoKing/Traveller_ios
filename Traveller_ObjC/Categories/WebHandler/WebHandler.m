@@ -2,7 +2,7 @@
 //  WebHandler.m
 //
 //  Created by Sagar Shirbhate on 22/04/15.
-//  Copyright (c) xxxxx. All rights reserved.
+//  Copyright (c) Sagar Shirbhate. All rights reserved.
 //
 
 #import "WebHandler.h"
@@ -49,8 +49,6 @@
         }else{
             return nil;
         }
-
-       
     }else{
         return nil;
     }

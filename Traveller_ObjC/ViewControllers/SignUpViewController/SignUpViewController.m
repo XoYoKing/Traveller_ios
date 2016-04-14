@@ -19,7 +19,30 @@
     self.title=@"SignUp";
     // Do any additional setup after loading the view.
     [self setUpView];
+    [self setUpNavigationBar];
 }
+-(void)setUpNavigationBar{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
+                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
+                                back_btn_Color, NSForegroundColorAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    btnClose.tintColor=back_btn_Color;
+    //  [btnClose setTitle:[FontIcon iconString:ICON_CANCEL] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+    self.navigationItem.leftBarButtonItem = leftbarButton;
+}
+
+-(void)backClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 -(void)setUpView{
     maleChk.font=[UIFont fontWithName:fontIcomoon size:20];
     maleChk.text =[NSString stringWithUTF8String:ICOMOON_CHECK];

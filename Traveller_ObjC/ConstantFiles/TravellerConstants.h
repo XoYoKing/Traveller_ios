@@ -58,12 +58,12 @@
 #define toastDuration 3.0f
 
 
+#pragma mark --------------------------Internal Notification Codes-------------------------------
+#define throwNotificationStatus @"sendCountOfNotification"
 
 #pragma mark --------------------------Webservice Codes-------------------------------
 #define SUCESS @1
 #define FAIL @0
-
-
 
 #pragma mark --------------------------Webservice Constants-------------------------------
 #define URL_CONST @"http://trasquare.com/traveller_api/checkurl.php?"
@@ -76,6 +76,10 @@
 #define ACTION_GET_WISH_TO @"getWishTo"
 #define ACTION_GET_VISITED_CITIES @"getVisitedCities"
 #define ACTION_GET_CITIES @"getCities"
+#define ACTION_GET_NOTIFICATION @"getInvitationAskTip"
+#define ACTION_ADD_ACTIVITY @"addUserActivity"
+#define ACTION_GET_WISH_TO_VISITED @"getCityVisitedPerson"
+#define ACTION_ADD_FOLLOWER @"addFollowers"
 
 
 #pragma mark --------------------------Color Codes-------------------------------
@@ -93,6 +97,7 @@
 #define segment_disselected_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 #define menu_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 #define menu_background_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define back_btn_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 
 #pragma mark --------------------------For Parallax Effect on Feed View-------------------------------
 #define feed_headerHeight iPAD ? 350 : (IS_IPHONE_6 ? 300.0 : 220.0)
@@ -103,30 +108,3 @@
 
 #pragma mark --------------------------Validation messages-------------------------------
 #define no_internet_message @"Please check your internet connection"
-#define no_connection_message @"We are unable to connect you to server"
-#define validation_required_Field @"Please fill all the required field"
-#define validation_UsernameWrong @"Please enter valid username"
-#define validation_Username @"Please enter username"
-#define validation_Password @"Please enter password"
-#define validation_PasswordDigits @"Password must have minimum 6 characters and maximum 15 characters"
-#define validation_ConfirmPassword @"Password and confirm password does not match"
-#define validation_Email @"Please enter the email address"
-#define validation_ValidEmail @"Please enter a valid email address"
-#define validation_FirstName @"Please enter the First name"
-#define validation_LastName @"Please enter the Last name"
-#define validation_Address @"Please enter street address"
-#define validation_State @"Please select state"
-#define validation_City @"Please enter city"
-#define validation_Zipcode @"Please enter zipcode"
-#define validation_Phone @"Please enter the phone number"
-#define validation_WorkPhone @"Please enter the work phone number"
-#define validation_CellPhone @"Please enter the cellphone number"
-#define validation_companyLocation @"Please select prefered company location"
-#define validation_passwordDigits @"Password length should not be less than 6 or greater than 15 character"
-#define validation_ExistingPassword @"Please enter existing password"
-#define validation_NewPassword @"Please enter new password"
-#define validation_RetypePassword @"Please enter retype password"
-#define validation_ExistingPasswordDigits @"Existing password must have minimum 6 characters and maximum 15 characters"
-#define validation_NewPasswordDigits @"New password must have minimum 6 characters and maximum 15 characters"
-#define validation_RetypePasswordDigits @"Retype password must have minimum 6 characters and maximum 15 characters"
-#define validation_NewPasswordMatch @"New password and confirm password does not match"

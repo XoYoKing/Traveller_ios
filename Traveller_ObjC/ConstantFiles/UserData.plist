@@ -6,5 +6,9 @@
 	<string>No</string>
 	<key>StartUpShown</key>
 	<string>No</string>
+	<key>NotificationCount</key>
+	<string>0</string>
+	<key>NotificationDict</key>
+	<dict/>
 </dict>
 </plist>

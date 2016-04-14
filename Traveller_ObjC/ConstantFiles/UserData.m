@@ -72,7 +72,34 @@
   }
 
 
++(void) setNotificationCount :(int)count{
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:[NSString stringWithFormat:@"%d",count] forKey:@"NotificationCount"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
+}
+
+
++(void )setNotificationDict : (NSDictionary *) dict {
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:dict forKey:@"NotificationDict"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
+}
+
 #pragma mark======================= Getter Methods======================
+
++(NSDictionary *) getNotificationDict{
+    NSDictionary * notificationDict =[NSDictionary new];
+     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
+    notificationDict=[dict valueForKey:@"NotificationDict"];
+    return notificationDict;
+}
+
++(int) getNotificationCount{
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
+    return [[dict valueForKey:@"NotificationCount"] intValue];
+}
+
+
 +(NSString *) getUserID{
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
     return [dict valueForKey:@"UserId"];

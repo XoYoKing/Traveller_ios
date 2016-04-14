@@ -58,6 +58,14 @@
 
 +(NSString *) checkIntroViewShown;
 
++(int) getNotificationCount;
+
++(void) setNotificationCount :(int)count ;
+
++(NSDictionary *) getNotificationDict;
+
++(void )setNotificationDict : (NSDictionary *) dict ;
+
 +(void )setIntroShown;
 
 +(void ) setLogOutStatus;

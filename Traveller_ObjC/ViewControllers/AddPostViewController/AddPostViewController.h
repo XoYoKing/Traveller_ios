@@ -24,8 +24,7 @@
     
     __weak IBOutlet UIButton *btnCamera;
     __weak IBOutlet UIButton *btnGallery;
-    __weak IBOutlet UIButton *btnSubmit
-    ;
+
     __weak IBOutlet UILabel *addImageLbl;
     __weak IBOutlet UILabel *addLocationLbl;
     __weak IBOutlet UILabel *addPostDetailsLbl;
@@ -46,5 +45,6 @@
     UIPopoverController *popover;
 }
 @property (weak, nonatomic) IBOutlet MVPlaceSearchTextField *txtPlaceSearch;
+@property(strong,nonatomic)NSDictionary * selectedCityDict;
 
 @end

@@ -44,7 +44,7 @@
         int wishToPage;
         int visitedCitiesPage;
         int selectedIndex;
-    
+        int selectedUserIdex;
     
     }
     

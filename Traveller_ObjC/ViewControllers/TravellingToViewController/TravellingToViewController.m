@@ -24,6 +24,13 @@
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
 }
 
 

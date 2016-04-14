@@ -14,8 +14,11 @@
 @interface CitiesViewController : UIViewController
 {
     __weak IBOutlet UICollectionView *citiesCollectionView;
+    __weak IBOutlet UITextField *searchTF;
+    __weak IBOutlet UIButton *searchBtn;
     GIBadgeView * badgeView;
     
+    NSMutableArray * globalArrayToShow;
     NSMutableArray * citiesArray;
     BOOL citiesPagingBoolean;
     int citiesPage;

@@ -33,22 +33,70 @@
     citiesArray=[NSMutableArray new];
     citiesPage=1;
     citiesPagingBoolean=YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+    [self setUpView];
+    [self setUpNavigationBar];
+}
+
+-(void)setUpView{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnView)];
+    tap.cancelsTouchesInView = YES;
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+    
+    searchBtn.titleLabel.font =[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    searchTF.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+
+}
+-(void)setUpNavigationBar{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
+                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
+                                back_btn_Color, NSForegroundColorAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    btnClose.tintColor=back_btn_Color;
+    //  [btnClose setTitle:[FontIcon iconString:ICON_CANCEL] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+    self.navigationItem.leftBarButtonItem = leftbarButton;
+}
+
+-(void)backClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+
+-(void)tappedOnView{
+    [self.view endEditing:YES];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return citiesArray.count;
+    return globalArrayToShow.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CitiesCollectionViewCell *cell=[citiesCollectionView dequeueReusableCellWithReuseIdentifier:@"CitiesCollectionViewCell" forIndexPath:indexPath];
     cell.contentView.frame = [cell bounds];
-    cell.cityImageView.image=[UIImage imageNamed:@"alpes.jpg"];
-    [cell.placesButton addTarget:self action:@selector(openPostForm:) forControlEvents:UIControlEventTouchUpInside];
+    cell.placesButton.tag=indexPath.row;
+    cell.wishButton.tag=indexPath.row;
     
-    NSDictionary * dataDict =[citiesArray objectAtIndex:indexPath.row];
+    [cell.wishButton addTarget:self action:@selector(openWishedToForm:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.placesButton addTarget:self action:@selector(openPostForm:) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary * dataDict =[globalArrayToShow objectAtIndex:indexPath.row];
     
     NSString * city =[dataDict valueForKey:@"city"];
     NSString * country =[dataDict valueForKey:@"country"];
@@ -73,8 +121,6 @@
         cell.cityNameLbl.text =@"City Name Not Available Now";
     }
     
-    
-    
     //Checked for post Image
     NSString * urlStringForImage =[dataDict valueForKey:@"image"];
     if (![urlStringForImage isKindOfClass:[NSNull class]]) {
@@ -93,15 +139,13 @@
 
 -(void)openPostForm:(UIButton *)btn{
     AddPostViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"AddPostViewController"];
+    vc.selectedCityDict=[citiesArray objectAtIndex:btn.tag];
     [self.navigationController pushViewController:vc animated:YES];
 }
-
-
--(void)addShaddowToView:(UIView *)view{
-    view.layer.shadowOffset = CGSizeMake(2, 2);
-    view.layer.shadowColor = [[UIColor blackColor] CGColor];
-    view.layer.shadowRadius = 4.0f;
-    view.layer.shadowOpacity = 0.80f;
+-(void)openWishedToForm:(UIButton *)btn{
+    AddPostViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"AddPostViewController"];
+    vc.selectedCityDict=[citiesArray objectAtIndex:btn.tag];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)addNotificationView{
@@ -117,7 +161,7 @@
     badgeView = [GIBadgeView new];
     [notificationButton addSubview:badgeView];
     badgeView.badgeValue = 5;
-    [self addShaddowToView:notificationButton];
+    [notificationButton addShaddow];
     [self.view addSubview:notificationButton];
     [self.view bringSubviewToFront:notificationButton];
 }
@@ -126,9 +170,6 @@
     vc.fromMenu=NO;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -141,6 +182,7 @@
         NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_CITIES,userID,citiesPage];
         NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
         [citiesArray addObjectsFromArray:[dict valueForKey:@"data"]];
+    globalArrayToShow = citiesArray;
         [self performSelectorOnMainThread:@selector(reloadCollectionView) withObject:nil waitUntilDone:YES];
 }
     
@@ -153,6 +195,7 @@
             citiesPagingBoolean=NO;
         }else{
             [citiesArray addObjectsFromArray:[dict valueForKey:@"data"]];
+            [globalArrayToShow addObjectsFromArray:[dict valueForKey:@"data"]];
             citiesPagingBoolean=YES;
         }
         [self performSelectorOnMainThread:@selector(reloadCollectionView) withObject:nil waitUntilDone:YES];
@@ -166,5 +209,49 @@
     }
 }
 
+
+#pragma mark - TextField Delegates
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    return YES;
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    if (![textField.text isEqualToString:@""]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"a CONTAINS[cd] %@", textField.text];
+        globalArrayToShow = [[citiesArray filteredArrayUsingPredicate:predicate] mutableCopy];
+         [citiesCollectionView reloadData];
+    }else{
+        globalArrayToShow=citiesArray;
+        [citiesCollectionView reloadData];
+    }
+    return YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    return YES;
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString * searchStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([searchStr isEqualToString:@""]) {
+        globalArrayToShow=citiesArray;
+        [citiesCollectionView reloadData];
+        textField.text=@"";
+        textField.text=searchStr;
+    }else{
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"a CONTAINS[cd] %@", searchStr];
+        globalArrayToShow = [[citiesArray filteredArrayUsingPredicate:predicate] mutableCopy];
+        [citiesCollectionView reloadData];
+    }
+    return YES;
+}
+
+- (BOOL) textFieldShouldClear:(UITextField *)textField{
+    globalArrayToShow=citiesArray;
+    [citiesCollectionView reloadData];
+    textField.text=@"";
+    return YES;
+}
 
 @end
