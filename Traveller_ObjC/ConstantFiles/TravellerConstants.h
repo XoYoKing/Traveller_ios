@@ -75,6 +75,7 @@
 #define ACTION_GET_FOLLOW_LIST @"getFollowList"
 #define ACTION_GET_WISH_TO @"getWishTo"
 #define ACTION_GET_VISITED_CITIES @"getVisitedCities"
+#define ACTION_GET_CITIES @"getCities"
 
 
 #pragma mark --------------------------Color Codes-------------------------------

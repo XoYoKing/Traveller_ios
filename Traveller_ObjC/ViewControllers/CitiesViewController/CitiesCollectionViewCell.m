@@ -25,6 +25,8 @@
     _placesLogo.font=[UIFont fontWithName:fontIcomoon size:20];
     _placesLogo.text=[NSString stringWithUTF8String:ICOMOON_CHECK];
     
+    _cityNameLbl.font=[UIFont fontWithName:font_bold size:font_size_bold];
+    
     }
 
 -(void)addShaddowToView:(UIView *)view{

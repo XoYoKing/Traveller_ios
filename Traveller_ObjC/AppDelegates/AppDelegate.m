@@ -26,6 +26,7 @@
     [[GPPSignIn sharedInstance] setClientID:@"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com"];
     [GPPSignIn sharedInstance].delegate = self;
     
+    [GMSServices provideAPIKey:@"AIzaSyBuQ0Z76oO7IJBaYxF7pWziTZ8-17LWosc"];
  //   HomeViewController * homeVC = [[HomeViewController alloc]init];
    // UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:homeVC];
    // self.window.rootViewController=nav;

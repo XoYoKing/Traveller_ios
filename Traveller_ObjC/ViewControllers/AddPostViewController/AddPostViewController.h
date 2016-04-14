@@ -20,6 +20,7 @@
     __weak IBOutlet NSLayoutConstraint *heightOfMapView;
     
     __weak IBOutlet UIImageView *postImageView;
+    __weak IBOutlet NSLayoutConstraint *postImageViewHeight;
     
     __weak IBOutlet UIButton *btnCamera;
     __weak IBOutlet UIButton *btnGallery;
@@ -28,12 +29,22 @@
     __weak IBOutlet UILabel *addImageLbl;
     __weak IBOutlet UILabel *addLocationLbl;
     __weak IBOutlet UILabel *addPostDetailsLbl;
+    __weak IBOutlet UILabel *selectPostTypeLbl;
+    
+    __weak IBOutlet UILabel *logo1;
+    __weak IBOutlet UILabel *logo2;
+    __weak IBOutlet UILabel *logo3;
+    __weak IBOutlet UILabel *logo4;
     
     __weak IBOutlet UITextView *descriptionTextView;
     
-    __weak IBOutlet MVPlaceSearchTextField *txtPlaceSearch;
+    __weak IBOutlet UIScrollView *myScrollView;
+    
+    NSMutableArray * buttonArray;
     
     UIImagePickerController *ipc;
     UIPopoverController *popover;
 }
+@property (weak, nonatomic) IBOutlet MVPlaceSearchTextField *txtPlaceSearch;
+
 @end

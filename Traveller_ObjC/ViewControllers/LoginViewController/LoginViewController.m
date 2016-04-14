@@ -205,7 +205,7 @@
 
     
    // if ([userNameTextField validate]&&[passwordTextField validate]) {
-            [JTProgressHUD show];
+            [self.view showLoader];
            [self performSelectorInBackground:@selector(callLoginWebservice) withObject:nil];
 //    }
   #endif
@@ -299,7 +299,10 @@
 }
 
 
-
+-(void)showToastWithMessage:(NSString *)msg{
+     [self.view hideLoader];
+    [self.view makeToast:msg duration:toastDuration position:toastPositionBottomUp];
+}
 
 
 

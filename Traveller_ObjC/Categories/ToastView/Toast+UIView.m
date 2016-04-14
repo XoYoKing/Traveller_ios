@@ -359,8 +359,5 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 -(void)showLoader{
     [JTProgressHUD show];
 }
--(void)showToastWithMessage:(NSString*)msg{
-    [JTProgressHUD hide];
-    [self makeToast:msg duration:toastDuration position:toastPositionBottomUp];
-}
+
 @end

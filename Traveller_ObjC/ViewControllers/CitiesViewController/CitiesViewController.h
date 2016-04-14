@@ -15,5 +15,9 @@
 {
     __weak IBOutlet UICollectionView *citiesCollectionView;
     GIBadgeView * badgeView;
+    
+    NSMutableArray * citiesArray;
+    BOOL citiesPagingBoolean;
+    int citiesPage;
 }
 @end
