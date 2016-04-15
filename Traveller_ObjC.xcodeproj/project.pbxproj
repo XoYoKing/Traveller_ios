@@ -69,7 +69,6 @@
 		AA5A777B1CC0B977001355C8 /* InviteToJoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A777A1CC0B977001355C8 /* InviteToJoinViewController.m */; };
 		AA5A777E1CC0B986001355C8 /* AskForTipsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A777D1CC0B986001355C8 /* AskForTipsViewController.m */; };
 		AA807B041CBE17C200D1E665 /* AddPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B031CBE17C200D1E665 /* AddPostViewController.m */; };
-		AA807B061CBE17D300D1E665 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA807B051CBE17D200D1E665 /* MapKit.framework */; };
 		AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */; };
 		AA807B171CBE181600D1E665 /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B0F1CBE181600D1E665 /* NSString+Levenshtein.m */; };
 		AA807B181CBE181600D1E665 /* MVPlaceSearchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B111CBE181600D1E665 /* MVPlaceSearchTextField.m */; };
@@ -203,7 +202,6 @@
 		AA5A777D1CC0B986001355C8 /* AskForTipsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskForTipsViewController.m; sourceTree = "<group>"; };
 		AA807B021CBE17C200D1E665 /* AddPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPostViewController.h; sourceTree = "<group>"; };
 		AA807B031CBE17C200D1E665 /* AddPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPostViewController.m; sourceTree = "<group>"; };
-		AA807B051CBE17D200D1E665 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		AA807B091CBE181600D1E665 /* MLPAutoCompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextField.h; sourceTree = "<group>"; };
 		AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPAutoCompleteTextField.m; sourceTree = "<group>"; };
 		AA807B0B1CBE181600D1E665 /* MLPAutoCompleteTextFieldDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextFieldDataSource.h; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA807B061CBE17D300D1E665 /* MapKit.framework in Frameworks */,
 				3B0B21EC430FB9ACFD6C10C7 /* libPods-Traveller_ObjC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,7 +454,6 @@
 		AA2BC09E1CB4E10E0030A0E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA807B051CBE17D200D1E665 /* MapKit.framework */,
 				BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */,
 			);
 			name = Frameworks;
@@ -850,6 +846,18 @@
 				TargetAttributes = {
 					AA2BC0831CB4D75A0030A0E5 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 4BGR2HUY6V;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1032,9 +1040,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1052,9 +1062,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1077,9 +1088,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1091,8 +1104,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1104,6 +1118,8 @@
 			baseConfigurationReference = 3C43B7F232D644E47068A78B /* Pods-Traveller_ObjC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1111,9 +1127,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "sagar.Traveller-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1122,6 +1141,8 @@
 			baseConfigurationReference = F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1129,9 +1150,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "sagar.Traveller-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
