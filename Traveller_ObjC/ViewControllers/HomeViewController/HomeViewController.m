@@ -38,6 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden=YES;
+    
     homeFeedPage=1;
     followerPage=1;
     followingPage=1;
@@ -76,7 +78,7 @@
     self.navigationController.navigationBarHidden=NO;
     badgeView = [GIBadgeView new];
     [notificationButton addSubview:badgeView];
-    badgeView.badgeValue = 5;
+    badgeView.badgeValue = [UserData getNotificationCount];
     [notificationButton addShaddow];
     [self.view addSubview:notificationButton];
     [self.view bringSubviewToFront:notificationButton];
@@ -91,6 +93,7 @@
 #pragma mark===============These are private methods Written By Sagar Shirbhate=============================
 -(void)setHomeView{
     
+     self.navigationController.navigationBarHidden=NO;
      [self configureNavBar];
     
     _headerHeight = feed_headerHeight;
@@ -353,11 +356,12 @@
     views[@"super"] = self.view;
     UIButton* followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     followButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [followButton setTitle:@"  View Profile  " forState:UIControlStateNormal];
+    [followButton setTitle:@"" forState:UIControlStateNormal];
     followButton.layer.cornerRadius = cornerRadius_Button;
     followButton.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     followButton.layer.borderWidth =1;
     [followButton addShaddow];
+    followButton.hidden=YES;
     followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
     followButton.backgroundColor=userShouldDOButoonColor;
     [followButton addTarget:self action:@selector(tappedOnUserImage) forControlEvents:UIControlEventTouchUpInside];
@@ -489,7 +493,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (selectedIndex==0) {
-        return homeFeedData.count;
+        return 3;//homeFeedData.count;
     }else   if (selectedIndex==1) {
         return visitedCitiesData.count;
     }else   if (selectedIndex==2) {
@@ -544,11 +548,13 @@
         NSString *userName;
         NSString *cityName;
         NSString * userID;
+        NSString * locId;
         NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
         if (refertitle!=nil) {
             userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
             cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
             userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
         }
  
         if([userID isEqualToString:[UserData getUserID]]){
@@ -576,9 +582,9 @@
         
         void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
             if ([substring isEqualToString:userName]) {
-                [self openUserProfile];
+                [self openUserProfile:userID];
             }else{
-                [self openLocationFeedView];
+                [self openLocationFeedView:locId];
             }
         };
         //Added link substrings
@@ -726,6 +732,15 @@
             [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
         }
        
+        // For Paging Mechanism
+        if (indexPath.row==visitedCitiesData.count -3) {
+            if (visitedCitiesPageShouldDoPaging==YES) {
+                visitedCitiesPage++;
+                [self performSelectorInBackground:@selector(getVisitedCitiesDataForPaging) withObject:nil];
+            }
+        }
+
+        
     
         return cell;
         
@@ -764,6 +779,13 @@
             [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
         }
         
+        // For Paging Mechanism
+        if (indexPath.row==wishToData.count -3) {
+            if (wishToPageShouldDoPaging==YES) {
+                wishToPage++;
+                [self performSelectorInBackground:@selector(getWishDataForPaging) withObject:nil];
+            }
+        }
         
         return cell;
         
@@ -801,6 +823,15 @@
             [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
         }
     
+        // For Paging Mechanism
+        if (indexPath.row==followerData.count -3) {
+            if (followerPageShouldDoPaging==YES) {
+                followerPage++;
+                [self performSelectorInBackground:@selector(getWishDataForPaging) withObject:nil];
+            }
+        }
+        
+        
         return cell;
         
     }else if (selectedIndex==4){
@@ -808,6 +839,15 @@
         UINib *nib = [UINib nibWithNibName:@"FollowingTableViewCell" bundle:nil];
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
         FollowingTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FollowingTableViewCell"];
+        
+        
+        // For Paging Mechanism
+        if (indexPath.row==wishToData.count -3) {
+            if (followingPageShouldDoPaging==YES) {
+                followingPage++;
+                [self performSelectorInBackground:@selector(getFollowListDataForPaging) withObject:nil];
+            }
+        }
         return cell;
         
     }
@@ -1026,13 +1066,14 @@
 
 
 #pragma mark====================Open User Profile=============================
--(void)openUserProfile{
+-(void)openUserProfile:(NSString * )userId{
     ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+    vc.userId=userId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark====================Open Location Feeds=============================
--(void)openLocationFeedView{
+-(void)openLocationFeedView:(NSString * )locationId{
     LocationFeedViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"LocationFeedViewController"];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -1109,10 +1150,38 @@
 
 #pragma mark====================Open Who commented on the Post=============================
 -(void)openCommentMenu:(UIButton*)btn{
+    
+    BOOL shouldOpenMenu =NO;
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
+    //Managed Comments View
+    int isCommentByYou=[[dataDict valueForKey:@"is_my"]intValue];
+    int coments =[[dataDict valueForKey:@"total_comments"]intValue];
+    if (isCommentByYou==1) {
+        if (coments==0) {
+                [self.view makeToast:@"No one like the post yet" duration:toastDuration position:toastPositionBottomUp];
+            shouldOpenMenu =NO;
+        }else if(coments==1){
+            shouldOpenMenu =YES;
+        }else{
+            shouldOpenMenu =YES;
+        }
+        
+    }else{
+        
+        if (coments==0) {
+            [self.view makeToast:@"No one like the post yet" duration:toastDuration position:toastPositionBottomUp];
+        }else if(coments==1){
+           shouldOpenMenu =YES;
+        }else{
+            shouldOpenMenu =YES;
+        }
+    }
+    if (shouldOpenMenu) {
     CommentsViewController * v =[self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
      [self setPresentationStyleForSelfController:self presentingController:v];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:v];
     [self presentViewController:nav animated:YES completion:nil];
+    }
 }
 
 #pragma mark ====================FollowMechanism=============================

@@ -11,6 +11,16 @@
 #import "NotificationsViewController.h"
 #import "TravellerConstants.h"
 
-@interface TravellingToViewController : UIViewController
-{GIBadgeView * badgeView;}
-@end
+@interface TravellingToViewController : UIViewController<UITextFieldDelegate>
+{
+    __weak IBOutlet UICollectionView *citiesCollectionView;
+    __weak IBOutlet UITextField *searchTF;
+    __weak IBOutlet UIButton *searchBtn;
+    GIBadgeView * badgeView;
+    
+    NSMutableArray * globalArrayToShow;
+    NSMutableArray * citiesArray;
+    BOOL citiesPagingBoolean;
+    int citiesPage;
+}
+- (IBAction)searchClick:(id)sender;@end

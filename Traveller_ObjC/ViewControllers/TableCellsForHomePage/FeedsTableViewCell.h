@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *agoLbl;
 @property (weak, nonatomic) IBOutlet UIButton *menuBtnOfPost;
 @property (weak, nonatomic) IBOutlet UIButton *likeThumbBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageWidth;
 
 
 @end

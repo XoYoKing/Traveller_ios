@@ -16,4 +16,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *followLogoLbl;
 @property (weak, nonatomic) IBOutlet UILabel *followNameLbl;
 @property (weak, nonatomic) IBOutlet UIButton *followBtn;
+@property (weak, nonatomic) IBOutlet UIView *followBackView;
 @end

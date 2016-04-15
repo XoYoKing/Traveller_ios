@@ -65,6 +65,9 @@
 		AA3789231CB610D2000F151B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789221CB610D2000F151B /* HomeViewController.m */; };
 		AA3789261CB610E0000F151B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789251CB610E0000F151B /* LoginViewController.m */; };
 		AA37892A1CB62D71000F151B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */; };
+		AA5A77781CC0B96B001355C8 /* WishToVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A77771CC0B96B001355C8 /* WishToVisitViewController.m */; };
+		AA5A777B1CC0B977001355C8 /* InviteToJoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A777A1CC0B977001355C8 /* InviteToJoinViewController.m */; };
+		AA5A777E1CC0B986001355C8 /* AskForTipsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A777D1CC0B986001355C8 /* AskForTipsViewController.m */; };
 		AA807B041CBE17C200D1E665 /* AddPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B031CBE17C200D1E665 /* AddPostViewController.m */; };
 		AA807B061CBE17D300D1E665 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA807B051CBE17D200D1E665 /* MapKit.framework */; };
 		AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B0A1CBE181600D1E665 /* MLPAutoCompleteTextField.m */; };
@@ -192,6 +195,12 @@
 		AA3789251CB610E0000F151B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		AA3789281CB62D71000F151B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		AA5A77761CC0B96B001355C8 /* WishToVisitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WishToVisitViewController.h; sourceTree = "<group>"; };
+		AA5A77771CC0B96B001355C8 /* WishToVisitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WishToVisitViewController.m; sourceTree = "<group>"; };
+		AA5A77791CC0B977001355C8 /* InviteToJoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteToJoinViewController.h; sourceTree = "<group>"; };
+		AA5A777A1CC0B977001355C8 /* InviteToJoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteToJoinViewController.m; sourceTree = "<group>"; };
+		AA5A777C1CC0B986001355C8 /* AskForTipsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskForTipsViewController.h; sourceTree = "<group>"; };
+		AA5A777D1CC0B986001355C8 /* AskForTipsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskForTipsViewController.m; sourceTree = "<group>"; };
 		AA807B021CBE17C200D1E665 /* AddPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPostViewController.h; sourceTree = "<group>"; };
 		AA807B031CBE17C200D1E665 /* AddPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPostViewController.m; sourceTree = "<group>"; };
 		AA807B051CBE17D200D1E665 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -482,6 +491,9 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA5A77731CC0B957001355C8 /* WishToVisitViewController */,
+				AA5A77741CC0B957001355C8 /* InviteToJoinViewController */,
+				AA5A77751CC0B957001355C8 /* AskForTipsViewController */,
 				AA0321CC1CBF970100B38B76 /* ViewUserProfileViewController */,
 				AA807B011CBE17B400D1E665 /* AddPostViewController */,
 				AA19148C1CBD1FA90039C2FB /* ForgetPasswordViewController */,
@@ -691,6 +703,33 @@
 				AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */,
 			);
 			path = ImageEffects;
+			sourceTree = "<group>";
+		};
+		AA5A77731CC0B957001355C8 /* WishToVisitViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA5A77761CC0B96B001355C8 /* WishToVisitViewController.h */,
+				AA5A77771CC0B96B001355C8 /* WishToVisitViewController.m */,
+			);
+			path = WishToVisitViewController;
+			sourceTree = "<group>";
+		};
+		AA5A77741CC0B957001355C8 /* InviteToJoinViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA5A77791CC0B977001355C8 /* InviteToJoinViewController.h */,
+				AA5A777A1CC0B977001355C8 /* InviteToJoinViewController.m */,
+			);
+			path = InviteToJoinViewController;
+			sourceTree = "<group>";
+		};
+		AA5A77751CC0B957001355C8 /* AskForTipsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA5A777C1CC0B986001355C8 /* AskForTipsViewController.h */,
+				AA5A777D1CC0B986001355C8 /* AskForTipsViewController.m */,
+			);
+			path = AskForTipsViewController;
 			sourceTree = "<group>";
 		};
 		AA807B011CBE17B400D1E665 /* AddPostViewController */ = {
@@ -928,6 +967,7 @@
 				399691351CB8F677000A3A4A /* Notification3TableViewCell.m in Sources */,
 				399691381CB8F69B000A3A4A /* Notification4TableViewCell.m in Sources */,
 				3996915A1CB944A6000A3A4A /* LocationFeedViewController.m in Sources */,
+				AA5A777B1CC0B977001355C8 /* InviteToJoinViewController.m in Sources */,
 				AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */,
 				3996912C1CB8D055000A3A4A /* SearchCollectionViewCell.m in Sources */,
 				AA3789231CB610D2000F151B /* HomeViewController.m in Sources */,
@@ -938,6 +978,7 @@
 				AA2BC0BB1CB4E2900030A0E5 /* DTParallaxHeaderView.m in Sources */,
 				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
 				399691321CB8F666000A3A4A /* Notification2TableViewCell.m in Sources */,
+				AA5A77781CC0B96B001355C8 /* WishToVisitViewController.m in Sources */,
 				AA0321CF1CBF971100B38B76 /* ViewUserProfileViewController.m in Sources */,
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
@@ -948,6 +989,7 @@
 				AA2BC0E51CB53FAB0030A0E5 /* UIStoryboard+BTAdditions.m in Sources */,
 				AA807B181CBE181600D1E665 /* MVPlaceSearchTextField.m in Sources */,
 				399691561CB92904000A3A4A /* FRHyperLabel.m in Sources */,
+				AA5A777E1CC0B986001355C8 /* AskForTipsViewController.m in Sources */,
 				AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */,
 				AA807B171CBE181600D1E665 /* NSString+Levenshtein.m in Sources */,
 				AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */,

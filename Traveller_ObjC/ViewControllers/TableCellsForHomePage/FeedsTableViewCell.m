@@ -13,10 +13,23 @@
 -(void)awakeFromNib{
     _profileImage.layer.borderColor=[UIColor whiteColor].CGColor;
     _profileImage.layer.borderWidth=2;
-    _profileImage.layer.cornerRadius=6;
-    [self addShaddowToView:_profileImage];
     
-    [self addShaddowToView:_postImage];
+    if (iPhone6||iPhone6plus||iPAD) {
+        _imageHeight.constant=100;
+        _imageWidth.constant=100;
+         _profileImage.layer.cornerRadius=50;
+    }else{
+        _imageHeight.constant=60;
+        _imageWidth.constant=60;
+         _profileImage.layer.cornerRadius=30;
+    }
+    
+    [_profileImage layoutIfNeeded];
+   
+    _profileImage.clipsToBounds=YES;
+    [_profileImage addShaddow];
+    
+    [_postImage addShaddow];
     
     _buttonsBackView.layer.borderColor=[UIColor lightGrayColor].CGColor;
     _buttonsBackView.layer.borderWidth=1;
@@ -29,13 +42,6 @@
     
     _menuBtnOfPost.titleLabel.font=[UIFont fontWithName:fontIcomoon size:15];
     [_menuBtnOfPost setTitle:[NSString stringWithUTF8String:ICOMOON_MENU_DOWN] forState:UIControlStateNormal] ;
-}
-
--(void)addShaddowToView:(UIView *)view{
-    view.layer.shadowOffset = CGSizeMake(1, 1);
-    view.layer.shadowColor = [[UIColor blackColor] CGColor];
-    view.layer.shadowRadius = 4.0f;
-    view.layer.shadowOpacity = 0.80f;
 }
 
 

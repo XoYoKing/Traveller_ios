@@ -11,7 +11,7 @@
 #import "NotificationsViewController.h"
 #import "TravellerConstants.h"
 
-@interface CitiesViewController : UIViewController
+@interface CitiesViewController : UIViewController<UITextFieldDelegate>
 {
     __weak IBOutlet UICollectionView *citiesCollectionView;
     __weak IBOutlet UITextField *searchTF;
@@ -23,4 +23,5 @@
     BOOL citiesPagingBoolean;
     int citiesPage;
 }
+- (IBAction)searchClick:(id)sender;
 @end

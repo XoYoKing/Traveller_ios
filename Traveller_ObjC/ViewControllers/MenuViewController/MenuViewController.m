@@ -47,19 +47,32 @@
     tableHeightConstraints.constant=menuTableView.contentSize.height;
     [menuTableView layoutIfNeeded];
     [self.view layoutIfNeeded];
-    imageViewOfUser.layer.cornerRadius=7;
+    imageViewOfUser.layer.cornerRadius=50;
     imageViewOfUser.layer.borderWidth=2;
     imageViewOfUser.layer.borderColor=[UIColor whiteColor].CGColor;
-    [self addShaddowToView:imageViewOfUser];
+    imageViewOfUser.clipsToBounds=YES;
+    [imageViewOfUser addShaddow];
     notificationView.layer.cornerRadius=20;
      badgeView = [GIBadgeView new];
     [notificationView addSubview:badgeView];
-    badgeView.badgeValue = 0;
+    badgeView.badgeValue = [UserData getNotificationCount];
     
     UILabel * lbl =[[UILabel alloc]init];
     lbl.frame=notificationView.bounds;
     lbl.textColor=[UIColor whiteColor];
     lbl.textAlignment=NSTextAlignmentCenter;
+    
+    nameOfUser.font =[UIFont fontWithName:font_bold size:font_size_bold];
+    addressOfUser.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+    
+    
+    NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
+    if (profileUrl) {
+        [imageViewOfUser sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+    }
+
+    nameOfUser.text=[UserData getUserName];
+    addressOfUser.text=[UserData getUserCity];
     
     
     if (iPhone6||iPhone6plus||iPAD) {
@@ -113,8 +126,7 @@
     }else if (indexPath.row==1){
           [self openCitiesMenu];
     }else if (indexPath.row==2){
-       // [self opemTravellingToMenu];
-         [self openCitiesMenu];
+        [self opemTravellingToMenu];
     }else if (indexPath.row==3){
         [self openSearchMenu];
     }else if (indexPath.row==4){

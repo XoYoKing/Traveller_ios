@@ -338,10 +338,10 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 //Custom Method By Sagar Shirbhate
 -(void)addShaddow{
-    self.layer.shadowOffset = CGSizeMake(1, 1);
-    self.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.layer.shadowRadius = 4.0f;
-    self.layer.shadowOpacity = 0.80f;
+//    self.layer.shadowOffset = CGSizeMake(1, 1);
+//    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    self.layer.shadowRadius = 4.0f;
+//    self.layer.shadowOpacity = 0.80f;
 }
 -(void)addWhiteLayerAndCornerRadius:(int)radius AndWidth:(int)Width {
     self.layer.borderColor=[UIColor whiteColor].CGColor;

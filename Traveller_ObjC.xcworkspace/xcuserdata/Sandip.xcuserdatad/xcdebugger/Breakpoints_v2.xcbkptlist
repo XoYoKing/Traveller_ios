@@ -153,8 +153,8 @@
                   symbolName = "__37-[LoginViewController facebookClick:]_block_invoke"
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sandip/Desktop/Demos/Traveller_ObjC/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-                  timestampString = "482272043.007778"
+                  urlString = "file:///Users/Sandip/Desktop/Traveller_ObjC/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
+                  timestampString = "482353608.388766"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "89"
@@ -168,8 +168,8 @@
                   symbolName = "__copy_helper_block_"
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sandip/Desktop/Demos/Traveller_ObjC/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-                  timestampString = "482272043.008014"
+                  urlString = "file:///Users/Sandip/Desktop/Traveller_ObjC/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
+                  timestampString = "482353608.389007"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -183,8 +183,8 @@
                   symbolName = "__destroy_helper_block_"
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sandip/Desktop/Demos/Traveller_ObjC/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-                  timestampString = "482272043.00826"
+                  urlString = "file:///Users/Sandip/Desktop/Traveller_ObjC/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
+                  timestampString = "482353608.389272"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -328,13 +328,27 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "482185137.298969"
+            filePath = "Traveller_ObjC/ViewControllers/CitiesViewController/WIshedToViewController.h"
+            timestampString = "482342615.123826"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1136"
-            endingLineNumber = "1136"
-            landmarkName = "-getFollowerDataForPaging"
+            startingLineNumber = "6"
+            endingLineNumber = "6">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/ViewProfileController/ViewProfileController.m"
+            timestampString = "482350694.447697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1248"
+            endingLineNumber = "1248"
+            landmarkName = "-getHomeFeedData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -344,13 +358,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "482185137.298969"
+            filePath = "Traveller_ObjC/ViewControllers/ViewProfileController/ViewProfileController.m"
+            timestampString = "482350694.447697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "946"
-            endingLineNumber = "946"
-            landmarkName = "-callWebservicesAsButtonClick"
+            startingLineNumber = "1250"
+            endingLineNumber = "1250"
+            landmarkName = "-getHomeFeedData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/CitiesViewController/CitiesViewController.m"
+            timestampString = "482352091.726811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -361,12 +391,108 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/AddPostViewController/AddPostViewController.m"
-            timestampString = "482270399.873735"
+            timestampString = "482351607.825992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
-            landmarkName = "-btnCameraClicked:"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
+            landmarkName = "-upload"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/AddPostViewController/AddPostViewController.m"
+            timestampString = "482351612.434416"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "444"
+            endingLineNumber = "444"
+            landmarkName = "-upload"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/AddPostViewController/AddPostViewController.m"
+            timestampString = "482351761.664718"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
+            landmarkName = "-upload"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/CitiesViewController/CitiesViewController.m"
+            timestampString = "482352091.726811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "-openPostForm:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/AddPostViewController/AddPostViewController.m"
+            timestampString = "482351922.694166"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
+            landmarkName = "-upload"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/SearchViewController/SearchViewController.m"
+            timestampString = "482354445.097064"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/SearchViewController/SearchViewController.m"
+            timestampString = "482353490.085725"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

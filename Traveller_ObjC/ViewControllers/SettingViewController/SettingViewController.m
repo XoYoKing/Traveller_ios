@@ -46,7 +46,7 @@
     self.navigationController.navigationBarHidden=NO;
     badgeView = [GIBadgeView new];
     [notificationButton addSubview:badgeView];
-    badgeView.badgeValue = 5;
+    badgeView.badgeValue = [UserData getNotificationCount];
     [self addShaddowToView:notificationButton];
     [self.view addSubview:notificationButton];
     [self.view bringSubviewToFront:notificationButton];

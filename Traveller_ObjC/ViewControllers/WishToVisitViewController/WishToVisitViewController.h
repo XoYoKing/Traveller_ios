@@ -1,20 +1,18 @@
 //
-//  SearchViewController.h
+//  WishToVisitViewController.h
 //  Traveller_ObjC
 //
-//  Created by Sandip Jadhav on 08/04/16.
+//  Created by Sagar Shirbhate on 15/04/16.
 //  Copyright © 2016 Sagar Shirbhate. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "SearchCollectionViewCell.h"
-#import "TravellerConstants.h"
+#import "FollowingTableViewCell.h"
 #import "GIBadgeView.h"
 #import "NotificationsViewController.h"
-
-@interface SearchViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate>
+@interface WishToVisitViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
-    __weak IBOutlet UICollectionView *searchCollectionView;
+    __weak IBOutlet UITableView *wishToTableView;
     GIBadgeView * badgeView;
     
     NSMutableArray * globalArrayToShow;
@@ -26,4 +24,6 @@
     __weak IBOutlet UIButton *searchBtn;
     
 }
+
+@property(strong,nonatomic)NSDictionary * selectedCityDict;
 @end

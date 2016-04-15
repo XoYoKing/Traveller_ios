@@ -9,34 +9,38 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedsTableViewCell" rowHeight="402" id="uWH-r3-vVN" customClass="FeedsTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="499" height="402"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedsTableViewCell" rowHeight="530" id="uWH-r3-vVN" customClass="FeedsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="499" height="530"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uWH-r3-vVN" id="FY5-h9-Deq">
-                <rect key="frame" x="0.0" y="0.0" width="499" height="401"/>
+                <rect key="frame" x="0.0" y="0.0" width="499" height="529"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FZd-Ho-gMN">
-                        <rect key="frame" x="-2" y="8" width="503" height="390"/>
+                        <rect key="frame" x="-2" y="8" width="503" height="518"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="s4j-73-OhH">
-                                <rect key="frame" x="15" y="5" width="60" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="po3-B9-Fo1">
+                                <rect key="frame" x="-10" y="60" width="523" height="2"/>
+                                <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="RZF-NL-mLW"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="No_User" translatesAutoresizingMaskIntoConstraints="NO" id="s4j-73-OhH">
+                                <rect key="frame" x="222" y="31" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="KAs-4s-NEl"/>
                                     <constraint firstAttribute="height" constant="60" id="yrB-SX-F3p"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbJ-Vn-YCm" customClass="FRHyperLabel">
-                                <rect key="frame" x="85" y="0.0" width="378" height="63"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="63" id="Err-82-PIx"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbJ-Vn-YCm" customClass="FRHyperLabel">
+                                <rect key="frame" x="20" y="105" width="463" height="8"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CCn-et-Iro">
-                                <rect key="frame" x="0.0" y="355" width="503" height="35"/>
+                                <rect key="frame" x="0.0" y="483" width="503" height="35"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pno-0E-0X1">
                                         <rect key="frame" x="0.0" y="0.0" width="252" height="35"/>
@@ -133,7 +137,10 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="GSi-eX-tfq">
-                                <rect key="frame" x="10" y="345" width="483" height="0.0"/>
+                                <rect key="frame" x="10" y="404" width="483" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="Vf5-fO-aIj"/>
+                                </constraints>
                                 <string key="text">UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
 The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.
 2016-04-09 19:57:34.211 Traveller_ObjC[17178:212407] Unable to simultaneously satisfy constraints.
@@ -142,8 +149,23 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drG-Bt-Pcd">
-                                <rect key="frame" x="468" y="5" width="30" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="⌚ 1 Hour ago." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38U-ew-yIz">
+                                <rect key="frame" x="10" y="121" width="473" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="mED-Vl-oFh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="Shopping" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
+                                <rect key="frame" x="0.0" y="144" width="503" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="d74-ie-qne"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drG-Bt-Pcd">
+                                <rect key="frame" x="441" y="83" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="QDk-lo-tKl"/>
                                     <constraint firstAttribute="width" constant="30" id="o9j-uj-63J"/>
@@ -152,44 +174,32 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="⌚ 1 Hour ago." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38U-ew-yIz">
-                                <rect key="frame" x="10" y="71" width="473" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="mED-Vl-oFh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="alpes.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
-                                <rect key="frame" x="0.0" y="94" width="503" height="241"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="d74-ie-qne"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RbJ-Vn-YCm" firstAttribute="top" secondItem="FZd-Ho-gMN" secondAttribute="top" id="0HF-lV-RQv"/>
+                            <constraint firstAttribute="trailing" secondItem="RbJ-Vn-YCm" secondAttribute="trailing" constant="20" id="09g-Kg-BKW"/>
                             <constraint firstItem="38U-ew-yIz" firstAttribute="top" secondItem="RbJ-Vn-YCm" secondAttribute="bottom" constant="8" id="0Tj-Rc-KrY"/>
                             <constraint firstItem="CCn-et-Iro" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" id="1rr-ig-ccM"/>
+                            <constraint firstItem="s4j-73-OhH" firstAttribute="centerY" secondItem="po3-B9-Fo1" secondAttribute="centerY" id="4JQ-x3-rLA"/>
                             <constraint firstItem="Ln7-UO-2dS" firstAttribute="top" secondItem="38U-ew-yIz" secondAttribute="bottom" constant="5" id="AaE-z4-yqg"/>
-                            <constraint firstItem="RbJ-Vn-YCm" firstAttribute="leading" secondItem="s4j-73-OhH" secondAttribute="trailing" constant="10" id="Cum-6C-52i"/>
                             <constraint firstAttribute="trailing" secondItem="drG-Bt-Pcd" secondAttribute="trailing" constant="5" id="DYP-ni-Ouv"/>
                             <constraint firstItem="GSi-eX-tfq" firstAttribute="top" secondItem="Ln7-UO-2dS" secondAttribute="bottom" constant="10" id="K4y-6u-b14"/>
-                            <constraint firstItem="s4j-73-OhH" firstAttribute="top" secondItem="FZd-Ho-gMN" secondAttribute="top" constant="5" id="R5o-GO-eXx"/>
                             <constraint firstAttribute="trailing" secondItem="Ln7-UO-2dS" secondAttribute="trailing" id="TYb-X1-Pvr"/>
                             <constraint firstAttribute="trailing" secondItem="CCn-et-Iro" secondAttribute="trailing" id="UmP-Ol-yyR"/>
+                            <constraint firstItem="po3-B9-Fo1" firstAttribute="top" secondItem="FZd-Ho-gMN" secondAttribute="top" constant="60" id="Yfv-mi-ev6"/>
                             <constraint firstItem="GSi-eX-tfq" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" constant="10" id="Zsd-5R-wC6"/>
                             <constraint firstItem="Ln7-UO-2dS" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" id="cGL-5O-9Ur"/>
                             <constraint firstAttribute="trailing" secondItem="38U-ew-yIz" secondAttribute="trailing" constant="20" id="cqV-Xn-CD2"/>
                             <constraint firstItem="CCn-et-Iro" firstAttribute="top" secondItem="GSi-eX-tfq" secondAttribute="bottom" constant="10" id="eUj-ln-Mlj"/>
-                            <constraint firstItem="drG-Bt-Pcd" firstAttribute="top" secondItem="FZd-Ho-gMN" secondAttribute="top" constant="5" id="eYb-q6-7ts"/>
-                            <constraint firstItem="s4j-73-OhH" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" constant="15" id="g3q-ij-aiq"/>
+                            <constraint firstItem="RbJ-Vn-YCm" firstAttribute="top" secondItem="s4j-73-OhH" secondAttribute="bottom" constant="14" id="fEJ-ak-U1q"/>
                             <constraint firstItem="38U-ew-yIz" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" constant="10" id="h5q-BZ-c3s"/>
                             <constraint firstAttribute="bottom" secondItem="CCn-et-Iro" secondAttribute="bottom" id="loA-Wc-hah"/>
-                            <constraint firstItem="drG-Bt-Pcd" firstAttribute="leading" secondItem="RbJ-Vn-YCm" secondAttribute="trailing" constant="5" id="ptp-CN-Kcl"/>
+                            <constraint firstItem="RbJ-Vn-YCm" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" constant="20" id="nCc-IY-sWC"/>
+                            <constraint firstItem="s4j-73-OhH" firstAttribute="centerX" secondItem="FZd-Ho-gMN" secondAttribute="centerX" id="qNk-7q-OjE"/>
+                            <constraint firstItem="po3-B9-Fo1" firstAttribute="leading" secondItem="FZd-Ho-gMN" secondAttribute="leading" constant="-10" id="vAY-wN-H1X"/>
                             <constraint firstAttribute="trailing" secondItem="GSi-eX-tfq" secondAttribute="trailing" constant="10" id="w4d-PU-73O"/>
+                            <constraint firstAttribute="trailing" secondItem="po3-B9-Fo1" secondAttribute="trailing" constant="-10" id="yDa-x9-sax"/>
+                            <constraint firstItem="drG-Bt-Pcd" firstAttribute="top" secondItem="po3-B9-Fo1" secondAttribute="bottom" constant="8" id="ydr-ia-rjn"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -207,6 +217,8 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                 <outlet property="comentMenuTextLbl" destination="g2Q-uh-Q1z" id="bq5-Wl-3V0"/>
                 <outlet property="commentBtn" destination="g7k-rV-t7c" id="C21-M8-iKa"/>
                 <outlet property="extraFeedLabel" destination="GSi-eX-tfq" id="Fcv-ux-5fH"/>
+                <outlet property="imageHeight" destination="yrB-SX-F3p" id="Yf5-f3-tkg"/>
+                <outlet property="imageWidth" destination="KAs-4s-NEl" id="J46-Sw-OX2"/>
                 <outlet property="likeBtn" destination="mDU-AP-ac3" id="QUU-m0-5Io"/>
                 <outlet property="likeMenuLogoLbl" destination="KnC-JE-fLT" id="BwB-4w-Dr6"/>
                 <outlet property="likeMenuTxtLbl" destination="v1d-we-6GB" id="7uH-8u-F5p"/>
@@ -216,11 +228,11 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                 <outlet property="postImage" destination="Ln7-UO-2dS" id="m1c-K5-tAE"/>
                 <outlet property="profileImage" destination="s4j-73-OhH" id="4c0-Xw-HMY"/>
             </connections>
-            <point key="canvasLocation" x="326.5" y="570"/>
+            <point key="canvasLocation" x="450.5" y="578"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="alpes.jpg" width="1267" height="742"/>
-        <image name="avatar.jpg" width="576" height="477"/>
+        <image name="No_User" width="300" height="300"/>
+        <image name="Shopping" width="1024" height="512"/>
     </resources>
 </document>

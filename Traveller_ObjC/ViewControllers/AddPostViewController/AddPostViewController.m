@@ -19,7 +19,7 @@
     [self setUpView];
     [self setUpScrollView];
     [self setUpNavigationBar];
-    self.title=@"Places Visited In Agra";
+    self.title=@"Places Visited";
  }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -268,6 +268,7 @@
 }
 -(void)savePost{
     
+    [self checkValidationsFromForm];
 }
 
 #pragma mark - Place search Textfield Delegates
@@ -389,16 +390,9 @@
 #pragma mark ============== Call Webservice ================
 
 -(void)checkValidationsFromForm{
-    int pinCount=0;
-    for (id<MKAnnotation> annotation in mapView.annotations){
-        MKAnnotationView* anView = [mapView viewForAnnotation: annotation];
-        if (anView){
-                pinCount++;
-        }
-    }
     if (postImageView.image==nil) {
         [self.view makeToast:@"Please select image" duration:toastDuration position:toastPositionBottomUp];
-    }else if(pinCount<=0){
+    }else if(_txtPlaceSearch.text.length<=3){
         [self.view makeToast:@"Please select proper location" duration:toastDuration position:toastPositionBottomUp];
     }else if ([descriptionTextView.text isEqualToString:@"  This place is known for ? How to get it ? Things to do ? Famous things ? etc. "]){
         [self.view makeToast:@"Please insert some description about place" duration:toastDuration position:toastPositionBottomUp];
@@ -434,7 +428,7 @@
     NSDictionary *parameters = @{
                                  @"action": ACTION_ADD_ACTIVITY,
                                  @"userId": [UserData getUserID],
-                                 @"cityId": [_selectedCityDict valueForKey:@"cityId"],
+                                 @"cityId": [_selectedCityDict valueForKey:@"id"],
                                  @"title": _txtPlaceSearch.text,
                                  @"description": descriptionTextView.text,
                                  @"activity_type": selectedActivityType
@@ -442,7 +436,7 @@
     [[WebHandler sharedHandler]uploadDataWithImage:postImageView.image forKey:@"file1" andParameters:parameters OnUrl:URL_CONST completion:^(NSDictionary * responceDict) {
         if (responceDict) {
             int status =[[responceDict valueForKey:@"status"] intValue];
-            if (status == (int)SUCESS) {
+            if (status == 1) {
                 [self.view hideLoader];
                 [self.view makeToast:@"Post successfully Posted" duration:toastDuration position:toastPositionBottomUp];
                 [self performSelector:@selector(backToCities) withObject:nil afterDelay:2];

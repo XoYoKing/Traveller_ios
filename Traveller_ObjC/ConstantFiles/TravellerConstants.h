@@ -80,7 +80,8 @@
 #define ACTION_ADD_ACTIVITY @"addUserActivity"
 #define ACTION_GET_WISH_TO_VISITED @"getCityVisitedPerson"
 #define ACTION_ADD_FOLLOWER @"addFollowers"
-
+#define ACTION_SEARCH_USER @"searchuser"
+#define ACTION_GET_VISITED_CITY_PEOPLE @"getCityVisitedPerson"
 
 #pragma mark --------------------------Color Codes-------------------------------
 #define userShouldDOButoonColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
