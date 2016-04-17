@@ -11,15 +11,12 @@
 @implementation LikeTableViewCell
 
 - (void)awakeFromNib {
-    _bgView.layer.borderColor=[UIColor blackColor].CGColor;
-    _bgView.layer.borderWidth=1;
-    _bgView.layer.cornerRadius=6;
-    [self addShaddowToView:_bgView];
+
+    [_bgView addShaddow];
+    [_profileImageView addShaddow];
     
-    _profileImageView.layer.borderColor=[UIColor whiteColor].CGColor;
-    _profileImageView.layer.borderWidth=2;
-    _profileImageView.layer.cornerRadius=6;
-    [self addShaddowToView:_profileImageView];
+    _profileImageView.layer.cornerRadius=30;
+    _profileImageView.clipsToBounds=YES;
     
 }
 
@@ -28,11 +25,6 @@
 
     // Configure the view for the selected state
 }
--(void)addShaddowToView:(UIView *)view{
-    view.layer.shadowOffset = CGSizeMake(1, 1);
-    view.layer.shadowColor = [[UIColor blackColor] CGColor];
-    view.layer.shadowRadius = 4.0f;
-    view.layer.shadowOpacity = 0.80f;
-}
+
 
 @end

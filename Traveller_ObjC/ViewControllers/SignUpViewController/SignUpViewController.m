@@ -23,16 +23,16 @@
 }
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
-                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
-                                back_btn_Color, NSForegroundColorAttributeName, nil];
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
     btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnClose.tintColor=back_btn_Color;
-    //  [btnClose setTitle:[FontIcon iconString:ICON_CANCEL] forState:UIControlStateNormal];
+    btnClose.tintColor=[UIColor blackColor];
+    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
     self.navigationItem.leftBarButtonItem = leftbarButton;
@@ -46,12 +46,14 @@
 -(void)setUpView{
     maleChk.font=[UIFont fontWithName:fontIcomoon size:20];
     maleChk.text =[NSString stringWithUTF8String:ICOMOON_CHECK];
+    maleChk.textColor=Check_Color;
     
     femaleChk.font=[UIFont fontWithName:fontIcomoon size:20];
-    femaleChk.text =[NSString stringWithUTF8String:ICOMOON_UNCHECK];
+    femaleChk.text =[NSString stringWithUTF8String:ICOMOON_CROSS];
+    femaleChk.textColor=Uncheck_Color;
     
     termButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
-    [termButton setTitle:[NSString stringWithUTF8String:ICOMOON_CHECKBOX_UNCHECKED] forState:UIControlStateNormal] ;
+    [termButton setTitle:[NSString stringWithUTF8String:ICOMOON_RADIO_UNCHECK] forState:UIControlStateNormal] ;
     
     [countryTF setLeftPadding:35];
     
@@ -74,6 +76,31 @@
     [myToolbar setItems:[NSArray arrayWithObjects: cancleBtn,flexibleWidth,flexibleWidth1,doneButton, nil] animated:NO];
     // Add toolbars to textfields
     countryTF.inputAccessoryView = myToolbar;
+    
+    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:font_size_normal_regular]};
+    termsLbl.attributedText = [[NSAttributedString alloc]initWithString:@"I accept Terms and Conditions" attributes:attributes];
+    
+    void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
+        if ([substring isEqualToString:@"Terms and Conditions"]) {
+            
+        }
+    };
+    //Added link substrings
+
+        NSMutableArray * substringArr =[NSMutableArray new];
+      [substringArr addObject:@"Terms and Conditions"];
+        [termsLbl setLinksForSubstrings:substringArr withLinkHandler:handler];
+    
+    if ([_fromWhichMenu isEqualToString:@"Update"]) {
+        registerBtn.hidden=YES;
+        registerHeightConstraint.constant=-80;
+        [self.view layoutIfNeeded];
+        termsLbl.hidden=YES;
+        termButton.hidden=YES;
+    }else{
+        updateBtn.hidden=YES;
+        cancelBtn.hidden=YES;
+    }
 }
 
 -(void)hidePicker{
@@ -116,12 +143,33 @@
 }
 
 - (IBAction)maleBtnClick:(id)sender {
+    maleChk.font=[UIFont fontWithName:fontIcomoon size:20];
+    maleChk.text =[NSString stringWithUTF8String:ICOMOON_CHECK];
+    maleChk.textColor=Check_Color;
+    
+    femaleChk.font=[UIFont fontWithName:fontIcomoon size:20];
+    femaleChk.text =[NSString stringWithUTF8String:ICOMOON_CROSS];
+    femaleChk.textColor=Uncheck_Color;
 }
 
 - (IBAction)femaleClick:(id)sender {
+    maleChk.font=[UIFont fontWithName:fontIcomoon size:20];
+    maleChk.text =[NSString stringWithUTF8String:ICOMOON_CROSS];
+    maleChk.textColor=Uncheck_Color;
+    
+    femaleChk.font=[UIFont fontWithName:fontIcomoon size:20];
+    femaleChk.text =[NSString stringWithUTF8String:ICOMOON_CHECK];
+    femaleChk.textColor=Check_Color;
 }
 
-- (IBAction)termButtonClick:(id)sender {
+- (IBAction)termButtonClick:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:[NSString stringWithUTF8String:ICOMOON_RADIO_UNCHECK]]) {
+        termButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
+        [termButton setTitle:[NSString stringWithUTF8String:ICOMOON_RADIO_CHECK] forState:UIControlStateNormal] ;
+    }else{
+        termButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
+        [termButton setTitle:[NSString stringWithUTF8String:ICOMOON_RADIO_UNCHECK] forState:UIControlStateNormal] ;
+    }
 }
 
 - (IBAction)registerClick:(id)sender {

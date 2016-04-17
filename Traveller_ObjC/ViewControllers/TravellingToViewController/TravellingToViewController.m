@@ -9,7 +9,7 @@
 #import "TravellingToViewController.h"
 #import "CitiesCollectionViewCell.h"
 #import "InviteToJoinViewController.h"
-#import "WishToVisitViewController.h"
+#import "AskForTipsViewController.h"
 @interface TravellingToViewController ()
 
 @end
@@ -50,8 +50,8 @@
 }
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
-                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
-                                back_btn_Color, NSForegroundColorAttributeName, nil];
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -140,10 +140,12 @@
 
 -(void)openPostForm:(UIButton *)btn{
     InviteToJoinViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"InviteToJoinViewController"];
+    vc.selectedCityDict=[globalArrayToShow objectAtIndex:btn.tag];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)openWishedToForm:(UIButton *)btn{
-    WishToVisitViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"WishToVisitViewController"];
+    AskForTipsViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"AskForTipsViewController"];
+    vc.selectedCityDict=[globalArrayToShow objectAtIndex:btn.tag];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

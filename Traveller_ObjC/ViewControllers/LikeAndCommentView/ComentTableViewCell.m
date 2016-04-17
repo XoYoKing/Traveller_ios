@@ -12,10 +12,12 @@
 
 - (void)awakeFromNib {
     
-    _profileImageView.layer.borderColor=[UIColor whiteColor].CGColor;
-    _profileImageView.layer.borderWidth=2;
-    _profileImageView.layer.cornerRadius=6;
-    [self addShaddowToView:_profileImageView];
+    [_profileImageView addShaddow];
+    _profileImageView.layer.cornerRadius=25;
+    _profileImageView.clipsToBounds=YES;
+    
+    _deleteButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
+    [_deleteButton setTitle:[NSString stringWithUTF8String:ICOMOON_DELET] forState:UIControlStateNormal] ;
     
 }
 -(void)addShaddowToView:(UIView *)view{

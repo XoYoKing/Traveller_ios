@@ -15,6 +15,8 @@
     __weak IBOutlet UITableView *wishToTableView;
     GIBadgeView * badgeView;
     
+    NSString * publicID;
+    
     NSMutableArray * globalArrayToShow;
     NSMutableArray * citiesArray;
     BOOL citiesPagingBoolean;

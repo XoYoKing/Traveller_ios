@@ -30,6 +30,7 @@
 		399691521CB90F56000A3A4A /* FollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 399691511CB90F56000A3A4A /* FollowingTableViewCell.m */; };
 		399691561CB92904000A3A4A /* FRHyperLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 399691551CB92904000A3A4A /* FRHyperLabel.m */; };
 		3996915A1CB944A6000A3A4A /* LocationFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399691591CB944A6000A3A4A /* LocationFeedViewController.m */; };
+		39B73E9E1CC39240007E42D6 /* ViewProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B73E9D1CC39240007E42D6 /* ViewProfileTableViewCell.m */; };
 		39CE42E91CBA08C1000B371C /* LikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CE42E81CBA08C1000B371C /* LikeViewController.m */; };
 		39CE42EC1CBA111A000B371C /* LikeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CE42EB1CBA111A000B371C /* LikeTableViewCell.m */; };
 		39CE42EF1CBA167C000B371C /* ComentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CE42EE1CBA167C000B371C /* ComentTableViewCell.m */; };
@@ -128,6 +129,8 @@
 		399691551CB92904000A3A4A /* FRHyperLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRHyperLabel.m; sourceTree = "<group>"; };
 		399691581CB944A6000A3A4A /* LocationFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationFeedViewController.h; sourceTree = "<group>"; };
 		399691591CB944A6000A3A4A /* LocationFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationFeedViewController.m; sourceTree = "<group>"; };
+		39B73E9C1CC39240007E42D6 /* ViewProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewProfileTableViewCell.h; sourceTree = "<group>"; };
+		39B73E9D1CC39240007E42D6 /* ViewProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewProfileTableViewCell.m; sourceTree = "<group>"; };
 		39CE42E71CBA08C1000B371C /* LikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeViewController.h; sourceTree = "<group>"; };
 		39CE42E81CBA08C1000B371C /* LikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeViewController.m; sourceTree = "<group>"; };
 		39CE42EA1CBA111A000B371C /* LikeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeTableViewCell.h; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 			children = (
 				AA0321CD1CBF971100B38B76 /* ViewUserProfileViewController.h */,
 				AA0321CE1CBF971100B38B76 /* ViewUserProfileViewController.m */,
+				39B73E9C1CC39240007E42D6 /* ViewProfileTableViewCell.h */,
+				39B73E9D1CC39240007E42D6 /* ViewProfileTableViewCell.m */,
 			);
 			path = ViewUserProfileViewController;
 			sourceTree = "<group>";
@@ -1002,6 +1007,7 @@
 				AA807B171CBE181600D1E665 /* NSString+Levenshtein.m in Sources */,
 				AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */,
 				AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */,
+				39B73E9E1CC39240007E42D6 /* ViewProfileTableViewCell.m in Sources */,
 				3996912F1CB8F64C000A3A4A /* Notification1TableViewCell.m in Sources */,
 				AA807B191CBE181600D1E665 /* PlaceDetail.m in Sources */,
 				390419921CBC1AEF00879650 /* UserData.m in Sources */,
@@ -1065,7 +1071,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
+				PROVISIONING_PROFILE = "6f786a21-3a99-4728-bb83-a8c2bcb7e45c";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1106,7 +1112,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
+				PROVISIONING_PROFILE = "6f786a21-3a99-4728-bb83-a8c2bcb7e45c";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1118,8 +1124,8 @@
 			baseConfigurationReference = 3C43B7F232D644E47068A78B /* Pods-Traveller_ObjC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1131,8 +1137,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
-				TARGETED_DEVICE_FAMILY = 1;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1141,8 +1147,8 @@
 			baseConfigurationReference = F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1154,8 +1160,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "11231d07-59b2-4883-8e00-70617137c86e";
-				TARGETED_DEVICE_FAMILY = 1;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

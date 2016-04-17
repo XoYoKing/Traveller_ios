@@ -16,44 +16,54 @@
 #import "CommentsViewController.h"
 
 @interface LocationFeedViewController ()<UITableViewDelegate, UITableViewDataSource>
-{
-    CGFloat _headerHeight;
-    CGFloat _subHeaderHeight;
-    CGFloat _headerSwitchOffset;
-    CGFloat _avatarImageSize;
-    CGFloat _avatarImageCompressedSize;
-    BOOL _barIsCollapsed;
-    BOOL _barAnimationComplete;
-    
-}
-
-@property (weak) UITableView *tableView;
-@property (weak) UIImageView *imageHeaderView;
-@property (weak) UIVisualEffectView *visualEffectView;
-@property (strong,nonatomic) UIView *customTitleView;
-@property (strong) UIImage *originalBackgroundImage;
-
-@property (strong) NSMutableDictionary* blurredImageCache;
-
-
-
 
 @end
 
 @implementation LocationFeedViewController
--(void)addShaddowToView:(UIView *)view{
-    view.layer.shadowOffset = CGSizeMake(2, 2);
-    view.layer.shadowColor = [[UIColor blackColor] CGColor];
-    view.layer.shadowRadius = 4.0f;
-    view.layer.shadowOpacity = 0.80f;
-}
--(void)removeShaddowToView:(UIView *)view{
-    view.layer.shadowOffset = CGSizeMake(0, 0);
-    view.layer.shadowColor = [[UIColor blackColor] CGColor];
-    view.layer.shadowRadius = 0;
-    view.layer.shadowOpacity = 0;
+
+
+#pragma mark====================View Controller Life Cycles===============================
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    
+    if (firstTimePageOpen==YES) {
+        [self.view showLoader];
+        [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+    }
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.navigationController.navigationBarHidden=YES;
+    
+    homeFeedPage=1;
+    followerPage=1;
+    followingPage=1;
+    wishToPage=1;
+    visitedCitiesPage=1;
+    selectedIndex=0;
+    
+    homeFeedData=[NSMutableArray new];
+    followerData=[NSMutableArray new];
+    followingData=[NSMutableArray new];
+    wishToData=[NSMutableArray new];
+    visitedCitiesData=[NSMutableArray new];
+    
+    firstTimePageOpen=YES;
+    homeFeedPageShouldDoPaging=YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
+}
+
+
+#pragma mark====================Notification View===============================
 -(void)addNotificationView{
     UIButton *  notificationButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     notificationButton.frame = CGRectMake(self.view.frame.size.width-65,self.view.frame.size.height-65,50,50);
@@ -66,8 +76,8 @@
     self.navigationController.navigationBarHidden=NO;
     badgeView = [GIBadgeView new];
     [notificationButton addSubview:badgeView];
-    badgeView.badgeValue = 5;
-    [self addShaddowToView:notificationButton];
+    badgeView.badgeValue = [UserData getNotificationCount];
+    [notificationButton addShaddow];
     [self.view addSubview:notificationButton];
     [self.view bringSubviewToFront:notificationButton];
 }
@@ -77,33 +87,23 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
--(void)viewDidAppear:(BOOL)animated{
-    if (badgeView==nil) {
-        [self addNotificationView];
-    }
-    [self setupTableAfterClick];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+#pragma mark====================Set Up Home View Dont Do Any Changes Here=============================
+#pragma mark===============These are private methods Written By Sagar Shirbhate=============================
+-(void)setHomeView{
     
+    self.navigationController.navigationBarHidden=NO;
     [self configureNavBar];
-    selectedIndex=0;
     
-    _headerHeight = 150.0;
-    _subHeaderHeight = 100.0;
-    _avatarImageSize = 100;
-    _avatarImageCompressedSize = 44;
+    _headerHeight = feed_headerHeight;
+    _subHeaderHeight = feed_subHeaderHeight;
+    _avatarImageSize = feed_avatarImageSize;
+    _avatarImageCompressedSize = feed_avatarImageCompressedSize;
     _barIsCollapsed = false;
     _barAnimationComplete = false;
     
     
     self.tableView.estimatedRowHeight=50;
     self.tableView.rowHeight=UITableViewAutomaticDimension;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.separatorColor = [UIColor clearColor];
-    [self.tableView reloadData];
     
     UIApplication* sharedApplication = [UIApplication sharedApplication];
     CGFloat kStatusBarHeight = sharedApplication.statusBarFrame.size.height;
@@ -120,9 +120,10 @@
     tableView.dataSource = self;
     self.tableView = tableView;
     [self.view addSubview:tableView];
+    self.tableView.hidden=YES;
     views[@"tableView"] = tableView;
     
-    UIImage* bgImage = [UIImage imageNamed:@"alpes.jpg"];
+    UIImage* bgImage = [UIImage imageNamed:@"Place"];
     _originalBackgroundImage = bgImage;
     
     UIImageView* headerImageView = [[UIImageView alloc] initWithImage:bgImage];
@@ -144,35 +145,27 @@
     [tableHeaderView insertSubview:subHeaderPart belowSubview:headerImageView];
     views[@"subHeaderPart"] = subHeaderPart;
     
-    
-    
     tableView.tableHeaderView = tableHeaderView;
     
-    
-    
     UIImageView* avatarImageView = [self createAvatarImage];
+    
+    NSURL * profileUrl =[NSURL URLWithString:_imageUrl];
+    if (profileUrl) {
+        [avatarImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+    }
+    
     avatarImageView.translatesAutoresizingMaskIntoConstraints = NO; //autolayout
     views[@"avatarImageView"] = avatarImageView;
     avatarImageView.userInteractionEnabled=YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageTap)];
-    tap.cancelsTouchesInView = YES;
-    tap.numberOfTapsRequired = 1;
-    [avatarImageView addGestureRecognizer:tap];
-    
+   avatarImageView.userInteractionEnabled=YES;
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] init];
+    [tapRecognizer addTarget:self action:@selector(clickedOnPostImage:)];
+    [avatarImageView addGestureRecognizer:tapRecognizer];
     
     [tableHeaderView addSubview:avatarImageView];
     
-    /*
-     * At this point tableHeader views are ordered like this:
-     * 0 : subHeaderPart
-     * 1 : headerImageView
-     * 2 : avatarImageView
-     */
-    
-    /* This is important, or section header will 'overlaps' the navbar */
     self.automaticallyAdjustsScrollViewInsets = YES;
-    
     
     //Now Let's do the layout
     NSArray* constraints;
@@ -195,8 +188,6 @@
     format = @"V:|-0-[tableView]-0-|";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:metrics views:views];
     [self.view addConstraints:constraints];
-    
-    
     
     // ===== Header image view should take all available width ========
     
@@ -224,29 +215,23 @@
     NSLayoutConstraint* magicConstraint = [NSLayoutConstraint constraintWithItem:headerImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0];
     [self.view addConstraint: magicConstraint];
     
-    
-    
     // ===== avatar should stick to left with default margin spacing  ========
     format = @"|-[avatarImageView]";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:metrics views:views];
     [self.view addConstraints:constraints];
     
-    
     // === avatar is square
     constraint = [NSLayoutConstraint constraintWithItem:avatarImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:avatarImageView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0];
     [self.view addConstraint: constraint];
-    
     
     // ===== avatar size can be between avatarSize and avatarCompressedSize
     format = @"V:[avatarImageView(<=avatarSize@760,>=avatarCompressedSize@800)]";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:metrics views:views];
     [self.view addConstraints:constraints];
     
-    
     constraint = [NSLayoutConstraint constraintWithItem:avatarImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:(kStatusBarHeight + kNavBarHeight)];
     constraint.priority = 790;
     [self.view addConstraint: constraint];
-    
     
     constraint = [NSLayoutConstraint constraintWithItem:avatarImageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:subHeaderPart attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-50.0];
     constraint.priority = 801;
@@ -256,313 +241,45 @@
         [self fillBlurredImageCache];
     });
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
-}
-
--(void)updateNotificationCount:(NSNotification *)notification{
-    NSDictionary * dict =notification.object;
-    int count = [[dict valueForKey:@"tip_count"] intValue];
-    badgeView.badgeValue = count;
-}
-
--(void)handleImageTap{
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    if ([self isViewLoaded] && self.view.window){
-        /*strong ref to this*/
-        _customTitleView = nil;
-    }
-}
-
-- (void)dealloc{
-    _originalBackgroundImage = nil;
-    [_blurredImageCache removeAllObjects];
-    _blurredImageCache = nil;
-}
-#pragma mark - Table view data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 25;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [UITableViewCell new];
-    
-    if (selectedIndex==0) {
-        UINib *nib = [UINib nibWithNibName:@"FeedsTableViewCell" bundle:nil];
-        [self.tableView registerNib:nib forCellReuseIdentifier:@"FeedsTableViewCell"];
-        FeedsTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FeedsTableViewCell"];
-        
-        cell.mainTitle.numberOfLines = 0;
-        
-        //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to shopping at🚩Tulshibag , Pune";
-        NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:12]};
-        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
-        
-        void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-            if ([substring isEqualToString:@"Sagar Shirbhate"]) {
-                [self openUserProfile];
-            }else{
-                [self openLocationFeedView];
-            }
-        };
-        
-        
-        //Step 3: Add link substrings
-        [cell.mainTitle setLinksForSubstrings:@[@"Tulshibag , Pune", @"Sagar Shirbhate"] withLinkHandler:handler];
-        
-        [cell.likeBtn addTarget:self action:@selector(openLikeMenu:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.commentBtn addTarget:self action:@selector(openCommentMenu:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView layoutIfNeeded];
-        return cell;
-        
-    }else if (selectedIndex==1){
-        UINib *nib = [UINib nibWithNibName:@"FeedsTableViewCell" bundle:nil];
-        [self.tableView registerNib:nib forCellReuseIdentifier:@"FeedsTableViewCell"];
-        FeedsTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FeedsTableViewCell"];
-        
-        cell.mainTitle.numberOfLines = 0;
-        
-        //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to shopping 👗 at Tulshibag , Pune";
-        NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:12]};
-        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
-        
-        void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-            if ([substring isEqualToString:@"Sagar Shirbhate"]) {
-                [self openUserProfile];
-            }else{
-                [self openLocationFeedView];
-            }
-        };
-        
-        
-        //Step 3: Add link substrings
-        [cell.mainTitle setLinksForSubstrings:@[@"Tulshibag , Pune", @"Sagar Shirbhate"] withLinkHandler:handler];
-        
-        [cell.contentView layoutIfNeeded];
-        return cell;
-    }else if (selectedIndex==2){
-        UINib *nib = [UINib nibWithNibName:@"FeedsTableViewCell" bundle:nil];
-        [self.tableView registerNib:nib forCellReuseIdentifier:@"FeedsTableViewCell"];
-        FeedsTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FeedsTableViewCell"];
-        
-        cell.mainTitle.numberOfLines = 0;
-        
-        //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to accomodation 🏠 👗at Tulshibag , Pune";
-        NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:12]};
-        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
-        
-        void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-            if ([substring isEqualToString:@"Sagar Shirbhate"]) {
-                [self openUserProfile];
-            }else{
-                [self openLocationFeedView];
-            }
-        };
-        
-        
-        //Step 3: Add link substrings
-        [cell.mainTitle setLinksForSubstrings:@[@"Tulshibag , Pune", @"Sagar Shirbhate"] withLinkHandler:handler];
-        
-        [cell.contentView layoutIfNeeded];
-        return cell;
-    }else if (selectedIndex==3){
-        UINib *nib = [UINib nibWithNibName:@"FeedsTableViewCell" bundle:nil];
-        [self.tableView registerNib:nib forCellReuseIdentifier:@"FeedsTableViewCell"];
-        FeedsTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FeedsTableViewCell"];
-        
-        cell.mainTitle.numberOfLines = 0;
-        
-        //Step 1: Define a normal attributed string for non-link texts
-        NSString *string = @"Sagar Shirbhate recommand to routing 🌄 🏠 👗 at Tulshibag , Pune";
-        NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:12]};
-        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
-        
-        void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-            if ([substring isEqualToString:@"Sagar Shirbhate"]) {
-                [self openUserProfile];
-            }else{
-                [self openLocationFeedView];
-            }
-        };
-        
-        
-        //Step 3: Add link substrings
-        [cell.mainTitle setLinksForSubstrings:@[@"Tulshibag , Pune", @"Sagar Shirbhate"] withLinkHandler:handler];
-        
-        [cell.contentView layoutIfNeeded];
-        return cell;
-    }else if (selectedIndex==4){
-        UINib *nib = [UINib nibWithNibName:@"FollowingTableViewCell" bundle:nil];
-        [[self tableView] registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
-        FollowingTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FollowingTableViewCell"];
-        return cell;
-    }
-    return cell;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    NSArray * namesOfMenus =@[@"Places",@"Food",@"Accomodation",@"Shopping",@"Visited By"];
-    
-    myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
-    CGFloat scrollWidth = 0.f;
-    buttonArray=[[NSMutableArray alloc]init];
-    for ( int j=0; j<namesOfMenus.count; j++)
-    {
-        NSString * name =[namesOfMenus objectAtIndex:j];
-        CGSize size = [name sizeWithAttributes:
-                       @{NSFontAttributeName: [UIFont fontWithName:font_regular size:17]}];
-        CGSize textSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
-        CGFloat strikeWidth = textSize.width;
-        CGRect frame = CGRectMake(scrollWidth, 0,strikeWidth+20, 40);
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTag:j];
-        button.frame = frame;
-        [button setBackgroundColor:[UIColor whiteColor]];
-        button.titleLabel.textColor=[UIColor whiteColor];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.layer.borderColor=[UIColor whiteColor].CGColor;
-        button.titleLabel.textAlignment=NSTextAlignmentCenter;
-        [button addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:name forState:UIControlStateNormal];
-        
-        scrollWidth= scrollWidth+strikeWidth+20;
-        
-        if (j==selectedIndex) {
-            button.backgroundColor= segment_selected_Color;
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
-            [self addShaddowToView:button];
-            if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_regular size:17];
-            }else {
-                button.titleLabel.font=[UIFont fontWithName:font_regular size:15];
-            }
-        }else {
-            button.backgroundColor= [UIColor blackColor];
-            [self removeShaddowToView:button];
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
-            if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_regular size:17];
-            }else{
-                button.titleLabel.font=[UIFont fontWithName:font_regular size:15];
-            }
-        }
-        
-        [buttonArray addObject:button];
-        [myScrollView addSubview:button];
-        
-    }
-    myScrollView.contentSize = CGSizeMake(scrollWidth, 30.f);
-    myScrollView.pagingEnabled = NO;
-    [myScrollView setShowsHorizontalScrollIndicator:NO];
-    [myScrollView setShowsVerticalScrollIndicator:NO];
-    return myScrollView;
-    
-}
-
-
-#pragma mark - Header Button Action
--(void)buttonEvent:(UIButton*)sender
-{
-    NSInteger index= sender.tag;
-    selectedIndex=index;
-    
-    for(int i=0;i<buttonArray.count;i++)
-    {
-        if(i==index)
-        {
-            UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-            btn.backgroundColor= segment_selected_Color;
-            [self addShaddowToView:btn];
-            
-        }
-        else{
-            UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-            btn.backgroundColor=[UIColor blackColor];
-            [self removeShaddowToView:btn];
-        }
-    }
-    
-    CGRect frame1 = myScrollView.frame;
-    UIButton * bt=(UIButton*)[buttonArray objectAtIndex:index];
-    frame1 =bt.frame ;
-    [myScrollView scrollRectToVisible:frame1 animated:YES];
-    
-    [self setupTableAfterClick];
-}
-
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
-}
-
-
--(void)setupTableAfterClick{
-    if (selectedIndex==0) {
-        self.tableView.estimatedRowHeight=200;
-        self.tableView.rowHeight=UITableViewAutomaticDimension;
-    }else if (selectedIndex==1){
-        self.tableView.estimatedRowHeight=200;
-        self.tableView.rowHeight=UITableViewAutomaticDimension;
-    }else if (selectedIndex==2){
-        self.tableView.estimatedRowHeight=200;
-        self.tableView.rowHeight=UITableViewAutomaticDimension;
-    }else if (selectedIndex==3){
-        self.tableView.estimatedRowHeight=200;
-        self.tableView.rowHeight=UITableViewAutomaticDimension;
-    }else if (selectedIndex==4){
-        self.tableView.estimatedRowHeight=130;
-        self.tableView.rowHeight=UITableViewAutomaticDimension;
-    }
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.separatorColor = [UIColor clearColor];
     [self.tableView reloadData];
-    [self performSelector:@selector(afterReloadScroll) withObject:nil afterDelay:0.3];
+    self.tableView.backgroundColor=[UIColor whiteColor];
+    self.view.backgroundColor=[UIColor whiteColor];
+    [self performSelector:@selector(showTableView) withObject:nil afterDelay:2];
+    [self performSelector:@selector(setViewForFirstTime) withObject:nil afterDelay:0.2];
 }
--(void)afterReloadScroll{
-    CGRect frame1 = myScrollView.frame;
-    UIButton * bt=(UIButton*)[buttonArray objectAtIndex:selectedIndex];
-    frame1 =bt.frame ;
-    [myScrollView scrollRectToVisible:frame1 animated:YES];
+// To Show Hide Table View at the time of Data Downloading
+-(void)showTableView{
+    self.tableView.hidden=NO;
+    self.tableView.tableFooterView=[UIView new];
+    [JTProgressHUD hide];
 }
 
-#pragma mark - NavBar configuration
-
+// Set up View for First Time
+-(void)setViewForFirstTime{
+    if (badgeView==nil) {
+        [self addNotificationView];
+    }
+    [self setupTableAfterClick];
+    
+}
 - (void) configureNavBar {
-    
-    self.view.backgroundColor = [UIColor blueColor];
-    
+    self.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    
-    
     UIButton *btn =  [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0,0,25,25);
     btn.titleLabel.font =[UIFont fontWithName:fontIcomoon size:25];
-    btn.tintColor=[UIColor whiteColor];
-    [btn setImage:[UIImage imageNamed:@"back_white"] forState:UIControlStateNormal];
+    [btn setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal] ;
+    btn.titleLabel.textColor  = [UIColor whiteColor];
     [btn addTarget:self action:@selector(menuToggle) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
     self.navigationItem.leftBarButtonItem =   barBtn;
     [self switchToExpandedHeader];
 }
 
 -(void)menuToggle{
-  [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 - (void)switchToExpandedHeader
 {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -570,45 +287,19 @@
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationItem.titleView = nil;
-    //    if(self.visualEffectView){
-    //        [self.visualEffectView removeFromSuperview];
-    //        self.visualEffectView = nil;
-    //    }
-    
     _barAnimationComplete = false;
     self.imageHeaderView.image = self.originalBackgroundImage;
-    
-    
-    //Inverse Z-Order of avatar Image view
     [self.tableView.tableHeaderView exchangeSubviewAtIndex:1 withSubviewAtIndex:2];
-    
 }
 
 - (void)switchToMinifiedHeader
 {
-    //    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    //    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    //    visualEffectView.frame = self.imageHeaderView.bounds;
-    //    self.visualEffectView = visualEffectView;
-    //    [self.imageHeaderView addSubview:visualEffectView];
-    
     _barAnimationComplete = false;
-    
     self.navigationItem.titleView = self.customTitleView;
     self.navigationController.navigationBar.clipsToBounds = YES;
-    
-    //Setting the view transform or changing frame origin has no effect, only this call does
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:60 forBarMetrics:UIBarMetricsDefault];
-    
-    //[self.navigationItem.titleView updateConstraintsIfNeeded];
-    
-    //Inverse Z-Order of avatar Image view
     [self.tableView.tableHeaderView exchangeSubviewAtIndex:1 withSubviewAtIndex:2];
 }
-
-
-#pragma mark - UIScrollView delegate
-
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat yPos = scrollView.contentOffset.y;
@@ -619,73 +310,45 @@
         [self switchToExpandedHeader];
         _barIsCollapsed = false;
     }
-    
-    //appologies for the magic numbers
     if(yPos > _headerSwitchOffset +20 && yPos <= _headerSwitchOffset +20 +40){
         CGFloat delta = (40 +20 - (yPos-_headerSwitchOffset));
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:delta forBarMetrics:UIBarMetricsDefault];
-        
         self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
-        
     }
     if(!_barAnimationComplete && yPos > _headerSwitchOffset +20 +40) {
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:0 forBarMetrics:UIBarMetricsDefault];
         self.imageHeaderView.image = [self blurWithImageAt:1.0];
         _barAnimationComplete = true;
     }
-    
 }
-
-
-#pragma mark - privates
-
 - (UIImageView*) createAvatarImage {
-    UIImageView* avatarView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar.jpg"]];
+    UIImageView* avatarView = [[UIImageView alloc] init];
     avatarView.contentMode = UIViewContentModeScaleToFill;
-    avatarView.layer.cornerRadius = 8.0;
-    avatarView.layer.borderWidth = 3.0f;
-    avatarView.layer.borderColor = [UIColor whiteColor].CGColor;
-    
+    [avatarView addWhiteLayerAndCornerRadius:mainUserProfileICornerRadius AndWidth:borderWidth_Image];
     avatarView.clipsToBounds = YES;
     return avatarView;
-    
 }
-
 - (UIView*) customTitleView {
     if(!_customTitleView){
         UILabel* myLabel = [UILabel new];
         myLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        myLabel.text = @"Sagar Shirbhate";
+        myLabel.text =_name;
         myLabel.numberOfLines =1;
-        
         [myLabel setTextColor:[UIColor whiteColor]];
-        [myLabel setFont:[UIFont boldSystemFontOfSize:15.0f]];
-        
-        
-        
+        [myLabel setFont:[UIFont fontWithName:font_bold size:font_size_button]];
         UILabel* smallText = [UILabel new];
         smallText.translatesAutoresizingMaskIntoConstraints = NO;
         smallText.text = @"";
         smallText.numberOfLines =1;
-        
         [smallText setTextColor:[UIColor whiteColor]];
-        [smallText setFont:[UIFont boldSystemFontOfSize:10.0f]];
-        
-        
+        [smallText setFont:[UIFont fontWithName:font_regular size:font_size_normal_regular]];
         UIView* wrapper = [UIView new];
         [wrapper addSubview:myLabel];
         [wrapper addSubview:smallText];
-        
-        
-        
         [wrapper addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[myLabel]-0-|" options:0 metrics:nil views:@{@"myLabel": myLabel,@"smallText":smallText}]];
         [wrapper addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[myLabel]-2-[smallText]-0-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:@{@"myLabel": myLabel,@"smallText":smallText}]];
-        
-        //mmm.. it seems that i have to set it like this, if not the view size is set to 0 by the navabar layout..
         wrapper.frame = CGRectMake(0, 0, MAX(myLabel.intrinsicContentSize.width,smallText.intrinsicContentSize.width), myLabel.intrinsicContentSize.height + smallText.intrinsicContentSize.height + 2);
-        
         wrapper.clipsToBounds = true;
-        
         _customTitleView  = wrapper;
     }
     return _customTitleView;
@@ -693,57 +356,47 @@
 
 - (UIView*) createSubHeaderView {
     UIView* view = [UIView new];
-    
     NSMutableDictionary* views = [NSMutableDictionary new];
     views[@"super"] = self.view;
-    
-    UIButton* followButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton* followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     followButton.translatesAutoresizingMaskIntoConstraints = NO;
     [followButton setTitle:@"" forState:UIControlStateNormal];
-    followButton.layer.cornerRadius = 0;
-    followButton.layer.borderWidth = 0;
-    followButton.layer.borderColor = [UIColor blueColor].CGColor;
-    
+    followButton.layer.cornerRadius = cornerRadius_Button;
+    followButton.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    followButton.layer.borderWidth =1;
+    [followButton addShaddow];
+    followButton.hidden=YES;
+    followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    followButton.backgroundColor=userShouldDOButoonColor;
+    [followButton addTarget:self action:@selector(tappedOnUserImage) forControlEvents:UIControlEventTouchUpInside];
     views[@"followButton"] = followButton;
     [view addSubview:followButton];
-    
     UILabel* nameLabel = [UILabel new];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    nameLabel.text = @"Sagar Shirbhate";
+    nameLabel.text =_name;
     nameLabel.numberOfLines =1;
-    [nameLabel setFont:[UIFont fontWithName:@"Futura" size:18]];
+    [nameLabel setFont:[UIFont fontWithName:font_bold size:font_size_bold]];
     views[@"nameLabel"] = nameLabel;
     [view addSubview:nameLabel];
-    
-    
-    
     NSArray* constraints;
     NSString* format;
-    //NSDictionary* metrics;
-    
     format = @"[followButton]-|";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
     [view addConstraints:constraints];
-    
     format = @"|-[nameLabel]";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
     [view addConstraints:constraints];
-    
     format = @"V:|-[followButton]";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
     [view addConstraints:constraints];
-    
     format = @"V:|-60-[nameLabel]";
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
     [view addConstraints:constraints];
-    
-    
     return view;
 }
 
 - (UIImage *)blurWithImageAt:(CGFloat)percent
 {
-    
     NSNumber* keyNumber = @0;
     if(percent <= 0.1){
         keyNumber = @1;
@@ -768,18 +421,14 @@
     }
     UIImage* image = [_blurredImageCache objectForKey:keyNumber];
     if(image == nil){
-        //TODO if cache not yet built, just compute and put in cache
         return _originalBackgroundImage;
     }
     return image;
 }
-
-
 - (UIImage *)blurWithImageEffects:(UIImage *)image andRadius: (CGFloat) radius
 {
     return [image applyBlurWithRadius:radius tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
 }
-
 - (void) fillBlurredImageCache {
     CGFloat maxBlur = 30;
     self.blurredImageCache = [NSMutableDictionary new];
@@ -790,32 +439,599 @@
 }
 
 
+#pragma mark====================Tapped On User Profile Image===============================
 
-
--(void)openLocationFeedView{
-    LocationFeedViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"LocationFeedViewController"];
+-(void)tappedOnUserImage{
+    ViewUserProfileViewController *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewUserProfileViewController"];
+    vc.userID=_cityId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)openUserProfile{
-    ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
-    [self.navigationController pushViewController:vc animated:YES];
+#pragma mark====================Memory Release===============================
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+    if ([self isViewLoaded] && self.view.window){
+        /*strong ref to this*/
+        _customTitleView = nil;
+    }
+}
+- (void)dealloc{
+    _originalBackgroundImage = nil;
+    [_blurredImageCache removeAllObjects];
+    _blurredImageCache = nil;
 }
 
+
+
+#pragma mark====================Table view data source===============================
+-(void)reloadTable{
+    [self.tableView reloadData];
+    [self.view hideLoader];
+    [self performSelector:@selector(afterReloadScroll) withObject:nil afterDelay:0.3];
+    
+    if (selectedIndex==0) {
+        if(homeFeedData.count==0){
+            [self.view makeToast:@"No Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==1) {
+        if( followerData.count==0){
+            [self.view makeToast:@"None of city you had visited." duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==2) {
+        if(wishToData.count==0){
+            [self.view makeToast:@"No cities is found in your wishlist destinations" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==3) {
+        if( followingData.count==0){
+            [self.view makeToast:@"No one is following you" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }else   if (selectedIndex==4) {
+        if(visitedCitiesData.count==0){
+            [self.view makeToast:@" You dont follow anyone" duration:toastDuration position:toastPositionBottomUp];
+        }
+    }
+    
+    
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (selectedIndex==0) {
+        return homeFeedData.count;
+    }else   if (selectedIndex==1) {
+        return followerData.count;
+    }else   if (selectedIndex==2) {
+        return wishToData.count;
+    }else   if (selectedIndex==3) {
+        return followingData.count;
+    }else if(selectedIndex==4){
+        return visitedCitiesData.count;
+    }
+        return 0;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [UITableViewCell new];
+    
+     if (selectedIndex==0||selectedIndex==1||selectedIndex==2||selectedIndex==3){
+        UINib *nib = [UINib nibWithNibName:@"FeedsTableViewCell" bundle:nil];
+        [self.tableView registerNib:nib forCellReuseIdentifier:@"FeedsTableViewCell"];
+        FeedsTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FeedsTableViewCell"];
+         NSDictionary * dataDict;
+         if (selectedIndex==0) {
+             dataDict =[homeFeedData objectAtIndex:indexPath.row];
+         }else if (selectedIndex==1){
+             dataDict =[followerData objectAtIndex:indexPath.row];
+         }else if(selectedIndex==2){
+             dataDict =[wishToData objectAtIndex:indexPath.row];
+         }else{
+              dataDict =[followingData objectAtIndex:indexPath.row];
+         }
+         
+        //created dictionary from array object
+        
+        
+        //detail text
+        NSString * details =[dataDict valueForKey:@"activity_description"];
+        cell.extraFeedLabel.text=details;
+        
+        //Checked for User Image
+        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+        if (![urlStringForProfileImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForProfileImage];
+            [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+        }
+        [cell.profileImage addShaddow];
+        
+        //Checked for post Image
+        NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
+        if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
+            [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
+        }
+        
+        
+        //On Click of Image Should Open
+        cell.postImage.userInteractionEnabled=YES;
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] init];
+        [tapRecognizer addTarget:self action:@selector(clickedOnPostImage:)];
+        [cell.postImage addGestureRecognizer:tapRecognizer];
+        
+        //
+         NSString *userNameOfPost;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+         NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+             userNameOfPost = [[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+        }
+        
+        if([userID isEqualToString:[UserData getUserID]]){
+            cell.menuBtnOfPost.hidden=NO;
+        }else{
+            cell.menuBtnOfPost.hidden=YES;
+        }
+        
+        //mainstr have title and Also Links Managed.
+        NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
+        
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
+                                                                withString:@"to eat 🍕 "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to visit"
+                                                                withString:@"to visit 🌄  "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to shopping"
+                                                                withString:@"to shopping 👗 "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to stay"
+                                                                withString:@"to stay 🏠 "];
+        mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"travelling to"
+                                                                withString:@"travelling to ✈️ "];
+        
+        cell.mainTitle.numberOfLines = 0;
+        
+        NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:font_size_normal_regular]};
+        cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:mainTitleStr attributes:attributes];
+        
+        void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
+            
+            substring =  [substring stringByReplacingOccurrencesOfString:@"recommen"
+                                                                    withString:@""];
+            if ([substring isEqualToString:[[refertitle objectAtIndex:0]valueForKey:@"name"]]) {
+                [self openUserProfile:userID:userNameOfPost:urlStringForProfileImage];
+            }else{
+                [self openLocationFeedView:locId :cityName :imageUrl];
+            }
+        };
+        //Added link substrings
+        if (cityName!=nil && userNameOfPost!=nil) {
+            NSMutableArray * substringArr =[NSMutableArray new];
+            if (![cityName isKindOfClass:[NSNull class]]) {
+                [substringArr addObject:cityName];
+            }
+            if (![userNameOfPost isKindOfClass:[NSNull class]]) {
+                [substringArr addObject:userNameOfPost];
+            }
+            [substringArr addObject:@"to eat 🍕"];
+            [substringArr addObject:@"to visit 🌄  "];
+            [substringArr addObject:@"to shopping 👗 "];
+            [substringArr addObject:@"to stay 🏠 "];
+            [substringArr addObject:@"travelling to ✈️ "];
+            [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
+        }
+        
+        
+        //Managed Comments View
+        int isCommentByYou=[[dataDict valueForKey:@"is_my"]intValue];
+        int coments =[[dataDict valueForKey:@"total_comments"]intValue];
+        if (isCommentByYou==1) {
+            if (coments==0) {
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"No Comments Yet !"];
+                cell.comentMenuTextLbl.textColor=[UIColor lightGrayColor];
+                cell.comentMenuLbl.textColor =[UIColor lightGrayColor];
+            }else if(coments==1){
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"You had Commented"];
+                cell.comentMenuTextLbl.textColor =[UIColor redColor];
+                cell.comentMenuLbl.textColor=[UIColor blackColor];
+            }else{
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"%d Comments + 1 You",coments-1];
+                cell.comentMenuLbl.textColor =[UIColor redColor];
+                cell.comentMenuLbl.textColor=[UIColor blackColor];
+            }
+            
+        }else{
+            
+            if (coments==0) {
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"No Comments Yet !"];
+                cell.comentMenuTextLbl.textColor=[UIColor lightGrayColor];;
+                cell.comentMenuLbl.textColor =[UIColor lightGrayColor];
+            }else if(coments==1){
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"%d Comment",coments];
+                cell.comentMenuTextLbl.textColor=[UIColor blackColor];
+                cell.comentMenuLbl.textColor =[UIColor blackColor];
+            }else{
+                cell.comentMenuTextLbl.text =[NSString stringWithFormat:@"%d Comments",coments];
+                cell.comentMenuTextLbl.textColor=[UIColor blackColor];
+                cell.comentMenuLbl.textColor =[UIColor blackColor];
+            }
+        }
+        
+        // Managed Like View
+        int isLikedByYou=[[dataDict valueForKey:@"is_like"]intValue];
+        if (isLikedByYou==1) {
+            int like =[[dataDict valueForKey:@"total_like"]intValue];
+            if (like==0) {
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"No Likes Yet !"];
+                cell.likeMenuTxtLbl.textColor=[UIColor lightGrayColor];
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }else if(like==1){
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Your Like",like];
+                cell.likeMenuLogoLbl.textColor =[UIColor redColor];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+            }else{
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Likes + 1 You",like-1];
+                cell.likeMenuLogoLbl.textColor =[UIColor redColor];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+            }
+            
+        }else{
+            int like =[[dataDict valueForKey:@"total_like"]intValue];
+            if (like==0) {
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"No Likes Yet !"];
+                cell.likeMenuTxtLbl.textColor=[UIColor lightGrayColor];;
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }else if(like==1){
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Like",like];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }else{
+                cell.likeMenuTxtLbl.text =[NSString stringWithFormat:@"%d Likes",like];
+                cell.likeMenuTxtLbl.textColor=[UIColor blackColor];
+                cell.likeMenuLogoLbl.textColor =[UIColor blueColor];
+            }
+        }
+        
+        
+        cell.likeBtn.tag=indexPath.row;
+        cell.commentBtn.tag=indexPath.row;
+        cell.likeThumbBtn.tag=indexPath.row;
+        cell.menuBtnOfPost.tag=indexPath.row;
+        
+        [cell.likeBtn addTarget:self action:@selector(openLikeMenu:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.commentBtn addTarget:self action:@selector(openCommentMenu:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.likeThumbBtn addTarget:self action:@selector(justDoLike:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.menuBtnOfPost addTarget:self action:@selector(editPost:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        [cell.contentView layoutIfNeeded];
+        
+        // For Paging Mechanism
+        if (indexPath.row==homeFeedData.count -3) {
+            if (homeFeedPageShouldDoPaging==YES) {
+                homeFeedPage++;
+                [self performSelectorInBackground:@selector(getHomeFeedDataForPaging) withObject:nil];
+            }
+        }
+        return cell;
+    }else if (selectedIndex==4){
+        UINib *nib = [UINib nibWithNibName:@"FollowingTableViewCell" bundle:nil];
+        [self.tableView registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
+        FollowingTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FollowingTableViewCell"];
+        
+        NSDictionary * dataDict =[visitedCitiesData objectAtIndex:indexPath.row];
+        NSString * city =[dataDict valueForKey:@"city"];
+        NSString * name =[dataDict valueForKey:@"name"];
+        
+        if (![city isKindOfClass:[NSNull class]]) {
+            if (![city isEqualToString:@""]) {
+                cell.addressLbl.text =[NSString stringWithFormat:@" %@ ",city];
+            }else {
+                cell.addressLbl.text =@"City Name Not Available Now";
+            }
+        }else{
+            cell.addressLbl.text =@"City Name Not Available Now";
+        }
+        
+        if (![name isKindOfClass:[NSNull class]]) {
+            cell.nameLbl.text=name;
+        }else {
+            cell.nameLbl.text=@"Name Not Available Now";
+        }
+        
+        //Checked for post Image
+        NSString * urlStringForImage =[dataDict valueForKey:@"image"];
+        if (![urlStringForImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
+            [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+        }
+        
+        // For Paging Mechanism
+        if (indexPath.row==visitedCitiesData.count -3) {
+            if (visitedCitiesPageShouldDoPaging==YES) {
+                visitedCitiesPage++;
+                [self performSelectorInBackground:@selector(getVisitedCitiesDataForPaging) withObject:nil];
+            }
+        }
+        
+        int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
+        if (showFollow ==1) {
+            [cell.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+            [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+        }else{
+            [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+        }
+        cell.followButton.tag=indexPath.row;
+        [cell.followButton addTarget:self action:@selector(inviteClick:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }
+    return cell;
+}
+-(void)inviteClick:(UIButton*)btn{
+    int index = (int)btn.tag;
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:index inSection:0];
+    FollowingTableViewCell *cell =  [self.tableView cellForRowAtIndexPath:ip];
+    NSDictionary * dataDict =[visitedCitiesData objectAtIndex:index];
+    publicId = [dataDict valueForKey:@"id"];
+    int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
+    if (showFollow ==1) {
+        [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"0" forKey:@"follow"];
+        [visitedCitiesData replaceObjectAtIndex:index withObject:newDict];
+        [self.view makeToast:@"You are following now"duration:toastDuration position:toastPositionBottomUp];
+        
+    }else{
+        [cell.followButton setTitle:@"UnFollow" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"1" forKey:@"follow"];
+        [visitedCitiesData replaceObjectAtIndex:index withObject:newDict];
+        [self.view makeToast:@"You are not following now"duration:toastDuration position:toastPositionBottomUp];
+    }
+    [self performSelectorInBackground:@selector(inviteWebservice) withObject:nil];
+}
+
+-(void)inviteWebservice{
+    NSString * ids =[NSString stringWithFormat:@"%@",publicId];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER,[UserData getUserID],ids];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+}
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    NSArray * namesOfMenus =@[@"Places",@"Food",@"Accomodation",@"Shopping",@"Visited By"];
+    
+    myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
+    CGFloat scrollWidth = 0.f;
+    buttonArray=[[NSMutableArray alloc]init];
+    for ( int j=0; j<namesOfMenus.count; j++)
+    {
+        NSString * name =[namesOfMenus objectAtIndex:j];
+        CGSize size = [name sizeWithAttributes:
+                       @{NSFontAttributeName: [UIFont fontWithName:font_bold size:font_size_button]}];
+        CGSize textSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
+        CGFloat strikeWidth;
+        if (iPAD) {
+            strikeWidth = self.view.frame.size.width/5.5;
+        }else{
+            strikeWidth = textSize.width;
+        }
+        CGRect frame = CGRectMake(scrollWidth, 0,strikeWidth+20, 40);
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setTag:j];
+        button.frame = frame;
+        [button setBackgroundColor:[UIColor whiteColor]];
+        button.titleLabel.textColor=[UIColor whiteColor];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.layer.borderColor=[UIColor whiteColor].CGColor;
+        button.titleLabel.textAlignment=NSTextAlignmentCenter;
+        [button addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:name forState:UIControlStateNormal];
+        
+        scrollWidth= scrollWidth+strikeWidth+20;
+        
+        if (j==selectedIndex) {
+            button.backgroundColor= Check_Color;
+            [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+            [button addShaddow];
+            if (iPhone6||iPhone6plus) {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }else {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }
+        }else {
+            button.backgroundColor= [UIColor blackColor];
+            //[self removeShaddowToView:button];
+            button.layer.borderColor=[UIColor whiteColor].CGColor;
+            if (iPhone6||iPhone6plus) {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }else{
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }
+        }
+        
+        [buttonArray addObject:button];
+        [myScrollView addSubview:button];
+        
+    }
+    myScrollView.contentSize = CGSizeMake(scrollWidth, 30.f);
+    myScrollView.pagingEnabled = NO;
+    [myScrollView setShowsHorizontalScrollIndicator:NO];
+    [myScrollView setShowsVerticalScrollIndicator:NO];
+    return myScrollView;
+    
+}
+
+#pragma mark====================Open User Profile=============================
+-(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
+    if (![userId isEqualToString:[UserData getUserID]]&&userId!=nil) {
+        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+        vc.userId=userId;
+        vc.name=userName;
+        vc.imageUrl=urlStringForProfileImage;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+#pragma mark====================Open Location Feeds=============================
+-(void)openLocationFeedView:(NSString *)locationId :(NSString *)locName :(NSString *)photoUrl{
+    
+    if (![_cityId isEqualToString:locationId]) {
+        LocationFeedViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"LocationFeedViewController"];
+        vc.cityId=locationId;
+        vc.name=locName;
+        vc.imageUrl=photoUrl;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+
+#pragma mark====================Open Who Likes the Post=============================
 -(void)openLikeMenu:(UIButton*)btn{
-    LikeViewController *newVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LikeViewController"];
-    [self setPresentationStyleForSelfController:self presentingController:newVC];
-    UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:newVC];
-    [self presentViewController:nav animated:YES completion:nil];
+    BOOL shouldOpenMenu =NO;
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
+    int isLikedByYou=[[dataDict valueForKey:@"is_like"]intValue];
+    if (isLikedByYou==1) {
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        if (like==0) {
+            shouldOpenMenu=NO;
+            [self.view makeToast:@"No one like the post yet"duration:toastDuration position:toastPositionBottomUp];
+        }else if(like==1){
+            shouldOpenMenu=NO;
+            [self.view makeToast:@"Only you had liked the post"duration:toastDuration position:toastPositionBottomUp];
+        }else{
+            shouldOpenMenu=YES;
+        }
+        
+    }else{
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        if (like==0) {
+            shouldOpenMenu=NO;
+            [self.view makeToast:@"No one like the post yet" duration:toastDuration position:toastPositionBottomUp];
+        }else if(like==1){
+            shouldOpenMenu=YES;
+        }else{
+            shouldOpenMenu=YES;
+        }
+    }
+    if (shouldOpenMenu==YES) {
+        
+        LikeViewController *newVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LikeViewController"];
+        [self setPresentationStyleForSelfController:self presentingController:newVC];
+        UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:newVC];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
 }
 
+
+#pragma mark====================Like the Post=============================
+-(void)justDoLike:(UIButton*)btn{
+    
+    FeedsTableViewCell *cell = (FeedsTableViewCell *)btn.superview.superview.superview.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+    
+    if ([[dataDict valueForKey:@"is_like"]intValue] == 1) {
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"0" forKey:@"is_like"];
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        like--;
+        [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
+        [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+        [self.view makeToast:@"You removed your like of the post"duration:toastDuration position:toastPositionBottomUp];
+        
+    }else{
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"1" forKey:@"is_like"];
+        int like =[[dataDict valueForKey:@"total_like"]intValue];
+        like++;
+        [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
+        [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+        [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
+    }
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+#pragma mark====================Open Who commented on the Post=============================
 -(void)openCommentMenu:(UIButton*)btn{
+    
     CommentsViewController * v =[self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
     [self setPresentationStyleForSelfController:self presentingController:v];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:v];
     [self presentViewController:nav animated:YES completion:nil];
+    
+    
 }
 
+#pragma mark - Header Button Action
+-(void)buttonEvent:(UIButton*)sender
+{
+    NSInteger index= sender.tag;
+    selectedIndex= (int) index;
+    
+    for(int i=0;i<buttonArray.count;i++)
+    {
+        UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
+        if (i==selectedIndex) {
+            button.backgroundColor= Check_Color;
+            [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+            [button addShaddow];
+            if (iPhone6||iPhone6plus) {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }else {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }
+        }else {
+            button.backgroundColor= [UIColor blackColor];
+            //[self removeShaddowToView:button];
+            button.layer.borderColor=[UIColor whiteColor].CGColor;
+            if (iPhone6||iPhone6plus) {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }else{
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }
+        }
+    }
+    
+    CGRect frame1 = myScrollView.frame;
+    UIButton * bt=(UIButton*)[buttonArray objectAtIndex:index];
+    frame1 =bt.frame ;
+    [myScrollView scrollRectToVisible:frame1 animated:YES];
+    [self setupTableAfterClick];
+}
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 44;
+}
+
+
+#pragma mark====================Edit User Feed Post=============================
+-(void)editPost:(UIButton*)btn{
+    [self showAlert];
+    selectedDictForDelete =[homeFeedData objectAtIndex:btn.tag];
+}
+-(void)deletePlaceVisited:(UIButton*)btn{
+    [self showAlert];
+    selectedDictForDelete =[visitedCitiesData objectAtIndex:btn.tag];
+}
+-(void)deleteWishTo:(UIButton*)btn{
+    [self showAlert];
+    selectedDictForDelete =[wishToData objectAtIndex:btn.tag];
+}
 
 - (void)setPresentationStyleForSelfController:(UIViewController *)selfController presentingController:(UIViewController *)presentingController
 {
@@ -832,7 +1048,307 @@
         [selfController.navigationController setModalPresentationStyle:UIModalPresentationCurrentContext];
     }
 }
+-(void)setupTableAfterClick{
+    NSArray *imagesArray = @[@"Place",@"Food",@"Visited",@"Follower",@"Following",@"Accomodation",@"Shopping"];
+    NSString *imageName = [imagesArray objectAtIndex:(arc4random() % imagesArray.count)];
+    self.imageHeaderView.image=[UIImage imageNamed:imageName];
+    
+    if (selectedIndex==0) {
+        self.tableView.estimatedRowHeight=250;
+        self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        self.tableView.separatorColor = [UIColor clearColor];
+        
+    }else if (selectedIndex==1){
+        self.tableView.estimatedRowHeight=250;
+        self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];;
+        
+    }else if (selectedIndex==2){
+        self.tableView.estimatedRowHeight=250;
+        self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+        
+    }else if (selectedIndex==3){
+        self.tableView.estimatedRowHeight=250;
+        self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+        
+    }else if (selectedIndex==4){
+        self.tableView.estimatedRowHeight=250;
+        self.tableView.rowHeight=UITableViewAutomaticDimension;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+        
+    }
+    [self.view showLoader];
+    [self performSelector:@selector(callWebservicesAsButtonClick) withObject:nil afterDelay:0.3];
+}
+-(void)afterReloadScroll{
+    CGRect frame1 = myScrollView.frame;
+    UIButton * bt=(UIButton*)[buttonArray objectAtIndex:selectedIndex];
+    frame1 =bt.frame ;
+    [myScrollView scrollRectToVisible:frame1 animated:YES];
+}
+-(void)callWebservicesAsButtonClick{
+    switch (selectedIndex) {
+            //=====================1st click ====================
+        case 0:
+        {
+            if (homeFeedData.count==0) {
+                [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+            }else{
+                if (firstTimePageOpen==NO) {
+                    [self.view hideLoader];
+                    [self reloadTable];
+                }
+            }
+        }break;
+            //=====================2st click ====================
+        case 1:
+            if (followerData.count==0) {
+                [self performSelectorInBackground:@selector(getFollowerData) withObject:nil];
+            }
+            else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+            break;
+            //=====================3st click ====================
+        case 2:
+            if (wishToData.count==0) {
+                [self performSelectorInBackground:@selector(getWishData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+                      break;
+            //=====================4st click ====================
+        case 3:
+            if (followingData.count==0) {
+                [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+
+            break;
+            //=====================5st click ====================
+        case 4:
+            if (visitedCitiesData.count==0) {
+                [self performSelectorInBackground:@selector(getVisitedCitiesData) withObject:nil];
+            }else{
+                [self.view hideLoader];
+                [self reloadTable];
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 
+#pragma mark====================Get HomeFeed Data From Webservice=============================
+-(void)getHomeFeedData{
+   NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=1&page=%d",[UserData getUserID],_cityId,homeFeedPage];
+ 
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [homeFeedData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+    //action=getCityActivity&userId=59&&cityId=152&activity_type=1&page=1
+    if (firstTimePageOpen==YES) {
+        [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
+        firstTimePageOpen=NO;
+    }
+}
+
+-(void)getHomeFeedDataForPaging{
+    
+  NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=1&page=%d",[UserData getUserID],_cityId,homeFeedPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        homeFeedPageShouldDoPaging=NO;
+    }else{
+        [homeFeedData addObjectsFromArray:data];
+        homeFeedPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Follower Data Data From Webservice=============================
+-(void)getFollowerData{
+    
+   NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=2&page=%d",[UserData getUserID],_cityId,followerPage];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [followerData addObjectsFromArray:[dict valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+-(void)getFollowerDataForPaging{
+    
+
+    NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=2&page=%d",[UserData getUserID],_cityId,followerPage];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[dict valueForKey:@"data"];
+    if (data.count==0) {
+        followerPageShouldDoPaging=NO;
+    }else{
+        [followerData addObjectsFromArray:data];
+        followerPageShouldDoPaging=YES;
+    }
+    
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Follow List Data From Webservice=============================
+-(void)getFollowListData{
+    
+NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=6&page=%d",[UserData getUserID],_cityId,followingPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+    
+}
+
+-(void)getFollowListDataForPaging{
+    
+NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=6&page=%d",[UserData getUserID],_cityId,followingPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        followingPageShouldDoPaging=NO;
+    }else{
+        [followingData addObjectsFromArray:data];
+        followingPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Wish Data From Webservice=============================
+-(void)getWishData{
+    NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=3&page=%d",[UserData getUserID],_cityId,wishToPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [wishToData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+-(void)getWishDataForPaging{
+    
+       NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=getCityActivity&userId=%@&&cityId=%@&activity_type=3&page=%d",[UserData getUserID],_cityId,wishToPage];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[homefeed valueForKey:@"data"];
+    if (data.count==0) {
+        wishToPageShouldDoPaging=NO;
+    }else{
+        [wishToData addObjectsFromArray:data];
+        wishToPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark====================Get Visited Cities From Webservice=============================
+-(void)getVisitedCitiesData{
+    
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&page=%d&cityId=%@",URL_CONST,ACTION_GET_VISITED_CITY_PEOPLE,[UserData getUserID],visitedCitiesPage,_cityId];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [visitedCitiesData addObjectsFromArray:[[homefeed valueForKey:@"data"]valueForKey:@"memberData"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+    
+}
+
+-(void)getVisitedCitiesDataForPaging{
+    
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&page=%d&cityId=%@",URL_CONST,ACTION_GET_VISITED_CITY_PEOPLE,[UserData getUserID],visitedCitiesPage,_cityId];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSArray * data =[[homefeed valueForKey:@"data"]valueForKey:@"memberData"];
+    if (data.count==0) {
+        visitedCitiesPageShouldDoPaging=NO;
+    }else{
+        [visitedCitiesData addObjectsFromArray:data];
+        visitedCitiesPageShouldDoPaging=YES;
+    }
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
+
+
+#pragma mark====================Open image properly =============================
+-(void)clickedOnPostImage:(UITapGestureRecognizer *)sender {
+    
+    UIImageView * imageview =(UIImageView *) sender.view;
+    
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = imageview.image;
+    imageInfo.referenceRect = imageview.frame;
+    imageInfo.referenceView = self.view;
+    imageInfo.referenceContentMode = imageview.contentMode;
+    imageInfo.referenceCornerRadius = imageview.layer.cornerRadius;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    
+}
+
+
+#pragma mark ==== Delete===
+-(void)showAlert{
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Traweller" message:@"Do you want to delete ?" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        if (selectedIndex==0) {
+            [self doDeleteOfFeed];
+        }else if(selectedIndex==1){
+            [self doDeletePlaceToVisited];
+        }else if(selectedIndex==2){
+            [self doDeleteWishedTo];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+    }]];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+-(void)doDeleteOfFeed{
+    [homeFeedData containsObject:selectedDictForDelete];
+    NSInteger i =  [homeFeedData indexOfObject:selectedDictForDelete];
+    [homeFeedData removeObjectAtIndex:i];
+    NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    
+}
+-(void)doDeletePlaceToVisited{
+    [visitedCitiesData containsObject:selectedDictForDelete];
+    NSInteger i =  [visitedCitiesData indexOfObject:selectedDictForDelete];
+    [visitedCitiesData removeObjectAtIndex:i];
+    NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+}
+-(void)doDeleteWishedTo{
+    [wishToData containsObject:selectedDictForDelete];
+    NSInteger i =  [wishToData indexOfObject:selectedDictForDelete];
+    [wishToData removeObjectAtIndex:i];
+    NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    
+}
 
 @end

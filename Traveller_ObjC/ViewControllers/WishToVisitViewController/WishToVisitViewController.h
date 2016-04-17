@@ -23,6 +23,8 @@
     __weak IBOutlet UITextField *searchTF;
     __weak IBOutlet UIButton *searchBtn;
     
+    NSString * publicId;
+    
 }
 
 @property(strong,nonatomic)NSDictionary * selectedCityDict;

@@ -25,7 +25,7 @@
     // For Google+
     [[GPPSignIn sharedInstance] setClientID:@"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com"];
     [GPPSignIn sharedInstance].delegate = self;
-    [GMSServices provideAPIKey:@"AIzaSyBuQ0Z76oO7IJBaYxF7pWziTZ8-17LWosc"];
+    [GMSServices provideAPIKey:@"AIzaSyA0Zxe_1JxR0Iemvi8RLel0ZEzWEBNPfqM"];
 
     // For Notifications
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);

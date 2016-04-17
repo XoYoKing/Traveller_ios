@@ -13,13 +13,17 @@
 #import "Notification2TableViewCell.h"
 #import "Notification3TableViewCell.h"
 #import "Notification4TableViewCell.h"
-@interface NotificationsViewController : UIViewController
+@interface NotificationsViewController : UIViewController<UITextViewDelegate>
 {
-    
     __weak IBOutlet UIScrollView *myScrollView;
     NSMutableArray * buttonArray;
     NSInteger selectedIndex;
     __weak IBOutlet UITableView *notificationTableView;
+    
+    NSMutableArray * invitation;
+    NSMutableArray * ask_for_tip;
+    NSMutableArray * follow ;
+    NSMutableArray * message;
 }
 @property(assign)BOOL fromMenu;
 @end

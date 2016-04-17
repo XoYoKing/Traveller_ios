@@ -14,18 +14,33 @@
 
 @implementation NotificationsViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self.view showLoader];
+    [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"Notifications";
     self.navigationController.navigationBarHidden=NO;
     selectedIndex=0;
     [self addScrollview];
+    notificationTableView.tableFooterView=[UIView new];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     if (_fromMenu==NO) {
     UIButton *btn =  [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.titleLabel.textColor=[UIColor blackColor];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     btn.frame = CGRectMake(0,0,25,25);
-    btn.tintColor=[UIColor whiteColor];
-    [btn setImage:[UIImage imageNamed:@"back_black"] forState:UIControlStateNormal];
+    btn.tintColor=[UIColor blackColor];
+        btn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        btn.tintColor=[UIColor blackColor];
+        [btn setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
@@ -77,7 +92,7 @@
                        @{NSFontAttributeName: [UIFont fontWithName:font_regular size:17]}];
         CGSize textSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
         CGFloat strikeWidth = textSize.width;
-        CGRect frame = CGRectMake(scrollWidth, 5,strikeWidth+20, 40);
+        CGRect frame = CGRectMake(scrollWidth, 0,strikeWidth+20, 40);
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTag:j];
         button.frame = frame;
@@ -122,7 +137,6 @@
 }
 
 
-
 #pragma mark - Header Button Action
 -(void)buttonEvent:(UIButton*)sender
 {
@@ -158,7 +172,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 25;
+    if (selectedIndex==0) {
+            return invitation.count;
+    }else if(selectedIndex==1){
+            return ask_for_tip.count;
+    }else if (selectedIndex==2){
+            return message.count;
+    }else {
+            return follow.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -166,18 +188,114 @@
     if (selectedIndex==0) {
         Notification1TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification1TableViewCell"];
         return cell;
+        NSDictionary * dict =[invitation objectAtIndex:indexPath.row];
+        
     }else if(selectedIndex==1){
         Notification2TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification2TableViewCell"];
+        NSDictionary * dict =[ask_for_tip objectAtIndex:indexPath.row];
+        cell.msgLbl.text =[dict valueForKey:@"ask_for_tip"];
+        cell.replyButton.tag=indexPath.row;
+        [cell.replyButton addTarget:self action:@selector(replyForAskTips:) forControlEvents:UIControlEventTouchUpInside];
+        cell.textView.delegate=self;
         return cell;
     }else if (selectedIndex==2){
         Notification2TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification2TableViewCell"];
+        NSDictionary * dict =[message objectAtIndex:indexPath.row];
+        cell.msgLbl.text =[dict valueForKey:@"message"];
+        cell.textView.delegate=self;
+        cell.replyButton.tag=indexPath.row;
+        [cell.replyButton addTarget:self action:@selector(replyForMsg:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }else if (selectedIndex==3){
         Notification4TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification4TableViewCell"];
+        NSDictionary * dict =[follow objectAtIndex:indexPath.row];
+        cell.lbl.text=[dict valueForKey:@"ask_for_tip"];
+        
         return cell;
     }
     return cell;
 }
 
+-(void)getAllNotifications{
+    NSString * userID =[UserData getUserID];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@",URL_CONST,ACTION_GET_NOTIFICATION,userID];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            int totalCount =[[dict valueForKey:@"tip_count"]intValue];
+            [UserData setNotificationCount:totalCount];
+            
+            invitation =[[NSMutableArray alloc]initWithArray:[dict valueForKey:@"invitation"]];
+            ask_for_tip =[[NSMutableArray alloc]initWithArray:[dict valueForKey:@"ask_for_tip"]];
+            follow =[[NSMutableArray alloc]initWithArray:[dict valueForKey:@"follow"]];
+           message =[[NSMutableArray alloc]initWithArray:[dict valueForKey:@"message"]];
+            
+            NSDictionary * dict =@{
+                                   @"invitation":invitation,
+                                   @"ask_for_tip":ask_for_tip,
+                                   @"follow":follow,
+                                   @"message":message
+                                   };
+            [UserData setNotificationDict:dict];
+            NSDictionary * not_Dict=@{@"tip_count":[NSString stringWithFormat:@"%d",totalCount]};
+            [[NSNotificationCenter defaultCenter] postNotificationName:throwNotificationStatus object:not_Dict];
+            [self performSelectorOnMainThread:@selector(reloadTableviews) withObject:nil waitUntilDone:YES];
+        }else {
+              [self performSelectorOnMainThread:@selector(reloadTableviews) withObject:nil waitUntilDone:YES];
+        }
+    }else
+          [self performSelectorOnMainThread:@selector(reloadTableviews) withObject:nil waitUntilDone:YES];
+}
+-(void)reloadTableviews{
+    [notificationTableView reloadData];
+    [self.view hideLoader];
+}
 
+# pragma mark  UITextView Delegates
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Write Message"]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
+}
+
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Write Message";
+        textView.textColor = [UIColor lightGrayColor];
+    }
+    [textView resignFirstResponder];
+}
+
+-(void)replyForAskTips:(UIButton *)btn{
+    [self.view endEditing:YES];
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:btn.tag inSection:0];
+    Notification2TableViewCell * cell = [notificationTableView cellForRowAtIndexPath:ip];
+    if ( [cell.textView.text isEqualToString:@"Write Message"]) {
+        [self.view makeToast:@"Please write message" duration:toastDuration position:toastPositionBottomUp];
+    }else{
+        
+    }
+}
+-(void)askForTipsWebservice{
+    
+}
+-(void)replyForMsg:(UIButton *)btn{
+    [self.view endEditing:YES];
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:btn.tag inSection:0];
+    Notification2TableViewCell * cell = [notificationTableView cellForRowAtIndexPath:ip];
+    if ( [cell.textView.text isEqualToString:@"Write Message"]) {
+        [self.view makeToast:@"Please write message" duration:toastDuration position:toastPositionBottomUp];
+    }else{
+        
+    }
+}
+-(void)msgWebservice{
+    
+}
 @end

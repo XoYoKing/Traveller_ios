@@ -54,9 +54,9 @@
     orLbl.font=[UIFont fontWithName:font_bold size:font_size_bold];
     googleBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:50];
     faceBookButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:50];
-    usernameLogo.text =[NSString stringWithUTF8String:ICOMOON_USER];
+    usernameLogo.text =[NSString stringWithUTF8String:ICOMOON_ACCOUNT_CIRCLE];
     passwordLogo.text =[NSString stringWithUTF8String:ICOMOON_KEY];
-    [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYE_CLOSED] forState:UIControlStateNormal];
+    [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYECLOSE] forState:UIControlStateNormal];
     [googleBtn setTitle:[NSString stringWithUTF8String:ICOMOON_GOOGLE] forState:UIControlStateNormal];
     [faceBookButton setTitle:[NSString stringWithUTF8String:ICOMOON_FACEBOOK] forState:UIControlStateNormal];
     [userNameTextField setLeftPadding:leftPadding];
@@ -200,16 +200,17 @@
 
     
 #if DEBUG
-    userNameTextField.text=@"satishsolan7@gmail.com";
-    passwordTextField.text=@"234";
-
-    
-   // if ([userNameTextField validate]&&[passwordTextField validate]) {
-            [self.view showLoader];
-           [self performSelectorInBackground:@selector(callLoginWebservice) withObject:nil];
-//    }
+    userNameTextField.text=@"sagarshirbhate@gmail.com";
+    passwordTextField.text=@"qwertyuiop";
   #endif
  
+    
+    if ([userNameTextField validate]&&[passwordTextField validate]) {
+        [self.view showLoader];
+        [self callLoginWebservice];
+        //[self performSelectorInBackground:@selector(callLoginWebservice) withObject:nil];
+    }
+    
 }
 
 -(void)callLoginWebservice{
@@ -227,6 +228,7 @@
     }else{
         [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:no_internet_message waitUntilDone:YES];
     }
+    
 }
 
 #pragma mark====================Open Home Page===============================
@@ -251,10 +253,10 @@
 - (IBAction)showHidePasswordClick:(id)sender {
     if( passwordTextField.secureTextEntry==YES){
         passwordTextField.secureTextEntry=NO;
-            [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYE] forState:UIControlStateNormal];
+            [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYEOPEN] forState:UIControlStateNormal];
     }else{
         passwordTextField.secureTextEntry=YES;
-            [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYE_CLOSED] forState:UIControlStateNormal];
+            [showHidePasswordBtn setTitle:[NSString stringWithUTF8String:ICOMOON_EYECLOSE] forState:UIControlStateNormal];
     }
 }
 

@@ -104,13 +104,13 @@
     }else if (indexPath.row==1){
       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_LOCATION] ;
     }else if (indexPath.row==2){
-       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_PLANE] ;
+       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_EXPLORER] ;
     }else if (indexPath.row==3){
        cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SEARCH] ;
     }else if (indexPath.row==4){
        cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SETTING] ;
     }else if (indexPath.row==5){
-       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_LOGOUT] ;
+       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SIGNOUT] ;
     }
 
     

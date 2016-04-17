@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -25,20 +24,11 @@
                                     <constraint firstAttribute="width" constant="138" id="JRI-7V-uH5"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright © 2016 Traweller Inc. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Nlo-fE-HM3">
-                                <rect key="frame" x="10" y="559" width="580" height="21"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5rm-e5-HKz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2H0-j3-vSf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Nlo-fE-HM3" secondAttribute="trailing" constant="-10" id="MCW-Qw-6yM"/>
-                            <constraint firstItem="Nlo-fE-HM3" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-10" id="MMn-ym-T1L"/>
                             <constraint firstItem="5rm-e5-HKz" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-50" id="UqY-a0-pJd"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Nlo-fE-HM3" secondAttribute="bottom" constant="20" id="VUL-Af-haA"/>
                         </constraints>
                     </view>
                 </viewController>

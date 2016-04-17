@@ -11,13 +11,10 @@
 @implementation Notification4TableViewCell
 
 -(void)awakeFromNib{
-    _bgView.layer.borderColor=[UIColor blackColor].CGColor;
-    _bgView.layer.borderWidth=1;
-    _bgView.layer.cornerRadius=6;
-    [self addShaddowToView:_bgView];
-    
     _deleteButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
-    [_deleteButton setTitle:[NSString stringWithUTF8String:ICOMOON_DELETE] forState:UIControlStateNormal] ;
+    [_deleteButton setTitle:[NSString stringWithUTF8String:ICOMOON_DELET] forState:UIControlStateNormal] ;
+    
+    _lbl.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
 }
 
 -(void)addShaddowToView:(UIView *)view{

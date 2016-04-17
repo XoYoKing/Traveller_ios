@@ -50,8 +50,11 @@
     int selectedIndex;
     int selectedUserIdex;
     
+    NSDictionary * selectedDictForDelete;
 }
 @property(strong,nonatomic)NSString * userId;
+@property(strong,nonatomic)NSString * name;
+@property(strong,nonatomic)NSString * imageUrl;
 @property (weak) UITableView *tableView;
 @property (weak) UIImageView *imageHeaderView;
 @property (weak) UIVisualEffectView *visualEffectView;

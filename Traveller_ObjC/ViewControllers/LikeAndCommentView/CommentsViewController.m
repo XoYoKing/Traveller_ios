@@ -22,9 +22,20 @@
     [self setupView];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    // to scroll tableview at bottom
+    if (commentTableView.contentSize.height > commentTableView.frame.size.height)
+    {
+        CGPoint offset = CGPointMake(0, commentTableView.contentSize.height -     commentTableView.frame.size.height);
+        [commentTableView setContentOffset:offset animated:YES];
+    }
+    
+
+}
+
 -(void)setupView{
     closeButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:25];
-    [closeButton setTitle:[NSString stringWithUTF8String:ICOMOON_UNCHECK] forState:UIControlStateNormal];
+    [closeButton setTitle:[NSString stringWithUTF8String:ICOMOON_CROSS] forState:UIControlStateNormal];
     closeButton.layer.cornerRadius=20;
     closeButton.backgroundColor=[UIColor whiteColor];
     [self addShaddowToView:closeButton];

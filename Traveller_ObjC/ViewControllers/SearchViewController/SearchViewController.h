@@ -25,5 +25,6 @@
     __weak IBOutlet UITextField *searchTF;
     __weak IBOutlet UIButton *searchBtn;
     
+    int selectedIndex;
 }
 @end

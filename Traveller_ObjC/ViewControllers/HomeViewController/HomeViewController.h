@@ -45,7 +45,12 @@
         int visitedCitiesPage;
         int selectedIndex;
         int selectedUserIdex;
+    int indexForLikeNotification;
     
+    NSDictionary * forLike;
+    
+    NSDictionary * selectedDictForDelete;
+    NSIndexPath * ipForFollow;
     }
     
     @property (weak) UITableView *tableView;

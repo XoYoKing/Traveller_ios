@@ -19,7 +19,7 @@
     [self addShaddowToView:_bgView];
     
     _wishLogo.font=[UIFont fontWithName:fontIcomoon size:20];
-    _wishLogo.text=[NSString stringWithUTF8String:ICOMOON_FAVORITE];
+    _wishLogo.text=[NSString stringWithUTF8String:ICOMOON_BOOKMARK];
     _wishLogo.textColor=segment_selected_Color;
     
     _placesLogo.font=[UIFont fontWithName:fontIcomoon size:20];

@@ -171,7 +171,7 @@
 -(void)setUpView{
 
     
-    _txtPlaceSearch.strApiKey                           = @"AIzaSyBuQ0Z76oO7IJBaYxF7pWziTZ8-17LWosc";
+    _txtPlaceSearch.strApiKey                           = @"AIzaSyA0Zxe_1JxR0Iemvi8RLel0ZEzWEBNPfqM";
     _txtPlaceSearch.placeSearchDelegate                 = self;
     _txtPlaceSearch.superViewOfList                     = self.view;  // View, on which Autocompletion list should be appeared.
     _txtPlaceSearch.autoCompleteShouldHideOnSelection   = YES;
@@ -220,10 +220,10 @@
      logo3.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
      logo4.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
     
-    logo1.text=[NSString stringWithUTF8String:ICOMOON_FAVORITE];
-    logo2.text=[NSString stringWithUTF8String:ICOMOON_PHOTO];
+    logo1.text=[NSString stringWithUTF8String:ICOMOON_BOOKMARK];
+    logo2.text=[NSString stringWithUTF8String:ICOMOON_IMAGE_PHOTO];
     logo3.text=[NSString stringWithUTF8String:ICOMOON_LOCATION];
-    logo4.text=[NSString stringWithUTF8String:ICOMOON_USER];
+    logo4.text=[NSString stringWithUTF8String:ICOMOON_EDIT1];
     
     descriptionTextView.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
     [descriptionTextView addBlackLayerAndCornerRadius:3 AndWidth:1];
@@ -235,17 +235,18 @@
 
 }
 -(void)setUpNavigationBar{
+    
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
-                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
-                                back_btn_Color, NSForegroundColorAttributeName, nil];
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
     btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnClose.tintColor=back_btn_Color;
-    //  [btnClose setTitle:[FontIcon iconString:ICON_CANCEL] forState:UIControlStateNormal];
+    btnClose.tintColor=[UIColor blackColor];
+    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
     self.navigationItem.leftBarButtonItem = leftbarButton;
@@ -253,8 +254,8 @@
     UIButton *btnSend = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnSend setFrame:CGRectMake(0, 0, 30, 30)];
     btnSend.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnSend.tintColor=[UIColor redColor];
-    // [btnSend setTitle:[FontIcon iconString:ICON_SEND] forState:UIControlStateNormal];
+    btnSend.tintColor=Check_Color;
+    [btnSend setTitle:[NSString stringWithUTF8String:ICOMOON_CHECK_CIRCLE]  forState:UIControlStateNormal];
     [btnSend addTarget:self action:@selector(savePost) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sendBarBtn = [[UIBarButtonItem alloc] initWithCustomView:btnSend];
 

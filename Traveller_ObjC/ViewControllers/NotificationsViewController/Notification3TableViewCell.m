@@ -13,10 +13,7 @@
 
 
 -(void)awakeFromNib{
-    _bgView.layer.borderColor=[UIColor blackColor].CGColor;
-    _bgView.layer.borderWidth=1;
-    _bgView.layer.cornerRadius=6;
-    [self addShaddowToView:_bgView];
+  
 }
 
 -(void)addShaddowToView:(UIView *)view{

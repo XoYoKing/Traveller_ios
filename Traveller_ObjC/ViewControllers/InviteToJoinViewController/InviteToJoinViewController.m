@@ -38,6 +38,7 @@
     wishToTableView.rowHeight=UITableViewAutomaticDimension;
     [wishToTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     wishToTableView.separatorColor = [UIColor lightGrayColor];
+    wishToTableView.tableFooterView=[UIView new];
 }
 
 -(void)setUpView{
@@ -53,16 +54,16 @@
 }
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
-                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
-                                back_btn_Color, NSForegroundColorAttributeName, nil];
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
     btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnClose.tintColor=back_btn_Color;
-    //  [btnClose setTitle:[FontIcon iconString:ICON_CANCEL] forState:UIControlStateNormal];
+    btnClose.tintColor=[UIColor blackColor];
+    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
     self.navigationItem.leftBarButtonItem = leftbarButton;
@@ -96,14 +97,11 @@
     
     NSDictionary * dataDict =[globalArrayToShow objectAtIndex:indexPath.row];
     NSString * city =[dataDict valueForKey:@"city"];
-    NSString * country =[dataDict valueForKey:@"country"];
     NSString * name =[dataDict valueForKey:@"name"];
     
-    if (![city isKindOfClass:[NSNull class]]&&![country isKindOfClass:[NSNull class]]) {
-        if ([city isEqualToString:country]) {
+    if (![city isKindOfClass:[NSNull class]]) {
+        if (![city isEqualToString:@""]) {
             cell.addressLbl.text =[NSString stringWithFormat:@" %@ ",city];
-        }else {
-            cell.addressLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city , country];
         }
     }else{
         cell.addressLbl.text =@"City Name Not Available Now";
@@ -130,6 +128,16 @@
         }
     }
     
+    int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
+    if (showFollow ==1) {
+        [cell.followButton setTitle:@"Invite" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+    }else{
+        [cell.followButton setTitle:@"UnInvite" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+    }
+    cell.followButton.tag=indexPath.row;
+    [cell.followButton addTarget:self action:@selector(inviteClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -254,4 +262,40 @@
         [self.view makeToast:@"Please add some text in search textfield" duration:toastDuration position:toastPositionBottomUp];
     }
 }
+
+-(void)inviteClick:(UIButton*)btn{
+    int index = (int)btn.tag;
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:index inSection:0];
+    FollowingTableViewCell *cell =  [wishToTableView cellForRowAtIndexPath:ip];
+    NSDictionary * dataDict =[globalArrayToShow objectAtIndex:index];
+    publicID = [dataDict valueForKey:@"id"];
+    int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
+    if (showFollow ==1) {
+        [cell.followButton setTitle:@"UnInvite" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"0" forKey:@"follow"];
+        [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
+        [self.view makeToast:@"You univited the person"duration:toastDuration position:toastPositionBottomUp];
+        
+    }else{
+        [cell.followButton setTitle:@"Invite" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"1" forKey:@"follow"];
+        [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
+        [self.view makeToast:@"You invited the person"duration:toastDuration position:toastPositionBottomUp];
+    }
+    [self performSelectorInBackground:@selector(inviteWebservice) withObject:nil];
+}
+
+-(void)inviteWebservice{
+    NSString * ids =[NSString stringWithFormat:@"%@",publicID];
+    NSString * cityId=[_selectedCityDict valueForKey:@"id"];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@&cityId=%@",URL_CONST,ACTION_INVITE,[UserData getUserID],ids,cityId];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    }
+
 @end

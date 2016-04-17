@@ -18,7 +18,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8b-j0-VMG">
                         <rect key="frame" x="13" y="8" width="468" height="113"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alpes.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Gvn-lF-Ef2">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="No_User" translatesAutoresizingMaskIntoConstraints="NO" id="Gvn-lF-Ef2">
                                 <rect key="frame" x="10" y="12" width="90" height="90"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -96,6 +96,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="alpes.jpg" width="1267" height="742"/>
+        <image name="No_User" width="300" height="300"/>
     </resources>
 </document>

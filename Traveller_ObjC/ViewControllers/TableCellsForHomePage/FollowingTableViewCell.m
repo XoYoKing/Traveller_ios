@@ -11,11 +11,14 @@
 @implementation FollowingTableViewCell
 -(void)awakeFromNib{
    
-    [self addShaddowToView:_profileImageView];
+    [_profileImageView addShaddow];
     
     _followButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
     _followButton.layer.borderWidth=1;
-    [self addShaddowToView:_followButton];
+    [_followButton addShaddow];
+    
+    _profileImageView.clipsToBounds=YES;
+    [_profileImageView addBlackLayerAndCornerRadius:45 AndWidth:1];
     
     
 }

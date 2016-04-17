@@ -7,7 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FollowingTableViewCell.h"
+#import "GIBadgeView.h"
+#import "NotificationsViewController.h"
+@interface AskForTipsViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+{
+    __weak IBOutlet UITableView *wishToTableView;
+    GIBadgeView * badgeView;
+    
+    NSMutableArray * globalArrayToShow;
+    NSMutableArray * citiesArray;
+    BOOL citiesPagingBoolean;
+    int citiesPage;
+    
+    __weak IBOutlet UITextField *searchTF;
+    __weak IBOutlet UIButton *searchBtn;
+    __weak IBOutlet UITextView *textView;
+    __weak IBOutlet UIButton *sendButton;
+    __weak IBOutlet NSLayoutConstraint *textViewHeight;
+    __weak IBOutlet NSLayoutConstraint *searchViewaboveConstraint;
+    __weak IBOutlet UIView *searchBackView;
+    int selectedIndex;
+}
 
-@interface AskForTipsViewController : UIViewController
+@property(strong,nonatomic)NSDictionary * selectedCityDict;
+- (IBAction)sendClick:(id)sender;
+
 
 @end

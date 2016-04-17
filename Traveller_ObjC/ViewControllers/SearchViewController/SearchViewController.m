@@ -47,8 +47,8 @@ if (citiesArray.count==0||citiesArray==nil) {
 }
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
-                                                                           fontWithName:font_bold size:22], NSFontAttributeName,
-                                back_btn_Color, NSForegroundColorAttributeName, nil];
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -91,14 +91,7 @@ if (citiesArray.count==0||citiesArray==nil) {
     SearchCollectionViewCell *cell=[searchCollectionView dequeueReusableCellWithReuseIdentifier:@"SearchCollectionViewCell" forIndexPath:indexPath];
     cell.contentView.frame = [cell bounds];
     NSDictionary * dataDict =[citiesArray objectAtIndex:indexPath.row];
-//    city = "pune to";
-//    country = India;
-//    follow = 0;
-//    id = 9;
-//    image = "http://trasquare.com/traveller_api/userPic/1458141473.jpg";
-//    name = Nitin;
-    
-    
+
     NSString * city =[dataDict valueForKey:@"city"];
     NSString * country =[dataDict valueForKey:@"country"];
     NSString * name =[dataDict valueForKey:@"name"];
@@ -148,13 +141,30 @@ if (citiesArray.count==0||citiesArray==nil) {
         cell.followBackView.hidden=YES;
     }
 
+    // For Paging Mechanism
+    if (indexPath.row==citiesArray.count -3) {
+        if (citiesPagingBoolean==YES) {
+            citiesPage++;
+            [self performSelectorInBackground:@selector(getCitiesDataPaging) withObject:nil];
+        }
+    }
+
+    
     [cell layoutIfNeeded];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.view.frame.size.width/2  , 200);
+    if(iPhone4s||iPhone5or5s){
+         return CGSizeMake(self.view.frame.size.width/2  , 160);
+    }else{
+        if (iPAD) {
+             return CGSizeMake(300  , 300);
+        }else{
+           return CGSizeMake(self.view.frame.size.width/2  , 200);
+        }
+    }
 }
 
 
@@ -277,5 +287,47 @@ if (citiesArray.count==0||citiesArray==nil) {
     }
 }
 
+#pragma mark ====================FollowMechanism=============================
+-(void)followButtonClick:(UIButton *)btn{
+    selectedIndex =(int)btn.tag;
+    [self.view showLoader];
+    [self performSelectorInBackground:@selector(followWebservice) withObject:nil];
+}
+-(void)followWebservice{
+    NSDictionary * dataDict ;
+    if (selectedIndex==3) {
+        dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
+    }else{
+        dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
+    }
+    
+    NSString * publicId =[dataDict valueForKey:@"mid"];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [self performSelectorOnMainThread:@selector(reloadTableRow:) withObject:homefeed waitUntilDone:YES];
+}
+
+-(void)reloadTableRow:(NSDictionary *)homefeed{
+    NSDictionary * dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
+    if (homefeed) {
+        if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"1" forKey:@"follow"];
+            [citiesArray replaceObjectAtIndex:selectedIndex withObject:newDict];
+            [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
+        }else{
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"0" forKey:@"follow"];
+            [citiesArray replaceObjectAtIndex:selectedIndex withObject:newDict];
+            [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
+        }
+    }
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:selectedIndex inSection:0];
+    [searchCollectionView reloadItemsAtIndexPaths:@[ip]];
+    [self.view hideLoader];
+}
 
 @end

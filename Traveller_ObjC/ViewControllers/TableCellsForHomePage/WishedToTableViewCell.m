@@ -11,17 +11,12 @@
 @implementation WishedToTableViewCell
 
 -(void)awakeFromNib{
-    //_bgView.layer.borderColor=[UIColor blackColor].CGColor;
-   // _bgView.layer.borderWidth=1;
-  //  [self addShaddowToView:_bgView];
-    
-   // _profileImageView.layer.borderColor=[UIColor whiteColor].CGColor;
-  //  _profileImageView.layer.borderWidth=2;
- //   _profileImageView.layer.cornerRadius =6;
+    _profileImageView.clipsToBounds=YES;
+    [_profileImageView addBlackLayerAndCornerRadius:40 AndWidth:1];
     [self addShaddowToView:_profileImageView];
     
     _deleteButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
-    [_deleteButton setTitle:[NSString stringWithUTF8String:ICOMOON_DELETE] forState:UIControlStateNormal] ;
+    [_deleteButton setTitle:[NSString stringWithUTF8String:ICOMOON_DELET] forState:UIControlStateNormal] ;
     _deleteButton.titleLabel.textColor  = userShouldNOTDOButoonColor;
     _deleteButton.tintColor =userShouldNOTDOButoonColor ;
 }

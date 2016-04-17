@@ -36,10 +36,9 @@
     __weak IBOutlet UIButton *updateBtn;
     
     CountryPicker * countryPicker;
-    
     __weak IBOutlet NSLayoutConstraint *registerHeightConstraint;
-    
 }
+@property(strong,nonatomic)NSString * fromWhichMenu;
 - (IBAction)updateClick:(id)sender;
 - (IBAction)maleBtnClick:(id)sender;
 - (IBAction)femaleClick:(id)sender;

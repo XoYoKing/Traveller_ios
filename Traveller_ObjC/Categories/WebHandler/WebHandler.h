@@ -15,4 +15,5 @@
 +(id)sharedHandler;
 -(NSDictionary *)getDataFromWebservice:(NSString *)urlString;
 -(BOOL)uploadDataWithImage:(UIImage *)image forKey:(NSString *)key andParameters:(NSDictionary *)dict OnUrl:(NSString *)url completion:(void(^)(NSDictionary *dict))completionBlock;
+
 @end
