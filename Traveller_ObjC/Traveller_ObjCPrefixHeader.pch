@@ -37,6 +37,7 @@
 #import "UIImage+ImageEffects.h"
 #import "UserData.h"
 #import "ViewUserProfileViewController.h"
+#import "UILabel+AgoLabelCategory.h"
 
 #endif
 

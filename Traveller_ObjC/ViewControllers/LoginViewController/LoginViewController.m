@@ -196,19 +196,15 @@
 
 #pragma mark====================Login With Email===============================
 - (IBAction)loginClick:(id)sender {
-    
 
-    
 #if DEBUG
     userNameTextField.text=@"sagarshirbhate@gmail.com";
     passwordTextField.text=@"qwertyuiop";
   #endif
- 
-    
+
     if ([userNameTextField validate]&&[passwordTextField validate]) {
         [self.view showLoader];
-        [self callLoginWebservice];
-        //[self performSelectorInBackground:@selector(callLoginWebservice) withObject:nil];
+        [self performSelectorInBackground:@selector(callLoginWebservice) withObject:nil];
     }
     
 }

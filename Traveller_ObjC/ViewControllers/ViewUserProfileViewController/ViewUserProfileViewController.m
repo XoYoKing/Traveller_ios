@@ -155,15 +155,95 @@
     
     return cell;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+#pragma mark - ImagePickerController Delegate
+
+-(void)clickOnImage{
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:@"Change Profile picture"
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    UIAlertAction* camera = [UIAlertAction
+                           actionWithTitle:@"Camera"
+                           style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action)
+                           {
+                               [self btnCameraClick];
+                               [self dismissViewControllerAnimated:YES completion:nil];
+                           }];
+    UIAlertAction* gallery = [UIAlertAction
+                             actionWithTitle:@"Gallery"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self btnGalleryClick];
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    
+    [view addAction:ok];
+    [view addAction:gallery];
+    [view addAction:camera];
+    CGPoint windowPoint = [userImageView convertPoint:userImageView.bounds.origin toView:self.view.window];
+    view.popoverPresentationController.sourceView = self.view;
+    view.popoverPresentationController.sourceRect = CGRectMake(userImageView.frame.origin.x, windowPoint.y+15, userImageView.frame.size.width, userImageView.frame.size.height);;
+    [self presentViewController: view animated:YES completion:nil];
 }
-*/
+
+
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    if(!iPAD) {
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [popover dismissPopoverAnimated:YES];
+    }
+    userImageView.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)btnGalleryClick
+{
+    ipc= [[UIImagePickerController alloc] init];
+    ipc.delegate = self;
+    ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    if(!iPAD)
+        [self presentViewController:ipc animated:YES completion:nil];
+    else
+    {
+        ipc.modalPresentationStyle = UIModalPresentationPopover;
+        ipc.popoverPresentationController.sourceView = userImageView;
+        [self presentViewController:ipc animated:YES completion:nil];
+    }
+}
+
+- (void)btnCameraClick
+{
+    ipc = [[UIImagePickerController alloc] init];
+    ipc.delegate = self;
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:ipc animated:YES completion:NULL];
+    }
+    else
+    {
+        [self.view makeToast:@"No Camera Available" duration:toastDuration position:toastPositionBottomUp];
+    }
+}
+
 
 - (IBAction)followClick:(id)sender {
 }

@@ -7,7 +7,7 @@
 //
 
 #import "SignUpViewController.h"
-
+#import "TermsAndConditionViewController.h"
 @interface SignUpViewController ()
 
 @end
@@ -79,11 +79,10 @@
     
     NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:font_size_normal_regular]};
     termsLbl.attributedText = [[NSAttributedString alloc]initWithString:@"I accept Terms and Conditions" attributes:attributes];
-    
+    termsLbl.userInteractionEnabled=YES;
     void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-        if ([substring isEqualToString:@"Terms and Conditions"]) {
-            
-        }
+            TermsAndConditionViewController * vc= [self.storyboard instantiateViewControllerWithIdentifier:@"TermsAndConditionViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
     };
     //Added link substrings
 
@@ -101,6 +100,23 @@
         updateBtn.hidden=YES;
         cancelBtn.hidden=YES;
     }
+    
+    statusTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     userNameTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     emailTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     passwordTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     websiteTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     nextDestinationTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     cityTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     confirmPasswordTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+     phoneNoTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+    maleLBL.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+    femaleLBL.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+    
+    registerBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    cancelBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    updateBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    
 }
 
 -(void)hidePicker{

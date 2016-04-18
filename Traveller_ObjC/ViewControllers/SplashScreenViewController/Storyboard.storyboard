@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Eg-ps-xN4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Eg-ps-xN4">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -1648,7 +1648,9 @@
                                     <constraint firstItem="IrO-QM-CsT" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="7cD-gW-fDw"/>
                                     <constraint firstAttribute="trailing" secondItem="yOM-GB-1AI" secondAttribute="trailing" constant="20" id="7l2-V6-E1a"/>
                                     <constraint firstItem="Pes-oA-NXF" firstAttribute="top" secondItem="cDd-JC-i6j" secondAttribute="bottom" id="Bjx-36-qER"/>
-                                    <constraint firstItem="Iqs-4y-Say" firstAttribute="top" secondItem="Nr6-RE-JKx" secondAttribute="bottom" constant="8" id="CP1-Lw-pRb"/>
+                                    <constraint firstItem="Iqs-4y-Say" firstAttribute="top" secondItem="Nr6-RE-JKx" secondAttribute="bottom" constant="8" id="CP1-Lw-pRb">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="qPJ-qM-Zl1" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="25" id="Cch-WC-wYG"/>
                                     <constraint firstItem="CBf-S3-1fw" firstAttribute="top" secondItem="gWh-eK-MKV" secondAttribute="bottom" id="DlX-g1-u2d"/>
                                     <constraint firstAttribute="trailing" secondItem="DNW-Ta-reO" secondAttribute="trailing" constant="20" id="E6T-1L-9kB"/>
@@ -1665,14 +1667,22 @@
                                     <constraint firstItem="DNW-Ta-reO" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="JqV-71-vVQ"/>
                                     <constraint firstAttribute="trailing" secondItem="9cP-14-VJI" secondAttribute="trailing" constant="20" id="KXd-o5-YHO"/>
                                     <constraint firstItem="r4t-RF-u9j" firstAttribute="top" secondItem="SWy-In-sCu" secondAttribute="bottom" id="LFi-SH-nD8"/>
-                                    <constraint firstItem="hTD-nL-h9o" firstAttribute="top" secondItem="wMZ-bt-tAB" secondAttribute="bottom" constant="8" id="La0-X4-b3b"/>
+                                    <constraint firstItem="hTD-nL-h9o" firstAttribute="top" secondItem="wMZ-bt-tAB" secondAttribute="bottom" constant="8" id="La0-X4-b3b">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="Pes-oA-NXF" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="MdF-l5-UJd"/>
                                     <constraint firstAttribute="trailing" secondItem="Nr6-RE-JKx" secondAttribute="trailing" constant="20" id="Mh9-EU-6NE"/>
                                     <constraint firstAttribute="trailing" secondItem="wMZ-bt-tAB" secondAttribute="trailing" constant="20" id="Mis-Fo-W5l"/>
-                                    <constraint firstItem="0Vu-35-fWk" firstAttribute="top" secondItem="qnW-3o-fZi" secondAttribute="bottom" constant="8" id="NV2-Z2-HdT"/>
-                                    <constraint firstItem="9bc-8w-534" firstAttribute="top" secondItem="r4t-RF-u9j" secondAttribute="bottom" constant="8" id="NoL-s9-YYY"/>
+                                    <constraint firstItem="0Vu-35-fWk" firstAttribute="top" secondItem="qnW-3o-fZi" secondAttribute="bottom" constant="8" id="NV2-Z2-HdT">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
+                                    <constraint firstItem="9bc-8w-534" firstAttribute="top" secondItem="r4t-RF-u9j" secondAttribute="bottom" constant="8" id="NoL-s9-YYY">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="r4t-RF-u9j" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="Ock-EL-MTD"/>
-                                    <constraint firstItem="65U-0R-I5n" firstAttribute="top" secondItem="9qn-Vi-vHN" secondAttribute="bottom" constant="8" id="Pxs-fB-XmX"/>
+                                    <constraint firstItem="65U-0R-I5n" firstAttribute="top" secondItem="9qn-Vi-vHN" secondAttribute="bottom" constant="8" id="Pxs-fB-XmX">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="hTD-nL-h9o" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="QKb-Wd-Gfx"/>
                                     <constraint firstItem="qnW-3o-fZi" firstAttribute="top" secondItem="Iqs-4y-Say" secondAttribute="bottom" id="QOl-u4-FAD"/>
                                     <constraint firstAttribute="trailing" secondItem="IrO-QM-CsT" secondAttribute="trailing" constant="20" id="Raf-1T-M8h"/>
@@ -1687,12 +1697,18 @@
                                     <constraint firstItem="klJ-4t-mhY" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="Wjj-fO-bDc"/>
                                     <constraint firstAttribute="trailing" secondItem="RnZ-A8-1Vl" secondAttribute="trailing" constant="20" id="XEP-X1-3iU"/>
                                     <constraint firstItem="kP4-4c-KgA" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="XJu-3A-Kqi"/>
-                                    <constraint firstItem="gWh-eK-MKV" firstAttribute="top" secondItem="Pes-oA-NXF" secondAttribute="bottom" constant="8" id="Y1P-zx-8Kf"/>
+                                    <constraint firstItem="gWh-eK-MKV" firstAttribute="top" secondItem="Pes-oA-NXF" secondAttribute="bottom" constant="8" id="Y1P-zx-8Kf">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="rP9-Mb-b8Z" firstAttribute="top" secondItem="klJ-4t-mhY" secondAttribute="bottom" constant="8" id="aBU-nS-ZKk"/>
                                     <constraint firstAttribute="trailing" secondItem="hTD-nL-h9o" secondAttribute="trailing" constant="20" id="b2C-jO-J4h"/>
                                     <constraint firstAttribute="bottom" secondItem="P59-iQ-F0u" secondAttribute="bottom" constant="20" id="bMM-lE-3yh"/>
-                                    <constraint firstItem="SWy-In-sCu" firstAttribute="top" secondItem="DNW-Ta-reO" secondAttribute="bottom" constant="8" id="c7Z-MF-xpH"/>
-                                    <constraint firstItem="kP4-4c-KgA" firstAttribute="top" secondItem="yOM-GB-1AI" secondAttribute="bottom" constant="8" id="cdc-fZ-xLs"/>
+                                    <constraint firstItem="SWy-In-sCu" firstAttribute="top" secondItem="DNW-Ta-reO" secondAttribute="bottom" constant="8" id="c7Z-MF-xpH">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
+                                    <constraint firstItem="kP4-4c-KgA" firstAttribute="top" secondItem="yOM-GB-1AI" secondAttribute="bottom" constant="8" id="cdc-fZ-xLs">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstAttribute="trailing" secondItem="9Ma-xh-YbV" secondAttribute="trailing" constant="20" id="eK9-ik-b2H"/>
                                     <constraint firstItem="Iqs-4y-Say" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="ei8-rw-Vwx"/>
                                     <constraint firstItem="yOM-GB-1AI" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="fxJ-K7-Ama"/>
@@ -1715,8 +1731,12 @@
                                     <constraint firstItem="P59-iQ-F0u" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="s6Z-wk-g6e"/>
                                     <constraint firstAttribute="trailing" secondItem="klJ-4t-mhY" secondAttribute="trailing" constant="20" id="t24-nJ-BKi"/>
                                     <constraint firstItem="yOM-GB-1AI" firstAttribute="top" secondItem="65U-0R-I5n" secondAttribute="bottom" id="uMM-ur-IRf"/>
-                                    <constraint firstItem="IrO-QM-CsT" firstAttribute="top" secondItem="CBf-S3-1fw" secondAttribute="bottom" constant="8" id="uci-DU-h1O"/>
-                                    <constraint firstItem="cDd-JC-i6j" firstAttribute="top" secondItem="RnZ-A8-1Vl" secondAttribute="bottom" constant="8" id="umQ-98-Ate"/>
+                                    <constraint firstItem="IrO-QM-CsT" firstAttribute="top" secondItem="CBf-S3-1fw" secondAttribute="bottom" constant="8" id="uci-DU-h1O">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
+                                    <constraint firstItem="cDd-JC-i6j" firstAttribute="top" secondItem="RnZ-A8-1Vl" secondAttribute="bottom" constant="8" id="umQ-98-Ate">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="RnZ-A8-1Vl" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="uqv-6U-uI7"/>
                                     <constraint firstItem="9cP-14-VJI" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="wRE-I2-PrN"/>
                                     <constraint firstItem="rP9-Mb-b8Z" firstAttribute="leading" secondItem="WIT-Ad-mbt" secondAttribute="leading" constant="20" id="zza-QB-LbG"/>
@@ -1762,6 +1782,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jU4-Yp-GGY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2032" y="1055"/>
+        </scene>
+        <!--Terms And Condition View Controller-->
+        <scene sceneID="6KR-bJ-2a4">
+            <objects>
+                <viewController restorationIdentifier="TermsAndConditionViewController" storyboardIdentifier="TermsAndConditionViewController" id="CpU-We-kvQ" customClass="TermsAndConditionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3kv-uW-lvC"/>
+                        <viewControllerLayoutGuide type="bottom" id="d4l-S4-14x"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="P7x-Ql-Lsv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="5mw-G2-QQc">
+                                <rect key="frame" x="30" y="30" width="540" height="560"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. We are offering you this app to use for your own personal use without cost, but you should be aware that you cannot send it on to anyone else, and you’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to easyJet.
+
+At the bottom of these terms and conditions you will be able to find links to our website where we set out our Privacy Policy, Acceptable Use of the app, and the general Terms and Conditions for passengers and baggage, which will be relevant if you use the app to book flights with easyJet in the future.
+
+easyJet is committed to ensuring that the app is as useful and efficient as possible. For that reason, we reserve the right to make changes to the app or to charge for its services, at any time and for any reason. We will never charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+
+The easyJet app stores and processes personal data that you have provided to us so that you can book flights. It’s your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the official operating system of your device. It could make your phone vulnerable to malware/viruses/malicious programs, compromise your phone’s security features and it could mean that the easyJet app won’t work properly or at all. 
+
+You should be aware that there are certain things that easyJet will not take responsibility for. Certain functions of the app, such as the ability to download and store your mobile boarding passes offline, the live Flight Tracker and the Mobile Host function will all require the app to have an active internet connection. The connection can be Wi-Fi, or provided by your mobile network provider, but easyJet cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+
+If you’re using the app outside of an area with Wi-Fi, you should remember that your terms of agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
+
+Along the same lines, easyJet cannot always take responsibility for the way you use the app. If you want to use the mobile boarding pass feature of the app, it’s possible that easyJet staff may need to briefly handle your device when your boarding pass is scanned. While our staff will - of course - take all reasonable care to make sure nothing happens to your device, we don’t accept liability for damage to it, unless it’s caused by any negligence or wilful misconduct by our staff. You also need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to scan your boarding pass as required, easyJet cannot accept responsibility if you are as a result not able to fly.
+
+You should also remember that the app’s passport scanner function’s purpose is to make things more convenient for you – it doesn’t replace your travel documents, and you will still need to bring them to the airport in order to fly. Lastly, with respect to easyJet’s responsibility for your use of the app, when you’re using the mobile host function of the app, it’s important to bear in mind that although we endeavour to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you. So, it is not intended to wholly replace the need to stay informed of updates that are made on screens throughout the terminal or via airport loudspeaker announcements. easyJet accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app rather than using all the resources in the airport to keep yourself updated as to the details of your flight.
+
+At some point we may wish to update the app. The app is currently available on Android and iOS – the requirements for both systems (and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app. easyJet does not promise that it will always update the app so that it is relevant to you and/or works with the iOS/Android version that you have installed on your device. However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.</mutableString>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d4l-S4-14x" firstAttribute="top" secondItem="5mw-G2-QQc" secondAttribute="bottom" constant="10" id="3Ms-ho-vuw"/>
+                            <constraint firstItem="5mw-G2-QQc" firstAttribute="leading" secondItem="P7x-Ql-Lsv" secondAttribute="leadingMargin" constant="10" id="Dt9-xF-M6G"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5mw-G2-QQc" secondAttribute="trailing" constant="10" id="JXj-bQ-qAH"/>
+                            <constraint firstItem="5mw-G2-QQc" firstAttribute="top" secondItem="3kv-uW-lvC" secondAttribute="bottom" constant="10" id="xyc-I7-IBx"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="13U-wj-Arp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2032" y="1827"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="T6y-sf-c9h">

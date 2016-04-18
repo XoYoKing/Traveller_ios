@@ -84,6 +84,10 @@
 		AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32D1CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m */; };
 		AA96D3351CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D32F1CBB9E5500B2CDDA /* UIImage+JTSImageEffects.m */; };
 		AA96D33E1CBBD04800B2CDDA /* ABCIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D33D1CBBD04800B2CDDA /* ABCIntroView.m */; };
+		AABC9AC51CC4C410008483AD /* UILabel+AgoLabelCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AABC9AC41CC4C410008483AD /* UILabel+AgoLabelCategory.m */; };
+		AABC9ACA1CC505C5008483AD /* TermsAndConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AABC9AC91CC505C5008483AD /* TermsAndConditionViewController.m */; };
+		AABC9AD01CC51A0A008483AD /* RFRateMe.m in Sources */ = {isa = PBXBuildFile; fileRef = AABC9ACD1CC51A0A008483AD /* RFRateMe.m */; };
+		AABC9AD11CC51A0A008483AD /* UIAlertView+NSCookbook.m in Sources */ = {isa = PBXBuildFile; fileRef = AABC9ACF1CC51A0A008483AD /* UIAlertView+NSCookbook.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +240,14 @@
 		AA96D33A1CBBAA2D00B2CDDA /* Traveller_ObjCPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traveller_ObjCPrefixHeader.pch; sourceTree = "<group>"; };
 		AA96D33C1CBBD04800B2CDDA /* ABCIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABCIntroView.h; sourceTree = "<group>"; };
 		AA96D33D1CBBD04800B2CDDA /* ABCIntroView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCIntroView.m; sourceTree = "<group>"; };
+		AABC9AC31CC4C410008483AD /* UILabel+AgoLabelCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+AgoLabelCategory.h"; sourceTree = "<group>"; };
+		AABC9AC41CC4C410008483AD /* UILabel+AgoLabelCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+AgoLabelCategory.m"; sourceTree = "<group>"; };
+		AABC9AC81CC505C5008483AD /* TermsAndConditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsAndConditionViewController.h; sourceTree = "<group>"; };
+		AABC9AC91CC505C5008483AD /* TermsAndConditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsAndConditionViewController.m; sourceTree = "<group>"; };
+		AABC9ACC1CC51A0A008483AD /* RFRateMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFRateMe.h; sourceTree = "<group>"; };
+		AABC9ACD1CC51A0A008483AD /* RFRateMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFRateMe.m; sourceTree = "<group>"; };
+		AABC9ACE1CC51A0A008483AD /* UIAlertView+NSCookbook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+NSCookbook.h"; sourceTree = "<group>"; };
+		AABC9ACF1CC51A0A008483AD /* UIAlertView+NSCookbook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+NSCookbook.m"; sourceTree = "<group>"; };
 		BD2F91310D877B4C065586C4 /* libPods-Traveller_ObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Traveller_ObjC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41858E93FFC38B342BF147A /* Pods-Traveller_ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller_ObjC.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traveller_ObjC/Pods-Traveller_ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -467,6 +479,7 @@
 		AA2BC0A21CB4E1980030A0E5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AABC9AC21CC4C405008483AD /* AgoLabelCategory */,
 				39F187BB1CB7C336001ABFB0 /* TextFieldPadding */,
 				AA3789271CB62D71000F151B /* ImageEffects */,
 				AA2BC0E81CB540010030A0E5 /* DontAllowCopyPaste */,
@@ -492,6 +505,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AABC9AC71CC505A7008483AD /* TermsAndConditionViewController */,
 				AA5A77731CC0B957001355C8 /* WishToVisitViewController */,
 				AA5A77741CC0B957001355C8 /* InviteToJoinViewController */,
 				AA5A77751CC0B957001355C8 /* AskForTipsViewController */,
@@ -519,6 +533,7 @@
 		AA2BC0A71CB4E1980030A0E5 /* Libaries */ = {
 			isa = PBXGroup;
 			children = (
+				AABC9ACB1CC51A0A008483AD /* RFRateMe */,
 				AA807B431CBE7AAF00D1E665 /* CountryPicker */,
 				AA807B071CBE181600D1E665 /* MVPlaceSearchTextField */,
 				AA96D33B1CBBD04800B2CDDA /* IntroView */,
@@ -808,6 +823,35 @@
 			path = IntroView;
 			sourceTree = "<group>";
 		};
+		AABC9AC21CC4C405008483AD /* AgoLabelCategory */ = {
+			isa = PBXGroup;
+			children = (
+				AABC9AC31CC4C410008483AD /* UILabel+AgoLabelCategory.h */,
+				AABC9AC41CC4C410008483AD /* UILabel+AgoLabelCategory.m */,
+			);
+			path = AgoLabelCategory;
+			sourceTree = "<group>";
+		};
+		AABC9AC71CC505A7008483AD /* TermsAndConditionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AABC9AC81CC505C5008483AD /* TermsAndConditionViewController.h */,
+				AABC9AC91CC505C5008483AD /* TermsAndConditionViewController.m */,
+			);
+			path = TermsAndConditionViewController;
+			sourceTree = "<group>";
+		};
+		AABC9ACB1CC51A0A008483AD /* RFRateMe */ = {
+			isa = PBXGroup;
+			children = (
+				AABC9ACC1CC51A0A008483AD /* RFRateMe.h */,
+				AABC9ACD1CC51A0A008483AD /* RFRateMe.m */,
+				AABC9ACE1CC51A0A008483AD /* UIAlertView+NSCookbook.h */,
+				AABC9ACF1CC51A0A008483AD /* UIAlertView+NSCookbook.m */,
+			);
+			path = RFRateMe;
+			sourceTree = "<group>";
+		};
 		D2396F9CAEB061D6BE726AA9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -959,6 +1003,7 @@
 				39F187BA1CB7BD26001ABFB0 /* icomoon.ttf in Sources */,
 				AA2BC0E41CB53FAB0030A0E5 /* Toast+UIView.m in Sources */,
 				AA96D33E1CBBD04800B2CDDA /* ABCIntroView.m in Sources */,
+				AABC9AC51CC4C410008483AD /* UILabel+AgoLabelCategory.m in Sources */,
 				AA2BC0BA1CB4E2900030A0E5 /* GIBadgeView.m in Sources */,
 				AA807B041CBE17C200D1E665 /* AddPostViewController.m in Sources */,
 				AA96D3341CBB9E5500B2CDDA /* UIApplication+JTSImageViewController.m in Sources */,
@@ -982,6 +1027,7 @@
 				3996915A1CB944A6000A3A4A /* LocationFeedViewController.m in Sources */,
 				AA5A777B1CC0B977001355C8 /* InviteToJoinViewController.m in Sources */,
 				AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */,
+				AABC9AD11CC51A0A008483AD /* UIAlertView+NSCookbook.m in Sources */,
 				3996912C1CB8D055000A3A4A /* SearchCollectionViewCell.m in Sources */,
 				AA3789231CB610D2000F151B /* HomeViewController.m in Sources */,
 				39F187BE1CB7C358001ABFB0 /* UITextField+PaddingText.m in Sources */,
@@ -992,6 +1038,7 @@
 				AA2BC0D91CB53C180030A0E5 /* Reachability.m in Sources */,
 				399691321CB8F666000A3A4A /* Notification2TableViewCell.m in Sources */,
 				AA5A77781CC0B96B001355C8 /* WishToVisitViewController.m in Sources */,
+				AABC9AD01CC51A0A008483AD /* RFRateMe.m in Sources */,
 				AA0321CF1CBF971100B38B76 /* ViewUserProfileViewController.m in Sources */,
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
@@ -1022,6 +1069,7 @@
 				39CE42EC1CBA111A000B371C /* LikeTableViewCell.m in Sources */,
 				39CE42EF1CBA167C000B371C /* ComentTableViewCell.m in Sources */,
 				395994E31CB81546001E2118 /* SignUpViewController.m in Sources */,
+				AABC9ACA1CC505C5008483AD /* TermsAndConditionViewController.m in Sources */,
 				AA2BC0BE1CB4E2900030A0E5 /* UIViewController+JASidePanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1046,8 +1094,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Pradip Solanke (4BGR2HUY6V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Pradip Solanke (4BGR2HUY6V)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -1071,7 +1119,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "6f786a21-3a99-4728-bb83-a8c2bcb7e45c";
+				PROVISIONING_PROFILE = "d1144a12-5b71-4418-8803-424eba8a5461";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1094,8 +1142,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pradip Solanke (3NFK5ZFTVC)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Pradip Solanke (4BGR2HUY6V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Pradip Solanke (4BGR2HUY6V)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -1112,7 +1160,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "6f786a21-3a99-4728-bb83-a8c2bcb7e45c";
+				PROVISIONING_PROFILE = "d1144a12-5b71-4418-8803-424eba8a5461";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

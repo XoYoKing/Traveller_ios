@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -158,16 +158,18 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="Shopping" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
                                 <rect key="frame" x="0.0" y="144" width="503" height="250"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="d74-ie-qne"/>
+                                    <constraint firstAttribute="height" constant="250" id="d74-ie-qne">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                    </constraint>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drG-Bt-Pcd">
-                                <rect key="frame" x="463" y="25" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drG-Bt-Pcd">
+                                <rect key="frame" x="462" y="24" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="K9q-Z7-LE9"/>
                                     <constraint firstAttribute="width" constant="30" id="XdH-O5-DY5"/>
                                 </constraints>
-                                <state key="normal" title="B">
+                                <state key="normal" image="dot_menu">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
@@ -231,5 +233,6 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
     <resources>
         <image name="No_User" width="300" height="300"/>
         <image name="Shopping" width="1024" height="512"/>
+        <image name="dot_menu" width="32" height="32"/>
     </resources>
 </document>

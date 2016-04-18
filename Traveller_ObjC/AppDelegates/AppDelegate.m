@@ -10,6 +10,8 @@
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "HomeViewController.h"
+#import "RFRateMe.h"
+#import "UIAlertView+NSCookbook.h"
 @interface AppDelegate ()<GPPSignInDelegate>
 
 @end
@@ -31,6 +33,17 @@
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
     [application registerUserNotificationSettings:settings];
+    
+    
+    //Option 1 (Show the alert)
+    [RFRateMe showRateAlert];
+    
+    // Option 2 (Show the alert after X amount of times you opened the app)
+    [RFRateMe showRateAlertAfterTimesOpened:3];
+    
+    // Option 3 (Show the alert after X amount of days you opened the app for the first time)
+    [RFRateMe showRateAlertAfterDays:7];
+    
     
     return YES;
 }

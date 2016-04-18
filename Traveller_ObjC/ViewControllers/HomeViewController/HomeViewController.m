@@ -556,6 +556,10 @@
         //created dictionary from array object
         NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
         
+        NSString * miliseconds =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"add_date"]];
+        
+        [cell.agoLbl setAgoText:miliseconds];
+        
         //detail text
         NSString * details =[dataDict valueForKey:@"activity_description"];
         cell.extraFeedLabel.text=details;
@@ -595,12 +599,6 @@
             userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
             locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
             imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-        if([userID isEqualToString:[UserData getUserID]]|| userID==nil){
-            cell.menuBtnOfPost.hidden=NO;
-        }else{
-            cell.menuBtnOfPost.hidden=YES;
         }
         
         //mainstr have title and Also Links Managed.
@@ -1165,9 +1163,107 @@
 
 #pragma mark====================Edit User Feed Post=============================
 -(void)editPost:(UIButton*)btn{
-    [self showAlert];
+   
     selectedDictForDelete =[homeFeedData objectAtIndex:btn.tag];
+    
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+        
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    UIAlertAction* edit = [UIAlertAction
+                         actionWithTitle:@"Edit"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self editPost];
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    UIAlertAction* delete = [UIAlertAction
+                         actionWithTitle:@"Delete"
+                         style:UIAlertActionStyleDestructive
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self doDeletePlaceToVisited];
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    UIAlertAction* share = [UIAlertAction
+                         actionWithTitle:@"Share"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self performSelector:@selector(sharePost) withObject:nil afterDelay:1];
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+        
+    
+      NSString * userID;
+
+    NSArray *refertitle =[selectedDictForDelete valueForKey:@"refertitle"];
+    if (refertitle!=nil) {
+        userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+    }
+
+    [view addAction:ok];
+    [view addAction:share];
+    
+    if ([userID isEqualToString:[UserData getUserID]]) {
+        [view addAction:edit];
+        [view addAction:delete];
+    }
+    
+    CGPoint windowPoint = [btn convertPoint:btn.bounds.origin toView:self.view.window];
+    view.popoverPresentationController.sourceView = self.view;
+    view.popoverPresentationController.sourceRect = CGRectMake(btn.frame.origin.x, windowPoint.y+15, btn.frame.size.width, btn.frame.size.height);;
+    [self presentViewController: view animated:YES completion:nil];
+    
+    }
+-(void)editPost{
+    
 }
+-(void)sharePost{
+
+    //detail text
+    NSString * details =[selectedDictForDelete valueForKey:@"activity_description"];
+    
+    //Checked for post Image
+    UIImageView * tempImageView =[UIImageView new];
+    NSString * urlStringForPostImage =[[[selectedDictForDelete valueForKey:@"image"]lastObject]valueForKey:@"image"];
+    if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
+        NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
+        [tempImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
+    }
+    
+    NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[selectedDictForDelete valueForKey:@"activity_title"]];
+    
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
+                                                            withString:@"to eat 🍕 "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to visit"
+                                                            withString:@"to visit 🌄  "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to shopping"
+                                                            withString:@"to shopping 👗 "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to stay"
+                                                            withString:@"to stay 🏠 "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"travelling to"
+                                                            withString:@"travelling to ✈️ "];
+
+
+    UIImage *imagetoshare = tempImageView.image;
+    NSArray *activityItems = @[mainTitleStr, imagetoshare,details];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    activityVC.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypePostToTwitter, UIActivityTypePostToWeibo];
+    [self presentViewController:activityVC animated:TRUE completion:nil];
+}
+
+
+#pragma mark======delete========
 -(void)deletePlaceVisited:(UIButton*)btn{
     [self showAlert];
     selectedDictForDelete =[visitedCitiesData objectAtIndex:btn.tag];
@@ -1573,31 +1669,43 @@
 
 #pragma mark ==== Delete===
 -(void)showAlert{
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Traweller" message:@"Do you want to delete ?" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:^{
-           
-        }];
-    }]];
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:@"Do you want to delete ?"
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        if (selectedIndex==0) {
-               [self doDeleteOfFeed];
-        }else if(selectedIndex==1){
-               [self doDeletePlaceToVisited];
-        }else if(selectedIndex==2){
-               [self doDeleteWishedTo];
-        }
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+
+    UIAlertAction* delete = [UIAlertAction
+                             actionWithTitle:@"Delete"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action)
+                             {
+                                 if (selectedIndex==0) {
+                                     [self doDeleteOfFeed];
+                                 }else if(selectedIndex==1){
+                                     [self doDeletePlaceToVisited];
+                                 }else if(selectedIndex==2){
+                                     [self doDeleteWishedTo];
+                                 }
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                             }];
+
     
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
-    }]];
     
-    [self presentViewController:actionSheet animated:YES completion:nil];
+   
+    [view addAction:ok];
+    [view addAction:delete];
+    view.popoverPresentationController.sourceRect = self.tableView.frame;
+    [self presentViewController: view animated:YES completion:nil];
+
 }
 -(void)doDeleteOfFeed{
     [homeFeedData containsObject:selectedDictForDelete];

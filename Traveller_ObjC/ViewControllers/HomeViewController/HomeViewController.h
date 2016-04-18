@@ -45,10 +45,9 @@
         int visitedCitiesPage;
         int selectedIndex;
         int selectedUserIdex;
-    int indexForLikeNotification;
+        int indexForLikeNotification;
     
     NSDictionary * forLike;
-    
     NSDictionary * selectedDictForDelete;
     NSIndexPath * ipForFollow;
     }

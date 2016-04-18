@@ -33,20 +33,12 @@
     
     _buttonsBackView.layer.borderColor=[UIColor lightGrayColor].CGColor;
     _buttonsBackView.layer.borderWidth=1;
-    
     _likeMenuLogoLbl.font=[UIFont fontWithName:fontIcomoon size:26];
     _likeMenuLogoLbl.text =[NSString stringWithUTF8String:ICOMOON_LIKE];
-
     _likeMenuTxtLbl.font=[UIFont fontWithName:font_bold size:font_size_ComentLike];
     _comentMenuTextLbl.font=[UIFont fontWithName:font_bold size:font_size_ComentLike];
-    
     _comentMenuLbl.font=[UIFont fontWithName:fontIcomoon size:20];
     _comentMenuLbl.text =[NSString stringWithUTF8String:ICOMOON_COMMENT1];
-    
-    _menuBtnOfPost.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
-    _menuBtnOfPost.titleLabel.textColor=[UIColor redColor];
-    _menuBtnOfPost.tintColor=[UIColor redColor];
-    [_menuBtnOfPost setTitle:[NSString stringWithUTF8String:ICOMOON_REMOVE_CIRCLE_MINUS] forState:UIControlStateNormal] ;
 }
 
 
