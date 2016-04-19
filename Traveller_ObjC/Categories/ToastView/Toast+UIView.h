@@ -56,6 +56,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -(void)showToastWithMessage:(NSString*)msg;
 -(void)hideLoader;
 -(void)showLoader;
-
+-(void)addLayerAndCornerRadius:(int)radius AndWidth:(int)Width AndColor:(UIColor*)color;
 
 @end

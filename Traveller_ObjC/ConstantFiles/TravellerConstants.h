@@ -142,11 +142,12 @@
 #define Like_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 #define comment_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
 #define share_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
-#define segment_selected_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
-#define segment_disselected_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
-#define menu_Color [UIColor redColor]
-#define menu_background_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
-#define back_btn_Color [UIColor colorWithRed:208.0/255 green:208.0/255 blue:208.0/255 alpha:1]
+#define segment_selected_Color [UIColor whiteColor]
+#define segment_disselected_Color [UIColor colorWithRed:63.0/255 green:114.0/255 blue:155.0/255 alpha:1]
+#define menu_Color [UIColor colorWithRed:63.0/255 green:114.0/255 blue:155.0/255 alpha:1]
+#define menu_background_Color [UIColor colorWithRed:63.0/255 green:114.0/255 blue:155.0/255 alpha:1]
+#define navigation_background_Color [UIColor colorWithRed:63.0/255 green:114.0/255 blue:155.0/255 alpha:1]
+#define back_btn_Color [UIColor whiteColor]
 
 #pragma mark --------------------------For Parallax Effect on Feed View-------------------------------
 

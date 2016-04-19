@@ -11,7 +11,7 @@
 		390419921CBC1AEF00879650 /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 390419911CBC1AEF00879650 /* UserData.m */; };
 		390B295D1CB82FFC00227B84 /* CitiesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 390B295C1CB82FFC00227B84 /* CitiesCollectionViewCell.m */; };
 		395994DA1CB81495001E2118 /* CitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994D91CB81495001E2118 /* CitiesViewController.m */; };
-		395994DD1CB814AA001E2118 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994DC1CB814AA001E2118 /* SearchViewController.m */; };
+		395994DD1CB814AA001E2118 /* cel.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994DC1CB814AA001E2118 /* cel.m */; };
 		395994E01CB814BB001E2118 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994DF1CB814BB001E2118 /* SettingViewController.m */; };
 		395994E31CB81546001E2118 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994E21CB81546001E2118 /* SignUpViewController.m */; };
 		395994E61CB81558001E2118 /* TravellingToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994E51CB81558001E2118 /* TravellingToViewController.m */; };
@@ -99,7 +99,7 @@
 		395994D81CB81495001E2118 /* CitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesViewController.h; sourceTree = "<group>"; };
 		395994D91CB81495001E2118 /* CitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesViewController.m; sourceTree = "<group>"; };
 		395994DB1CB814AA001E2118 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		395994DC1CB814AA001E2118 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		395994DC1CB814AA001E2118 /* cel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cel.m; sourceTree = "<group>"; };
 		395994DE1CB814BB001E2118 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		395994DF1CB814BB001E2118 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		395994E11CB81546001E2118 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				395994DB1CB814AA001E2118 /* SearchViewController.h */,
-				395994DC1CB814AA001E2118 /* SearchViewController.m */,
+				395994DC1CB814AA001E2118 /* cel.m */,
 				3996912A1CB8D055000A3A4A /* SearchCollectionViewCell.h */,
 				3996912B1CB8D055000A3A4A /* SearchCollectionViewCell.m */,
 			);
@@ -1065,7 +1065,7 @@
 				39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */,
 				AA807B161CBE181600D1E665 /* MLPAutoCompleteTextField.m in Sources */,
 				AA96D3331CBB9E5500B2CDDA /* JTSSimpleImageDownloader.m in Sources */,
-				395994DD1CB814AA001E2118 /* SearchViewController.m in Sources */,
+				395994DD1CB814AA001E2118 /* cel.m in Sources */,
 				39CE42EC1CBA111A000B371C /* LikeTableViewCell.m in Sources */,
 				39CE42EF1CBA167C000B371C /* ComentTableViewCell.m in Sources */,
 				395994E31CB81546001E2118 /* SignUpViewController.m in Sources */,

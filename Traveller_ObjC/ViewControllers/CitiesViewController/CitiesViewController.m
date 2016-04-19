@@ -52,9 +52,11 @@
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
-                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
    }
 
 -(void)backClick{

@@ -22,6 +22,8 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
                                 [UIColor blackColor], NSForegroundColorAttributeName, nil];
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
 }
 
@@ -66,6 +68,13 @@
     if (badgeView==nil) {
         [self addNotificationView];
     }
+    
+    
+    if ([self notificationServicesEnabled]) {
+        pushNotificationSwitch.on=YES;
+    }else{
+        pushNotificationSwitch.on=NO;
+    }
 }
 
 
@@ -74,15 +83,63 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)pushClick:(UISwitch *)sender {
+    if (!sender.isOn) {
+        [self showAlert:@"For turning OFF the notifications please turn switch OFF to stop recieving notifications from BTOnsite "];
+    }else{
+        [self showAlert:@"For turning ON the notifications please select allow notifications from BTOnsite and Switch on Sound, Badge & Alert"];
+    }
 }
-*/
-
+-(void)showAlert:(NSString *)msg{
+    
+    if ([msg isEqualToString:@"For turning OFF the notification please turn switch OFF to stop recieving notification from BTOnsite "]) {
+        pushNotificationSwitch.on=YES;
+    }else{
+        pushNotificationSwitch.on=NO;
+    }
+    
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:msg
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    
+    UIAlertAction* delete = [UIAlertAction
+                             actionWithTitle:@"Setting"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action)
+                             {
+                                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    [view addAction:ok];
+    [view addAction:delete];
+    
+    if (!iPAD) {
+        [self presentViewController:view animated:YES completion:nil];
+    }else {
+        CGPoint windowPoint = [pushNotificationSwitch convertPoint:pushNotificationSwitch.bounds.origin toView:self.view.window];
+        UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:view];
+        [popup presentPopoverFromRect: CGRectMake(pushNotificationSwitch.frame.origin.x, windowPoint.y+15, pushNotificationSwitch.frame.size.width, pushNotificationSwitch.frame.size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+}
+- (BOOL)notificationServicesEnabled {
+    BOOL isEnabled = NO;
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]){
+        UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        if (!notificationSettings || (notificationSettings.types == UIUserNotificationTypeNone)) {
+            isEnabled = NO;
+        } else {
+            isEnabled = YES;
+        }
+    }
+    return isEnabled;
+}
 @end

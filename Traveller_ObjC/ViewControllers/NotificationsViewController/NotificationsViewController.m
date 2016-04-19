@@ -29,17 +29,18 @@
     notificationTableView.tableFooterView=[UIView new];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
-                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
-    
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     if (_fromMenu==NO) {
     UIButton *btn =  [UIButton buttonWithType:UIButtonTypeCustom];
         btn.titleLabel.textColor=[UIColor blackColor];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.frame = CGRectMake(0,0,25,25);
-    btn.tintColor=[UIColor blackColor];
+    btn.tintColor=[UIColor whiteColor];
         btn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-        btn.tintColor=[UIColor blackColor];
+        btn.tintColor=[UIColor whiteColor];
         [btn setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:btn];
@@ -92,6 +93,12 @@
                        @{NSFontAttributeName: [UIFont fontWithName:font_regular size:17]}];
         CGSize textSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
         CGFloat strikeWidth = textSize.width;
+        if (iPAD) {
+          strikeWidth = self.view.frame.size.width/4;
+        }else{
+        strikeWidth = textSize.width+20;
+        }
+        
         CGRect frame = CGRectMake(scrollWidth, 0,strikeWidth+20, 40);
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTag:j];
@@ -103,29 +110,28 @@
         button.titleLabel.textAlignment=NSTextAlignmentCenter;
         [button addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:name forState:UIControlStateNormal];
-        
         scrollWidth= scrollWidth+strikeWidth+20;
-        
+
         if (j==selectedIndex) {
-            button.backgroundColor= segment_selected_Color ;
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
-            [self addShaddowToView:button];
+            button.backgroundColor=segment_selected_Color ;
+            [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addShaddow];
             if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }else {
-                button.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }
         }else {
-            button.backgroundColor= [UIColor blackColor];
-            [self removeShaddowToView:button];
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
+            button.backgroundColor=segment_disselected_Color;
+            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+            [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_button size:17];
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }else{
-                button.titleLabel.font=[UIFont fontWithName:font_button size:15];
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }
         }
-        
         [buttonArray addObject:button];
         [myScrollView addSubview:button];
         
@@ -145,17 +151,26 @@
     
     for(int i=0;i<buttonArray.count;i++)
     {
-        if(i==index)
-        {
-            UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-            btn.backgroundColor= segment_selected_Color;
-            [self addShaddowToView:btn];
-            
-        }
-        else{
-            UIButton * btn = (UIButton *) [buttonArray objectAtIndex:i];
-            btn.backgroundColor=[UIColor blackColor];
-            [self removeShaddowToView:btn];
+        UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
+        if (i==selectedIndex) {
+            button.backgroundColor=segment_selected_Color ;
+            [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addShaddow];
+            if (iPhone6||iPhone6plus) {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }else {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }
+        }else {
+            button.backgroundColor=segment_disselected_Color;
+            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+            [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
+            if (iPhone6||iPhone6plus) {
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }else{
+                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+            }
         }
     }
     

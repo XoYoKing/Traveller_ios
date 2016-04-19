@@ -48,8 +48,11 @@ if (citiesArray.count==0||citiesArray==nil) {
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
-                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
@@ -133,10 +136,12 @@ if (citiesArray.count==0||citiesArray==nil) {
         cell.followNameLbl.text=@"Follow";
         cell.followLogoLbl.text=   [NSString stringWithUTF8String:ICOMOON_USER_ICONPlus];
         cell.followNameLbl.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+        cell.followBackView.backgroundColor=navigation_background_Color;
     }else{
         cell.followNameLbl.text=@"Following";
         cell.followLogoLbl.text=  [NSString stringWithUTF8String:ICOMOON_USERICON_minus];
         cell.followNameLbl.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+        cell.followBackView.backgroundColor=Like_Color;
     }
     
     

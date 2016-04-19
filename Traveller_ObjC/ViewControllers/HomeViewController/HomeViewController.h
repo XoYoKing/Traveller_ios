@@ -10,7 +10,8 @@
 #import "FeedsTableViewCell.h"
 #import "WishedToTableViewCell.h"
 #import "FollowingTableViewCell.h"
-
+#import "RFRateMe.h"
+#import "UIAlertView+NSCookbook.h"
 @interface HomeViewController : UIViewController
 {
         UIScrollView * myScrollView;

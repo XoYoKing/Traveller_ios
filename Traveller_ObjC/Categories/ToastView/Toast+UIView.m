@@ -343,6 +343,11 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 //    self.layer.shadowRadius = 4.0f;
 //    self.layer.shadowOpacity = 0.80f;
 }
+-(void)addLayerAndCornerRadius:(int)radius AndWidth:(int)Width AndColor:(UIColor*)color{
+    self.layer.borderColor=color.CGColor;
+    self.layer.borderWidth=Width;
+    self.layer.cornerRadius=radius;
+}
 -(void)addWhiteLayerAndCornerRadius:(int)radius AndWidth:(int)Width {
     self.layer.borderColor=[UIColor whiteColor].CGColor;
     self.layer.borderWidth=Width;

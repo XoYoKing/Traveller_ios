@@ -10,8 +10,7 @@
 #import "TravellerConstants.h"
 @implementation MenuCell
 -(void)awakeFromNib{
-    _menuBGView.layer.borderColor=[UIColor blackColor].CGColor;
-    _menuBGView.layer.borderWidth=1;
+    
     [self addShaddowToView:_menuBGView];
     _menuBGView.backgroundColor=menu_Color;
     _menuImgLbl.textColor=[UIColor whiteColor];

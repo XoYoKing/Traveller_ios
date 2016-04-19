@@ -14,5 +14,24 @@
 @interface SettingViewController : UIViewController
 {
    GIBadgeView * badgeView;
+    //Push Notification
+    __weak IBOutlet UIView *pushNotificationBackView;
+    __weak IBOutlet UILabel *pushNotificationLbl;
+    __weak IBOutlet UISwitch *pushNotificationSwitch;
+    __weak IBOutlet UILabel *pushNotificationDetailTxt;
+    
+    //Push Notification
+    __weak IBOutlet UIView *editProfileBackView;
+    __weak IBOutlet UILabel *editProfileLbl;
+    __weak IBOutlet UILabel *editProfileDetailTxt;
+    
+    //Push Notification
+    __weak IBOutlet UIView *changePasswordBackView;
+    __weak IBOutlet UILabel *changePasswordLbl;
+    __weak IBOutlet UILabel *changePasswordDetailTxt;
+ 
 }
+- (IBAction)pushClick:(UISwitch *)sender;
+- (IBAction)editClick:(UIButton *)sender;
+- (IBAction)chengePasswordClick:(UIButton *)sender;
 @end

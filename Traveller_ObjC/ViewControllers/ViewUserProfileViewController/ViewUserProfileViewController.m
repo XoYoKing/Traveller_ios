@@ -110,15 +110,18 @@
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
-                                [UIColor blackColor], NSForegroundColorAttributeName, nil];
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     
     self.navigationController.navigationItem.titleView=[UIView new];
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
     btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnClose.tintColor=[UIColor blackColor];
+    btnClose.tintColor=[UIColor whiteColor];
     [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
@@ -127,7 +130,7 @@
     UIButton *btnSend = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnSend setFrame:CGRectMake(0, 0, 30, 30)];
     btnSend.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnSend.tintColor=[UIColor blackColor];
+    btnSend.tintColor=[UIColor whiteColor];
    [btnSend setTitle:[NSString stringWithUTF8String:ICOMOON_EDIT]  forState:UIControlStateNormal];
     [btnSend addTarget:self action:@selector(editClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sendBarBtn = [[UIBarButtonItem alloc] initWithCustomView:btnSend];

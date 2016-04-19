@@ -24,6 +24,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
+    [RFRateMe showRateAlertAfterTimesOpened:10];
     
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
@@ -961,7 +962,7 @@
     
     NSArray * namesOfMenus =@[@"Feeds",@"Places Visited",@"Wish To",@"Followers",@"Following"];
     
-     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
+     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
             CGFloat scrollWidth = 0.f;
             buttonArray=[[NSMutableArray alloc]init];
             for ( int j=0; j<namesOfMenus.count; j++)
@@ -991,8 +992,9 @@
                 scrollWidth= scrollWidth+strikeWidth+20;
         
                 if (j==selectedIndex) {
-                       button.backgroundColor= Check_Color;
-                    [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+                    button.backgroundColor=segment_selected_Color ;
+                    [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+                    [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
                     [button addShaddow];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1000,15 +1002,16 @@
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
                     }
                 }else {
-                    button.backgroundColor= [UIColor blackColor];
-                    //[self removeShaddowToView:button];
-                    button.layer.borderColor=[UIColor whiteColor].CGColor;
+                    button.backgroundColor=segment_disselected_Color;
+                    [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
+                    [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
                     }else{
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
                     }
                 }
+
                 
                 [buttonArray addObject:button];
                 [myScrollView addSubview:button];
@@ -1016,7 +1019,7 @@
             }
             myScrollView.contentSize = CGSizeMake(scrollWidth, 30.f);
             myScrollView.pagingEnabled = NO;
-    myScrollView.backgroundColor=[UIColor blackColor];
+    myScrollView.backgroundColor=segment_disselected_Color;
     [myScrollView setShowsHorizontalScrollIndicator:NO];
     [myScrollView setShowsVerticalScrollIndicator:NO];
     return myScrollView;
@@ -1033,8 +1036,9 @@
             {
                 UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
                 if (i==selectedIndex) {
-                    button.backgroundColor= Check_Color;
-                    [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+                    button.backgroundColor=segment_selected_Color ;
+                    [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+                    [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
                     [button addShaddow];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1042,9 +1046,9 @@
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
                     }
                 }else {
-                    button.backgroundColor= [UIColor blackColor];
-                    //[self removeShaddowToView:button];
-                    button.layer.borderColor=[UIColor whiteColor].CGColor;
+                    button.backgroundColor=segment_disselected_Color;
+                     [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+                    [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
                     }else{
@@ -1061,7 +1065,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
+    return 42;
 }
 
 
