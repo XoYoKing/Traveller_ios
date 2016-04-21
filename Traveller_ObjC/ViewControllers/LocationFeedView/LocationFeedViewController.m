@@ -802,7 +802,7 @@
 -(void)inviteWebservice{
     NSString * ids =[NSString stringWithFormat:@"%@",publicId];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER,[UserData getUserID],ids];
-    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
 }
 
 

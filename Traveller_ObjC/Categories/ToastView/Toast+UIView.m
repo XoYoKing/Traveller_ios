@@ -24,8 +24,8 @@ static const CGFloat CSToastVerticalPadding     = 10.0;
 static const CGFloat CSToastTopCentrePadding    = 100.0;
 static const CGFloat CSToastCornerRadius        = 10.0;
 static const CGFloat CSToastOpacity             = 0.8;
-static const CGFloat CSToastFontSize            = 13.0;
-static const CGFloat CSToastFontSizeForiPad      = 22.0;
+static const CGFloat CSToastFontSize            = 20;
+static const CGFloat CSToastFontSizeForiPad      =25;
 static const CGFloat CSToastMaxTitleLines       = 0;
 static const CGFloat CSToastMaxMessageLines     = 0;
 static const CGFloat CSToastFadeDuration        = 0.2;
@@ -240,14 +240,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     if (title != nil) {
         titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
-//        if (IS_IPAD) {
-//            titleLabel.font = [UIFont systemFontOfSize:CSToastFontSizeForiPad];
-//        }
-//        else{
-        
-            titleLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
-//        }
-        
+        titleLabel.font = [UIFont fontWithName:font_bold size:font_size_bold];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.textColor = [UIColor whiteColor];
@@ -264,14 +257,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     if (message != nil) {
         messageLabel = [[UILabel alloc] init] ;
         messageLabel.numberOfLines = CSToastMaxMessageLines;
-//        messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
-//        if (IS_IPAD) {
-            messageLabel.font = [UIFont systemFontOfSize:CSToastFontSizeForiPad];
-//        }
-//        else{
-        
-            messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
-//        }
+        messageLabel.font = [UIFont fontWithName:font_bold size:font_size_bold];
         messageLabel.textAlignment = NSTextAlignmentCenter;
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
         messageLabel.textColor = [UIColor whiteColor];
@@ -354,7 +340,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     self.layer.cornerRadius=radius;
 }
 -(void)addBlackLayerAndCornerRadius:(int)radius AndWidth:(int)Width{
-    self.layer.borderColor=[UIColor blackColor].CGColor;
+    self.layer.borderColor= segment_selected_Color.CGColor;
     self.layer.borderWidth=Width;
     self.layer.cornerRadius=radius;
 }

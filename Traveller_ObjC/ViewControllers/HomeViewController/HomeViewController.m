@@ -24,7 +24,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    [RFRateMe showRateAlertAfterTimesOpened:10];
+    [RFRateMe showRateAlertAfterTimesOpened:30];
     
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
@@ -35,7 +35,13 @@
         }
     }
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+       if (firstTimePageOpen==NO) {
+    self.navigationController.navigationBarHidden=NO;
+     self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+    self.navigationController.navigationBar.barTintColor=[UIColor clearColor];
+       }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -576,8 +582,13 @@
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
         if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
-            NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
-            [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
+            [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage]
+                           placeholderImage:[UIImage imageNamed:@"Placeholder"]
+                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                      cell.postImage.clipsToBounds=YES;
+                                      cell.postImage.contentMode=UIViewContentModeScaleAspectFill;
+                                      cell.postImage.image = image;
+                                  }];
         }
         
         
@@ -624,7 +635,7 @@
         void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
             if ([substring isEqualToString:userName]) {
                 [self openUserProfile:userID :userName: urlStringForProfileImage];
-            }else{
+            }else   if ([substring isEqualToString:cityName]) {
                 [self openLocationFeedView:locId :cityName :imageUrl];
             }
         };
@@ -944,17 +955,83 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (selectedIndex==0) {
-        
-    }else if (selectedIndex==1){
-        
+    if (selectedIndex==1){
+    
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        NSString *cityName;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+        [self openLocationFeedView:locId :cityName :imageUrl];
+        }
+     
+
     }else if (selectedIndex==2){
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        NSString *userName;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+            [self openLocationFeedView:locId :cityName :imageUrl];
+        }
+        
         
     }else if (selectedIndex==3){
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+    
+        //Checked for User Image
+        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+        NSString *userName;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+        }
+        
+                [self openUserProfile:userID :userName: urlStringForProfileImage];
         
     }else if (selectedIndex==4){
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        //Checked for User Image
+        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+         NSString *userName;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+        }
         
-    }
+                [self openUserProfile:userID :userName: urlStringForProfileImage];
+        }
 }
 
 #pragma mark====================Set up Segment here===============================
@@ -1019,7 +1096,8 @@
             }
             myScrollView.contentSize = CGSizeMake(scrollWidth, 30.f);
             myScrollView.pagingEnabled = NO;
-    myScrollView.backgroundColor=segment_disselected_Color;
+    myScrollView.backgroundColor=[UIColor whiteColor];
+   
     [myScrollView setShowsHorizontalScrollIndicator:NO];
     [myScrollView setShowsVerticalScrollIndicator:NO];
     return myScrollView;
@@ -1316,7 +1394,7 @@ NSString * str =@"Post is Shared From Traweller App.";
 #pragma mark====================Open Who Likes the Post=============================
 -(void)openLikeMenu:(UIButton*)btn{
     BOOL shouldOpenMenu =NO;
-    indexForLikeNotification=btn.tag;
+    indexForLikeNotification=(int)btn.tag;
     NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
     int isLikedByYou=[[dataDict valueForKey:@"is_like"]intValue];
     if (isLikedByYou==1) {
@@ -1400,13 +1478,13 @@ NSString * str =@"Post is Shared From Traweller App.";
 
 #pragma mark====================Open Who commented on the Post=============================
 -(void)openCommentMenu:(UIButton*)btn{
-    
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
     CommentsViewController * v =[self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
+    v.activityId=[dataDict valueForKey:@"id"];
+    v.postedById=[dataDict valueForKey:@"posted_by"];
      [self setPresentationStyleForSelfController:self presentingController:v];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:v];
     [self presentViewController:nav animated:YES completion:nil];
-    
-    
 }
 
 #pragma mark ====================FollowMechanism=============================
@@ -1728,7 +1806,9 @@ NSString * str =@"Post is Shared From Traweller App.";
     NSInteger i =  [homeFeedData indexOfObject:selectedDictForDelete];
     [homeFeedData removeObjectAtIndex:i];
     NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+      [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+      [self.tableView endUpdates];
      [self performSelectorInBackground:@selector(feedDeleteWebservice) withObject:nil];
 }
 -(void)doDeleteWishedTo{
@@ -1736,7 +1816,9 @@ NSString * str =@"Post is Shared From Traweller App.";
     NSInteger i =  [wishToData indexOfObject:selectedDictForDelete];
     [wishToData removeObjectAtIndex:i];
     NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
 }
 -(void)feedDeleteWebservice{
     NSString * taskID =[selectedDictForDelete valueForKey:@"id"];

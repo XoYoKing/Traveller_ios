@@ -8,6 +8,7 @@
 
 #import "SignUpViewController.h"
 #import "TermsAndConditionViewController.h"
+#import "ChangePasswordViewController.h"
 @interface SignUpViewController ()
 
 @end
@@ -17,7 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"SignUp";
-    // Do any additional setup after loading the view.
     [self setUpView];
     [self setUpNavigationBar];
 }
@@ -37,6 +37,18 @@
     [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
     self.navigationItem.leftBarButtonItem = leftbarButton;
+    
+     if ([_fromWhichMenu isEqualToString:@"Update"]) {
+    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_KEY] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(changePassClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+    self.navigationItem.rightBarButtonItem = right;
+     }
+    
+}
+-(void)changePassClick{
+    ChangePasswordViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)backClick{
@@ -97,6 +109,7 @@
         [self.view layoutIfNeeded];
         termsLbl.hidden=YES;
         termButton.hidden=YES;
+        [self setValues];
     }else{
         updateBtn.hidden=YES;
         cancelBtn.hidden=YES;
@@ -113,11 +126,25 @@
      phoneNoTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
     maleLBL.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
     femaleLBL.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
-    
     registerBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     cancelBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     updateBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     
+}
+
+-(void)setValues{
+    statusTF.text=[UserData getUserMyStatus];
+    userNameTF.text=[UserData getUserName];
+    emailTF.text=[UserData getUserEmail];
+    passwordTF.text=[UserData getUserPassword];
+    websiteTF.text=[UserData getUserWeburl];
+    nextDestinationTF.text=[UserData getUserDestimation];
+    cityTF.text=[UserData getUserCity];
+    confirmPasswordTF.text=[UserData getUserPassword];
+    phoneNoTF.text=[UserData getUserMobile];
+    passwordTF.userInteractionEnabled=NO;
+    confirmPasswordTF.userInteractionEnabled=NO;
+    emailTF.userInteractionEnabled=NO;
 }
 
 -(void)hidePicker{
@@ -126,7 +153,6 @@
 
 - (void)countryPicker:(CountryPicker *)picker didSelectCountryWithName:(NSString *)name code:(NSString *)code{
     countryTF.text = name;
-    
     NSString *imagePath = [NSString stringWithFormat:@"CountryPicker.bundle/%@", code];
     UIImage *image;
     if ([[UIImage class] respondsToSelector:@selector(imageNamed:inBundle:compatibleWithTraitCollection:)])

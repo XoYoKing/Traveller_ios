@@ -189,7 +189,7 @@ return cell;
 }
 -(void)likeWebservice{
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicID=%@&activityId=%@",URL_CONST,ACTION_ADD_LIKE,[UserData getUserID],_userId,_activityId];
-    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+     [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
 }
 
 -(void)addShaddowToView:(UIView *)view{

@@ -77,6 +77,7 @@
 		AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B151CBE181600D1E665 /* PlaceObject.m */; };
 		AA807B471CBE7AAF00D1E665 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA807B441CBE7AAF00D1E665 /* CountryPicker.bundle */; };
 		AA807B481CBE7AAF00D1E665 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AA807B461CBE7AAF00D1E665 /* CountryPicker.m */; };
+		AA86D35E1CC746B200667029 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA86D35D1CC746B200667029 /* ChangePasswordViewController.m */; };
 		AA96D3301CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */; };
 		AA96D3311CBB9E5500B2CDDA /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3271CBB9E5500B2CDDA /* JTSImageInfo.m */; };
 		AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA96D3291CBB9E5500B2CDDA /* JTSImageViewController.m */; };
@@ -225,6 +226,8 @@
 		AA807B441CBE7AAF00D1E665 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
 		AA807B451CBE7AAF00D1E665 /* CountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryPicker.h; sourceTree = "<group>"; };
 		AA807B461CBE7AAF00D1E665 /* CountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryPicker.m; sourceTree = "<group>"; };
+		AA86D35C1CC746B200667029 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		AA86D35D1CC746B200667029 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
 		AA96D3241CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
 		AA96D3251CBB9E5500B2CDDA /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
 		AA96D3261CBB9E5500B2CDDA /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
@@ -505,6 +508,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA86D35B1CC7469F00667029 /* ChangePasswordViewController */,
 				AABC9AC71CC505A7008483AD /* TermsAndConditionViewController */,
 				AA5A77731CC0B957001355C8 /* WishToVisitViewController */,
 				AA5A77741CC0B957001355C8 /* InviteToJoinViewController */,
@@ -795,6 +799,15 @@
 			path = CountryPicker;
 			sourceTree = "<group>";
 		};
+		AA86D35B1CC7469F00667029 /* ChangePasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA86D35C1CC746B200667029 /* ChangePasswordViewController.h */,
+				AA86D35D1CC746B200667029 /* ChangePasswordViewController.m */,
+			);
+			path = ChangePasswordViewController;
+			sourceTree = "<group>";
+		};
 		AA96D3231CBB9E5500B2CDDA /* ImageShowLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1025,6 +1038,7 @@
 				399691351CB8F677000A3A4A /* Notification3TableViewCell.m in Sources */,
 				399691381CB8F69B000A3A4A /* Notification4TableViewCell.m in Sources */,
 				3996915A1CB944A6000A3A4A /* LocationFeedViewController.m in Sources */,
+				AA86D35E1CC746B200667029 /* ChangePasswordViewController.m in Sources */,
 				AA5A777B1CC0B977001355C8 /* InviteToJoinViewController.m in Sources */,
 				AA807B1A1CBE181600D1E665 /* PlaceObject.m in Sources */,
 				AAF12B291CC5F13200E4182D /* UIAlertView+NSCookbook.m in Sources */,

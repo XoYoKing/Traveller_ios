@@ -10,6 +10,6 @@
 
 @interface UIStoryboard (BTAdditions)
 
-+ (instancetype)mainStoryboard;
++ (instancetype)storyboardWithName:(NSString *)name;
 
 @end

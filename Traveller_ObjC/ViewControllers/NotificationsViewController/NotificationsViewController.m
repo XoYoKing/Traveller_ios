@@ -202,9 +202,8 @@
 {   UITableViewCell *cell ;
     if (selectedIndex==0) {
         Notification1TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification1TableViewCell"];
-        return cell;
         NSDictionary * dict =[invitation objectAtIndex:indexPath.row];
-        
+           return cell;
     }else if(selectedIndex==1){
         Notification2TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification2TableViewCell"];
         NSDictionary * dict =[ask_for_tip objectAtIndex:indexPath.row];

@@ -7,6 +7,8 @@
 //
 
 #import "SettingViewController.h"
+#import "SignUpViewController.h"
+#import "ChangePasswordViewController.h"
 
 @interface SettingViewController ()
 
@@ -142,4 +144,13 @@
     }
     return isEnabled;
 }
+- (IBAction)editClick:(UIButton *)sender{
+    SignUpViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SignUpViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (IBAction)chengePasswordClick:(UIButton *)sender{
+    ChangePasswordViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 @end

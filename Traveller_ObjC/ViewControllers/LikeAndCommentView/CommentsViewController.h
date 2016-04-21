@@ -10,13 +10,24 @@
 #import "TravellerConstants.h"
 #import "HPGrowingTextView.h"
 #import "FRHyperLabel.h"
-@interface CommentsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface CommentsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HPGrowingTextViewDelegate>
 {
     __weak IBOutlet UITableView *commentTableView;
-    __weak IBOutlet NSLayoutConstraint *containerViewHeight;
-    __weak IBOutlet UIView *containerView;
+    __weak IBOutlet NSLayoutConstraint *tableViewBottomConstraint;
         __weak IBOutlet UIButton *closeButton;
     __weak IBOutlet UIView *bgView;
+
+    NSMutableArray * commentArr;
+    BOOL commentPageShouldDoPaging;
+    int selectedUserIdex;
+    int commentPage;
+    
+    HPGrowingTextView *messageInputView;// Growing TextView For Meassage
+    UIButton *sendButton;// Send Button
+     UIView *containerView; // Container View for Bottom text view
 }
+@property(nonatomic,strong)NSString * activityId;
+@property(nonatomic,strong)NSString * postedById;
 - (IBAction)dismissClick:(id)sender;
+
 @end

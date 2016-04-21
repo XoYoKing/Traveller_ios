@@ -20,6 +20,12 @@
 #pragma mark = didFinishLaunchingWithOptions
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
+    
+    UIFont *systemFont = [UIFont systemFontOfSize:12];
+    NSLog(@"what is it?    %@       %@", systemFont.familyName, systemFont.fontName);
+    
+    systemFont = [UIFont boldSystemFontOfSize:12];
+    NSLog(@"what is it?    %@       %@", systemFont.familyName, systemFont.fontName);
     //For Facebook
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     

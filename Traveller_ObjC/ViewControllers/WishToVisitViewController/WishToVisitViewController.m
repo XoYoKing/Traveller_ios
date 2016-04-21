@@ -106,7 +106,7 @@
     NSString * ids =[NSString stringWithFormat:@"%@",publicId];
     NSString * cityId=[_selectedCityDict valueForKey:@"id"];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@&cityId=%@",URL_CONST,ACTION_INVITE,[UserData getUserID],ids,cityId];
-    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
 }
 
 

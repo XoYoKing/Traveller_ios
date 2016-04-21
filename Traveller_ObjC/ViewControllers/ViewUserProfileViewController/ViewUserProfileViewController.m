@@ -9,6 +9,7 @@
 #import "ViewUserProfileViewController.h"
 #import "SignUpViewController.h"
 #import "ViewProfileTableViewCell.h"
+#import "ChangePasswordViewController.h"
 @interface ViewUserProfileViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -23,8 +24,9 @@
 -(void)getUserDetailsWebservice{
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@",URL_CONST,ACTION_GET_USER_DETAILS,[UserData getUserID],_userID];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
-    [self performSelectorOnMainThread:@selector(setValues:) withObject:dict waitUntilDone:YES];
-
+    if (dict) {
+        [self performSelectorOnMainThread:@selector(setValues:) withObject:dict waitUntilDone:YES];
+    }
 }
 
 -(void)setValues:(NSDictionary *)dict {
@@ -134,9 +136,25 @@
    [btnSend setTitle:[NSString stringWithUTF8String:ICOMOON_EDIT]  forState:UIControlStateNormal];
     [btnSend addTarget:self action:@selector(editClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sendBarBtn = [[UIBarButtonItem alloc] initWithCustomView:btnSend];
+    
+    UIButton *pwdBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [pwdBtn setFrame:CGRectMake(0, 0, 30, 30)];
+    pwdBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    pwdBtn.tintColor=[UIColor whiteColor];
+    [pwdBtn setTitle:[NSString stringWithUTF8String:ICOMOON_KEY] forState:UIControlStateNormal];
+    [pwdBtn addTarget:self action:@selector(changePassClick) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:pwdBtn];
+        self.navigationItem.rightBarButtonItem = right;
+    
     NSMutableArray *buttonArray=[[NSMutableArray alloc]init];
     [buttonArray addObject:sendBarBtn];
+    [buttonArray addObject:right];
     self.navigationItem.rightBarButtonItems = buttonArray;
+}
+
+-(void)changePassClick{
+    ChangePasswordViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)editClick{

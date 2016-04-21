@@ -21,7 +21,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="po3-B9-Fo1">
                                 <rect key="frame" x="-10" y="60" width="523" height="2"/>
-                                <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.2470588235" green="0.44705882349999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="RZF-NL-mLW"/>
                                 </constraints>
@@ -34,7 +34,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbJ-Vn-YCm" customClass="FRHyperLabel">
-                                <rect key="frame" x="20" y="111" width="463" height="23"/>
+                                <rect key="frame" x="20" y="111" width="463" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="CTv-qK-4fv"/>
                                 </constraints>
@@ -140,7 +140,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="999" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="GSi-eX-tfq">
-                                <rect key="frame" x="10" y="404" width="483" height="69"/>
+                                <rect key="frame" x="10" y="451" width="483" height="22"/>
                                 <string key="text">UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
 The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.
 2016-04-09 19:57:34.211 Traveller_ObjC[17178:212407] Unable to simultaneously satisfy constraints.
@@ -155,11 +155,11 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="Shopping" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
-                                <rect key="frame" x="0.0" y="144" width="503" height="250"/>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="Shopping" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
+                                <rect key="frame" x="0.0" y="141" width="503" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="d74-ie-qne">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                    <constraint firstAttribute="height" constant="300" id="d74-ie-qne">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="500"/>
                                     </constraint>
                                 </constraints>
                             </imageView>

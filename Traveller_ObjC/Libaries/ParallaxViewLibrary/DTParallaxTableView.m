@@ -95,7 +95,7 @@
     headerImgView.image = headerView.bgImage;
     if (headerView.imageUrl) {
         // setup image from url here
-        [headerImgView setImageWithURL:[NSURL URLWithString:headerView.imageUrl] placeholderImage:[UIImage imageNamed:@"girl.jpg"]];
+        [headerImgView sd_setImageWithURL:[NSURL URLWithString:headerView.imageUrl] placeholderImage:[UIImage imageNamed:@"girl.jpg"]];
     }
     
     [topBarView addSubview:headerImgView];
@@ -120,7 +120,7 @@
     bgImgView.image = headerView.bgImage;
     if (headerView.imageUrl) {
         // setup image from url here
-        [bgImgView setImageWithURL:[NSURL URLWithString:headerView.imageUrl] placeholderImage:[UIImage imageNamed:@"girl.jpg"]];
+        [bgImgView sd_setImageWithURL:[NSURL URLWithString:headerView.imageUrl] placeholderImage:[UIImage imageNamed:@"girl.jpg"]];
     }
     [bgView addSubview:bgImgView];
     bgImgView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;;

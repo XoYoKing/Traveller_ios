@@ -59,9 +59,9 @@
 
 #pragma mark --------------------------Font Details-------------------------------
 
-#define font_regular @"Avenir Next"
-#define font_button @"Avenir Next"
-#define font_bold @"Futura"
+#define font_regular @".SFUIText-Regular"
+#define font_button @".SFUIText-Regular"
+#define font_bold @".SFUIText-Semibold"
 #define fontIcomoon @"icomoon"
 
 
@@ -127,8 +127,8 @@
 #define ACTION_GET_USER_DETAILS @"getUserDetails"
 #define ACTION_GET_LIKE_DETAILS @"getLikeList"
 #define ACTION_ADD_LIKE @"addLike"
-#define ACTION_GET_Comment_DETAILS @"getCommentList"
-#define ACTION_Comment_LIKE @"addComment"
+#define ACTION_GET_COMMENT_DETAILS @"getComment"
+#define ACTION_COMMENT_ADD @"addComment"
 #define ACTION_FEED_DELETE @"delete"
 
 #pragma mark --------------------------Color Codes-------------------------------
