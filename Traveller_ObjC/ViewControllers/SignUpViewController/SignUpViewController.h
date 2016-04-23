@@ -35,6 +35,7 @@
     __weak IBOutlet UIButton *cancelBtn;
     __weak IBOutlet UIButton *updateBtn;
     
+    NSString * gender;
     CountryPicker * countryPicker;
     __weak IBOutlet NSLayoutConstraint *registerHeightConstraint;
 }

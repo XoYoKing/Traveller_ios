@@ -11,7 +11,7 @@
 #import "LocationFeedViewController.h"
 #import "LikeViewController.h"
 #import "CommentsViewController.h"
-
+#import "AddPostViewController.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -23,13 +23,10 @@
 #pragma mark====================View Controller Life Cycles===============================
 
 -(void)viewDidAppear:(BOOL)animated{
-    
     [RFRateMe showRateAlertAfterTimesOpened:30];
-    
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
-        
         if ([UserData getNotificationDict].count==0) {
               [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
         }
@@ -44,28 +41,63 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.navigationController.navigationBarHidden=YES;
-    
     homeFeedPage=1;
     followerPage=1;
     followingPage=1;
     wishToPage=1;
     visitedCitiesPage=1;
     selectedIndex=0;
-    
     homeFeedData=[NSMutableArray new];
     followerData=[NSMutableArray new];
     followingData=[NSMutableArray new];
     wishToData=[NSMutableArray new];
     visitedCitiesData=[NSMutableArray new];
-    
     firstTimePageOpen=YES;
     homeFeedPageShouldDoPaging=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLikeCell:) name:throwRefreshLike object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCommentCell:) name:throwRefreshComment object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:throwRefreshPage object:nil];
 }
 
+-(void)refreshView{
+    switch (selectedIndex) {
+            //=====================1st click ====================
+        case 0:
+        {
+          
+                [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+            
+        }break;
+            //=====================2st click ====================
+        case 1:
+          
+                [self performSelectorInBackground:@selector(getVisitedCitiesData) withObject:nil];
+            
+            break;
+            //=====================3st click ====================
+        case 2:
+           
+                [self performSelectorInBackground:@selector(getWishData) withObject:nil];
+            
+            break;
+            //=====================4st click ====================
+        case 3:
+          
+                [self performSelectorInBackground:@selector(getFollowerData) withObject:nil];
+          
+            break;
+            //=====================5st click ====================
+        case 4:
+        
+                [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
+                break;
+        default:
+            break;
+    }
+
+}
 
 -(void)updateNotificationCount:(NSNotification *)notification{
     NSDictionary * dict =notification.object;
@@ -74,11 +106,9 @@
 }
 
 -(void)refreshLikeCell:(NSNotification *)notification{
-    
-    
     NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForLikeNotification inSection:0];
     
-    
+    if (ip!=nil) {
     FeedsTableViewCell *cell = (FeedsTableViewCell *)[self.tableView cellForRowAtIndexPath:ip];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
@@ -104,8 +134,36 @@
         [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
     }
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
+
+-(void)refreshCommentCell:(NSNotification *)notification{
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForCommentNotification inSection:0];
+    if (ip!=nil) {
+        FeedsTableViewCell *cell = (FeedsTableViewCell *)[self.tableView cellForRowAtIndexPath:ip];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        if ([[dataDict valueForKey:@"is_my"]intValue] == 1) {
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"0" forKey:@"is_my"];
+            int like =[[dataDict valueForKey:@"total_comments"]intValue];
+            like--;
+            [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_comments"];
+            [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+        }else{
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"1" forKey:@"is_my"];
+            int like =[[dataDict valueForKey:@"total_comments"]intValue];
+            like++;
+            [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_comments"];
+            [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+        }
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
 
 #pragma mark====================Notification View===============================
 -(void)addNotificationView{
@@ -141,6 +199,7 @@
     _headerHeight = feed_headerHeight;
     _subHeaderHeight = feed_subHeaderHeight;
     _avatarImageSize = feed_avatarImageSize;
+    
     _avatarImageCompressedSize = feed_avatarImageCompressedSize;
     _barIsCollapsed = false;
     _barAnimationComplete = false;
@@ -198,6 +257,8 @@
            [avatarImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
     }
 
+    avatarImageView.contentMode=UIViewContentModeScaleAspectFill;
+    
     avatarImageView.translatesAutoresizingMaskIntoConstraints = NO; //autolayout
     views[@"avatarImageView"] = avatarImageView;
     avatarImageView.userInteractionEnabled=YES;
@@ -589,6 +650,9 @@
                                       cell.postImage.contentMode=UIViewContentModeScaleAspectFill;
                                       cell.postImage.image = image;
                                   }];
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForProfileImage];
+            [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+
         }
         
         
@@ -633,11 +697,12 @@
         cell.mainTitle.attributedText = [[NSAttributedString alloc]initWithString:mainTitleStr attributes:attributes];
         
         void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
-            if ([substring isEqualToString:userName]) {
+            substring =[substring stringByReplacingOccurrencesOfString:@" recommen" withString:@""];
+           if ([substring isEqualToString:userName]) {
                 [self openUserProfile:userID :userName: urlStringForProfileImage];
-            }else   if ([substring isEqualToString:cityName]) {
-                [self openLocationFeedView:locId :cityName :imageUrl];
-            }
+           }else   if ([substring isEqualToString:cityName]) {
+             [self openLocationFeedView:locId :cityName :imageUrl];
+           }
         };
         //Added link substrings
         if (cityName!=nil && userName!=nil) {
@@ -955,84 +1020,7 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (selectedIndex==1){
-    
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        NSString *cityName;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        [self openLocationFeedView:locId :cityName :imageUrl];
-        }
-     
-
-    }else if (selectedIndex==2){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-            [self openLocationFeedView:locId :cityName :imageUrl];
-        }
-        
-        
-    }else if (selectedIndex==3){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-    
-        //Checked for User Image
-        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-                [self openUserProfile:userID :userName: urlStringForProfileImage];
-        
-    }else if (selectedIndex==4){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        //Checked for User Image
-        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
-         NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-                [self openUserProfile:userID :userName: urlStringForProfileImage];
-        }
-}
+   }
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -1310,7 +1298,9 @@
     
     }
 -(void)editPost{
-    
+    AddPostViewController * vc= [self.storyboard instantiateViewControllerWithIdentifier:@"AddPostViewController"];
+    vc.EditPostDirectory=selectedDictForDelete;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)sharePost:(UIButton *)btn{
 
@@ -1371,14 +1361,12 @@ NSString * str =@"Post is Shared From Traweller App.";
 
 #pragma mark====================Open User Profile=============================
 -(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
-    if (![userId isEqualToString:[UserData getUserID]]&& userId!=nil) {
+
         ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
         vc.userId=userId;
         vc.name=userName;
         vc.imageUrl=urlStringForProfileImage;
         [self.navigationController pushViewController:vc animated:YES];
-    }
-
 }
 
 #pragma mark====================Open Location Feeds=============================
@@ -1479,6 +1467,7 @@ NSString * str =@"Post is Shared From Traweller App.";
 #pragma mark====================Open Who commented on the Post=============================
 -(void)openCommentMenu:(UIButton*)btn{
     NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
+    indexForCommentNotification=btn.tag;
     CommentsViewController * v =[self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
     v.activityId=[dataDict valueForKey:@"id"];
     v.postedById=[dataDict valueForKey:@"posted_by"];

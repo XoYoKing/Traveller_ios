@@ -10,6 +10,7 @@
 		3904198F1CBC1ACD00879650 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3904198E1CBC1ACD00879650 /* UserData.plist */; };
 		390419921CBC1AEF00879650 /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 390419911CBC1AEF00879650 /* UserData.m */; };
 		390B295D1CB82FFC00227B84 /* CitiesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 390B295C1CB82FFC00227B84 /* CitiesCollectionViewCell.m */; };
+		392E0CC21CCB8A5100C123B7 /* WriteMessage ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 392E0CC11CCB8A5100C123B7 /* WriteMessage ViewController.m */; };
 		395994DA1CB81495001E2118 /* CitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994D91CB81495001E2118 /* CitiesViewController.m */; };
 		395994DD1CB814AA001E2118 /* cel.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994DC1CB814AA001E2118 /* cel.m */; };
 		395994E01CB814BB001E2118 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395994DF1CB814BB001E2118 /* SettingViewController.m */; };
@@ -97,6 +98,8 @@
 		390419911CBC1AEF00879650 /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
 		390B295B1CB82FFC00227B84 /* CitiesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesCollectionViewCell.h; sourceTree = "<group>"; };
 		390B295C1CB82FFC00227B84 /* CitiesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesCollectionViewCell.m; sourceTree = "<group>"; };
+		392E0CC01CCB8A5100C123B7 /* WriteMessage ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WriteMessage ViewController.h"; sourceTree = "<group>"; };
+		392E0CC11CCB8A5100C123B7 /* WriteMessage ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WriteMessage ViewController.m"; sourceTree = "<group>"; };
 		395994D81CB81495001E2118 /* CitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesViewController.h; sourceTree = "<group>"; };
 		395994D91CB81495001E2118 /* CitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesViewController.m; sourceTree = "<group>"; };
 		395994DB1CB814AA001E2118 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
@@ -417,6 +420,8 @@
 				AA0321CE1CBF971100B38B76 /* ViewUserProfileViewController.m */,
 				39B73E9C1CC39240007E42D6 /* ViewProfileTableViewCell.h */,
 				39B73E9D1CC39240007E42D6 /* ViewProfileTableViewCell.m */,
+				392E0CC01CCB8A5100C123B7 /* WriteMessage ViewController.h */,
+				392E0CC11CCB8A5100C123B7 /* WriteMessage ViewController.m */,
 			);
 			path = ViewUserProfileViewController;
 			sourceTree = "<group>";
@@ -1054,6 +1059,7 @@
 				AA5A77781CC0B96B001355C8 /* WishToVisitViewController.m in Sources */,
 				AAF12B281CC5F13200E4182D /* RFRateMe.m in Sources */,
 				AA0321CF1CBF971100B38B76 /* ViewUserProfileViewController.m in Sources */,
+				392E0CC21CCB8A5100C123B7 /* WriteMessage ViewController.m in Sources */,
 				AA2BC0891CB4D75A0030A0E5 /* main.m in Sources */,
 				AA2BC0BC1CB4E2900030A0E5 /* DTParallaxTableView.m in Sources */,
 				390B295D1CB82FFC00227B84 /* CitiesCollectionViewCell.m in Sources */,

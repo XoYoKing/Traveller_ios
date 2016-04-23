@@ -95,6 +95,8 @@
 #pragma mark --------------------------Internal Notification Codes-------------------------------
 #define throwNotificationStatus @"sendCountOfNotification"
 #define throwRefreshLike @"refreshLikeCell"
+#define throwRefreshComment @"refreshCommentCell"
+#define throwRefreshPage @"refreshPage"
 
 #pragma mark --------------------------Webservice Codes-------------------------------
 #define SUCESS @1
@@ -105,6 +107,7 @@
 #define URL_CONST @"http://trasquare.com/traveller_api/checkurl.php?"
 #define ACTION_LOGIN @"login"
 #define ACTION_SIGNUP @"signUp"
+#define ACTION_UPDATE_PROFILE @"editProfile"
 #define ACTION_GET_MY_ACTIVITY @"getMyActivity"
 #define ACTION_FORGET_PASSWORD @"forgotPassword"
 #define ACTION_GET_FOLLOWER_LIST @"getFollowerList"
@@ -129,7 +132,11 @@
 #define ACTION_ADD_LIKE @"addLike"
 #define ACTION_GET_COMMENT_DETAILS @"getComment"
 #define ACTION_COMMENT_ADD @"addComment"
+#define ACTION_COMMENT_DELETE @"addDelete"
 #define ACTION_FEED_DELETE @"delete"
+#define ACTION_DELETE_NOTIFICATION @"delete"
+#define ACTION_NOTIFICATION_REPLY @"sendMessage"
+
 
 #pragma mark --------------------------Color Codes-------------------------------
 #define userShouldDOButoonColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]

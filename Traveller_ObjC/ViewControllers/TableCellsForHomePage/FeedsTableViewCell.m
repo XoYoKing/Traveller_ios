@@ -11,7 +11,7 @@
 @implementation FeedsTableViewCell
 
 -(void)awakeFromNib{
-    _profileImage.layer.borderColor=[UIColor blackColor].CGColor;
+    _profileImage.layer.borderColor=segment_disselected_Color.CGColor;
     _profileImage.layer.borderWidth=2;
     
     if (iPhone6||iPhone6plus||iPAD) {
@@ -19,9 +19,9 @@
         _imageWidth.constant=120;
          _profileImage.layer.cornerRadius=60;
     }else{
-        _imageHeight.constant=80;
-        _imageWidth.constant=80;
-         _profileImage.layer.cornerRadius=40;
+        _imageHeight.constant=60;
+        _imageWidth.constant=60;
+         _profileImage.layer.cornerRadius=30;
     }
     
     [_profileImage layoutIfNeeded];

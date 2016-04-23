@@ -146,6 +146,7 @@
 }
 - (IBAction)editClick:(UIButton *)sender{
     SignUpViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SignUpViewController"];
+    vc.fromWhichMenu=@"Update";
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)chengePasswordClick:(UIButton *)sender{

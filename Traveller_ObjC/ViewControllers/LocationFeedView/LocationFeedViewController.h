@@ -49,9 +49,12 @@
     int visitedCitiesPage;
     int selectedIndex;
     int selectedUserIdex;
+    int indexForLikeNotification;
+    int indexForCommentNotification;
     
-    NSString * publicId;
-     NSDictionary * selectedDictForDelete;
+    NSDictionary * forLike;
+    NSDictionary * selectedDictForDelete;
+    NSIndexPath * ipForFollow;
 }
 @property(strong,nonatomic)NSString * cityId;
 @property(strong,nonatomic)NSString * name;
@@ -62,4 +65,5 @@
 @property (strong,nonatomic) UIView *customTitleView;
 @property (strong) UIImage *originalBackgroundImage;
 @property (strong) NSMutableDictionary* blurredImageCache;
+
 @end

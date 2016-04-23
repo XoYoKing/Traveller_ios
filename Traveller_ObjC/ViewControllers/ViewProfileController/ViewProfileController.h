@@ -14,9 +14,9 @@
 #import "WishedToTableViewCell.h"
 #import "FollowingTableViewCell.h"
 #import "FRHyperLabel.h"
+#import "AddPostViewController.h"
 @interface ViewProfileController : UIViewController
 {
-    
     UIScrollView * myScrollView;
     GIBadgeView * badgeView;
     
@@ -49,16 +49,22 @@
     int visitedCitiesPage;
     int selectedIndex;
     int selectedUserIdex;
+    int indexForLikeNotification;
+    int indexForCommentNotification;
     
+    NSDictionary * forLike;
     NSDictionary * selectedDictForDelete;
+    NSIndexPath * ipForFollow;
 }
-@property(strong,nonatomic)NSString * userId;
-@property(strong,nonatomic)NSString * name;
-@property(strong,nonatomic)NSString * imageUrl;
+
 @property (weak) UITableView *tableView;
 @property (weak) UIImageView *imageHeaderView;
 @property (weak) UIVisualEffectView *visualEffectView;
 @property (strong,nonatomic) UIView *customTitleView;
 @property (strong) UIImage *originalBackgroundImage;
 @property (strong) NSMutableDictionary* blurredImageCache;
+@property(strong,nonatomic)NSString * userId;
+@property(strong,nonatomic)NSString * name;
+@property(strong,nonatomic)NSString * imageUrl;
+
 @end

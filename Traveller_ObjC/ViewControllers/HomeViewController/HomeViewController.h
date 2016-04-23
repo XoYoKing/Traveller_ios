@@ -47,6 +47,7 @@
         int selectedIndex;
         int selectedUserIdex;
         int indexForLikeNotification;
+          int indexForCommentNotification;
     
     NSDictionary * forLike;
     NSDictionary * selectedDictForDelete;

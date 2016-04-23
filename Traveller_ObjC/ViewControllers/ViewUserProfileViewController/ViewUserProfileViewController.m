@@ -10,6 +10,7 @@
 #import "SignUpViewController.h"
 #import "ViewProfileTableViewCell.h"
 #import "ChangePasswordViewController.h"
+#import "WriteMessage ViewController.h"
 @interface ViewUserProfileViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -17,8 +18,11 @@
 @implementation ViewUserProfileViewController
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden=NO;
-    [self.view showLoader];
-    [self performSelectorInBackground:@selector(getUserDetailsWebservice) withObject:nil];
+    if (userdataArray.count==0) {
+        [self.view showLoader];
+        [self performSelectorInBackground:@selector(getUserDetailsWebservice) withObject:nil];
+    }
+
 }
 
 -(void)getUserDetailsWebservice{
@@ -118,7 +122,7 @@
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     
-    self.navigationController.navigationItem.titleView=[UIView new];
+    self.navigationController.navigationItem.titleView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, 60) ];
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
@@ -191,8 +195,7 @@
 
 
 #pragma mark - ImagePickerController Delegate
-
--(void)clickOnImage{
+- (IBAction)clickonImage:(id)sender {
     UIAlertController * view=   [UIAlertController
                                  alertControllerWithTitle:@"Traweller"
                                  message:@"Change Profile picture"
@@ -210,16 +213,18 @@
                            style:UIAlertActionStyleDefault
                            handler:^(UIAlertAction * action)
                            {
+                                [self dismissViewControllerAnimated:YES completion:nil];
                                [self btnCameraClick];
-                               [self dismissViewControllerAnimated:YES completion:nil];
+                              
                            }];
     UIAlertAction* gallery = [UIAlertAction
                              actionWithTitle:@"Gallery"
                              style:UIAlertActionStyleDefault
                              handler:^(UIAlertAction * action)
                              {
-                                 [self btnGalleryClick];
                                  [self dismissViewControllerAnimated:YES completion:nil];
+                                 [self btnGalleryClick];
+                                
                              }];
     
     [view addAction:ok];
@@ -282,5 +287,7 @@
 }
 
 - (IBAction)messgeClick:(id)sender {
+    WriteMessage_ViewController * vc=[self.storyboard instantiateViewControllerWithIdentifier:@"WriteMessage_ViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

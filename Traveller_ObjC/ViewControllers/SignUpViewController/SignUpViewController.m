@@ -9,6 +9,7 @@
 #import "SignUpViewController.h"
 #import "TermsAndConditionViewController.h"
 #import "ChangePasswordViewController.h"
+#import "HomeViewController.h"
 @interface SignUpViewController ()
 
 @end
@@ -17,9 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"SignUp";
     [self setUpView];
     [self setUpNavigationBar];
+    gender=@"0";
 }
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
@@ -28,6 +29,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
@@ -39,9 +41,17 @@
     self.navigationItem.leftBarButtonItem = leftbarButton;
     
      if ([_fromWhichMenu isEqualToString:@"Update"]) {
-    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_KEY] forState:UIControlStateNormal];
-    [btnClose addTarget:self action:@selector(changePassClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+         
+         
+         UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+         [btn setFrame:CGRectMake(0, 0, 30, 30)];
+         
+         btn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+         btn.tintColor=[UIColor whiteColor];
+         
+    [btn setTitle:[NSString stringWithUTF8String:ICOMOON_KEY] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(changePassClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = right;
      }
     
@@ -110,9 +120,11 @@
         termsLbl.hidden=YES;
         termButton.hidden=YES;
         [self setValues];
+        self.title=@"Update Profile";
     }else{
         updateBtn.hidden=YES;
         cancelBtn.hidden=YES;
+        self.title=@"Sign Up";
     }
     
     statusTF.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
@@ -172,18 +184,38 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)updateClick:(id)sender {
+    if ([userNameTF validate]&&[emailTF validate]&&[passwordTF validate]&&[confirmPasswordTF validate]) {
+     
+            [self.view showLoader];
+            [self performSelectorInBackground:@selector(updateWebservice) withObject:nil];
+
+    }
+
 }
+-(void)updateWebservice{
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&password=%@&mobile=%@&city=%@&country=%@&my_status=%@&weburl=%@&nextDestination=%@&gender=%@",URL_CONST,ACTION_UPDATE_PROFILE,userNameTF.text,emailTF.text,passwordTF.text,phoneNoTF.text,cityTF.text,countryTF.text,statusTF.text,websiteTF.text,nextDestinationTF.text,gender];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            NSString * msg =[dict valueForKey:@"message"];
+            [self performSelectorOnMainThread:@selector(showToast:) withObject:msg waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(updatedSuccessfully) withObject:nil waitUntilDone:YES];
+        }else{
+            NSString * msg =[dict valueForKey:@"message"];
+            [self performSelectorOnMainThread:@selector(showToast:) withObject:msg waitUntilDone:YES];
+        }
+    }else{
+        NSString * msg =no_internet_message;
+        [self performSelectorOnMainThread:@selector(showToast:) withObject:msg waitUntilDone:YES];
+    }
+}
+
+-(void)updatedSuccessfully{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (IBAction)maleBtnClick:(id)sender {
     maleChk.font=[UIFont fontWithName:fontIcomoon size:20];
@@ -193,9 +225,11 @@
     femaleChk.font=[UIFont fontWithName:fontIcomoon size:20];
     femaleChk.text =[NSString stringWithUTF8String:ICOMOON_CROSS];
     femaleChk.textColor=Uncheck_Color;
+    gender=@"0";
 }
 
 - (IBAction)femaleClick:(id)sender {
+        gender=@"1";
     maleChk.font=[UIFont fontWithName:fontIcomoon size:20];
     maleChk.text =[NSString stringWithUTF8String:ICOMOON_CROSS];
     maleChk.textColor=Uncheck_Color;
@@ -216,8 +250,82 @@
 }
 
 - (IBAction)registerClick:(id)sender {
+    if ([userNameTF validate]&&[emailTF validate]&&[passwordTF validate]&&[confirmPasswordTF validate]) {
+        if ([termButton.titleLabel.text isEqualToString:[NSString stringWithUTF8String:ICOMOON_RADIO_CHECK]]) {
+              [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:@"Please accept tems and conditions" waitUntilDone:YES];
+        }else{
+            [self.view showLoader];
+            [self performSelectorInBackground:@selector(registerWebservice) withObject:nil];
+        }
+    }
 }
 
 - (IBAction)cancelClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+-(void)registerWebservice{
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&password=%@&mobile=%@&city=%@&country=%@&my_status=%@&weburl=%@&nextDestination=%@&gender=%@",URL_CONST,ACTION_SIGNUP,userNameTF.text,emailTF.text,passwordTF.text,phoneNoTF.text,cityTF.text,countryTF.text,statusTF.text,websiteTF.text,nextDestinationTF.text,gender];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            [self callLoginWebservice];
+        }else{
+            NSString * msg =[dict valueForKey:@"message"];
+            [self performSelectorOnMainThread:@selector(showToast:) withObject:msg waitUntilDone:YES];
+        }
+    }else{
+        NSString * msg =no_internet_message;
+        [self performSelectorOnMainThread:@selector(showToast:) withObject:msg waitUntilDone:YES];
+    }
+}
+
+-(void)callLoginWebservice{
+    NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTF.text,passwordTF.text,ACTION_LOGIN];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+            [UserData saveUserDict:dict];
+            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
+        }else{
+            NSString * msg =[dict valueForKey:@"message"];
+            [self performSelectorOnMainThread:@selector(showToast:) withObject:msg waitUntilDone:YES];
+        }
+    }else{
+        [self performSelectorOnMainThread:@selector(showToast:) withObject:no_internet_message waitUntilDone:YES];
+    }
+    
+}
+
+#pragma mark====================Open Home Page===============================
+-(void)loginSuccessful{
+    [JTProgressHUD hide];
+    JASidePanelController * vc = [[JASidePanelController alloc] init];
+    vc.leftPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"MenuViewController"];
+    HomeViewController * homeVc = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+    AppDelegate *d = [[UIApplication sharedApplication] delegate];
+    d.drawerView=vc;
+    d.drawerView.panningLimitedToTopViewController=NO;
+    d.drawerView.recognizesPanGesture=NO;
+    if (iPAD) {
+        d.drawerView.leftFixedWidth=self.view.frame.size.width/2;
+    }else{
+        d.drawerView.leftFixedWidth=self.view.frame.size.width/1.5;
+    }
+    
+    vc.centerPanel = [[UINavigationController alloc] initWithRootViewController:homeVc];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
+-(void)showToast:(NSString *)msg{
+    [self.view hideLoader];
+    [self.view makeToast:msg duration:toastDuration position:toastPositionBottomUp];
+}
+
+
+
 @end

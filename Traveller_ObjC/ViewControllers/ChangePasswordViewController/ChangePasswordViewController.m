@@ -73,6 +73,16 @@
     }
 }
 -(void)changePassWebservice{
+    
+//    NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTextField.text,passwordTextField.text,ACTION_LOGIN];
+//    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+//    if (dict!=nil) {
+//        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+//        if ( [status isEqual: SUCESS]) {
+//    
+    
+    
+    
     [self performSelectorOnMainThread:@selector(showErrorMsg) withObject:nil waitUntilDone:YES];
 }
 

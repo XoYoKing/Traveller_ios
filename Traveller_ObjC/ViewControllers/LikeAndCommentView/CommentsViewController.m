@@ -72,6 +72,10 @@
     commentArr =[homefeed valueForKey:@"data"];
     [self performSelectorOnMainThread:@selector(reloadDataOnTable) withObject:nil waitUntilDone:YES];
 }
+
+
+
+
 -(void)getWholeLikeDataForPaging{
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@&activityId=%@&page=%d",URL_CONST,ACTION_GET_COMMENT_DETAILS,[UserData getUserID],_postedById,_activityId,commentPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
@@ -84,6 +88,9 @@
     }
     [self performSelectorOnMainThread:@selector(reloadDataOnTable) withObject:nil waitUntilDone:YES];
 }
+
+
+
 -(void)reloadDataOnTable{
     [commentTableView reloadData];
     [self.view hideLoader];
@@ -108,13 +115,16 @@
     
     CGPoint windowPoint = [commentTableView convertPoint:commentTableView.bounds.origin toView:self.view.window];
     
-    CGRect Frame = CGRectMake(commentTableView.frame.origin.x, windowPoint.y+15, commentTableView.frame.size.width, commentTableView.frame.size.height) ;
+    CGRect Frame ;
     
-    
+    if (iPhone6||iPhone6plus||iPAD) {
+        Frame = CGRectMake(commentTableView.frame.origin.x, windowPoint.y+15, commentTableView.frame.size.width, commentTableView.frame.size.height) ;
+    }else{
+        Frame = CGRectMake(commentTableView.frame.origin.x, windowPoint.y, commentTableView.frame.size.width, commentTableView.frame.size.height) ;
+    }
+
     containerView = [[UIView alloc] initWithFrame:CGRectMake(20, Frame.size.height+80, commentTableView.frame.size.width, 50)];
-    
     containerView.backgroundColor=[UIColor whiteColor];
-    
     containerView.layer.borderWidth=1;
     messageInputView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, containerView.frame.size.width-60, 44)];
     messageInputView.isScrollable = NO;
@@ -128,7 +138,6 @@
     messageInputView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
     messageInputView.backgroundColor = [UIColor whiteColor];
     messageInputView.placeholder = @"Type your message here";
-
     [self.view addSubview:containerView];
     
     UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
@@ -164,11 +173,42 @@
 }
 
 -(void)sendButtonClick{
-    
+    if([messageInputView.text isEqualToString:@""]){
+        [self.view makeToast:@"Comment should not be empty" duration:toastDuration position:toastPositionBottomUp];
+    }else{
+        userInputtedMsg=messageInputView.text;
+        messageInputView.text=@"";
+        NSDictionary * dict =@{
+                               @"id":@"12345678",
+                               @"name": [UserData getUserName] ,
+                               @"comment":userInputtedMsg,
+                               @"image":[UserData getUserImageUrl],
+                               @"is_my":@"1"
+                               };
+        [commentArr addObject:dict];
+        [commentTableView reloadData];
+        NSDictionary * not_Dict=@{};
+        [[NSNotificationCenter defaultCenter] postNotificationName:throwRefreshComment object:not_Dict];
+        [self performSelectorInBackground:@selector(addCommentWebservice) withObject:nil];
+    }
+}
+-(void)addCommentWebservice{
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicID=%@&activityId=%@&comment=%@",URL_CONST,ACTION_COMMENT_ADD,[UserData getUserID],_postedById,_activityId,userInputtedMsg];
+    NSDictionary * dict =[[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    if (dict!=nil) {
+        NSDictionary * dict1 =@{
+                               @"id":[dict valueForKey:@"comment_id"],
+                               @"name": [UserData getUserName] ,
+                               @"comment":userInputtedMsg,
+                               @"image":[UserData getUserImageUrl],
+                               @"is_my":@"1"
+                               };
+        int index =commentArr.count-1;
+        [commentArr replaceObjectAtIndex:index withObject:dict1];
+    }
 }
 
 #pragma mark - Keybord Hide and show methods
-
 -(void) keyboardWillShow:(NSNotification *)note{
     
     CGRect keyboardBounds;
@@ -256,15 +296,6 @@
     ComentTableViewCell * cell = [commentTableView dequeueReusableCellWithIdentifier:@"ComentTableViewCell"];
     
     cell.commentLbl.numberOfLines = 0;
-    
-    //Step 1: Define a normal attributed string for non-link texts
-    
-//    "id":"327",
-//    "name":"Nitin",
-//    "comment":"hhhh",
-//    "image":"http:\/\/trasquare.com\/traveller_api\/userPic\/1458141473.jpg",
-//    "is_my":0
-    
     NSDictionary * dataDict =[commentArr objectAtIndex:indexPath.row];
     NSString * username=[dataDict valueForKey:@"name"];
     NSString * comment=[dataDict valueForKey:@"comment"];
@@ -299,8 +330,21 @@
 }
 
 -(void)deleteComentBtnClick:(UIButton *)btn{
+    commentToDelete=[commentArr objectAtIndex:btn.tag];
+    [commentArr removeObjectAtIndex:btn.tag];
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:btn.tag inSection:0];
+    [commentTableView beginUpdates];
+    [commentTableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    [commentTableView endUpdates];
     
+    NSDictionary * not_Dict=@{};
+    [[NSNotificationCenter defaultCenter] postNotificationName:throwRefreshComment object:not_Dict];
 }
+-(void)deleteCommentwebservice{
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicID=%@&activityId=%@&comment=%@",URL_CONST,ACTION_COMMENT_ADD,[UserData getUserID],_postedById,_activityId,userInputtedMsg];
+    [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+}
+
 
 -(void)addShaddowToView:(UIView *)view{
     view.layer.shadowOffset = CGSizeMake(1, 1);

@@ -20,7 +20,50 @@
     [self setUpScrollView];
     [self setUpNavigationBar];
     self.title=@"Places Visited";
+    [self setValuesToEdit];
  }
+-(void)setValuesToEdit{
+    if (_EditPostDirectory) {
+        
+        _selectedCityDict=@{@"id": [_EditPostDirectory valueForKey:@"city_id"]};
+        self.title=@"Edit Post";
+        UIButton * btn ;
+        if ([[_EditPostDirectory valueForKey:@"activity_type"]intValue]==1) {
+            selectedIndex= 0;
+            btn=(UIButton *)[buttonArray objectAtIndex:0];
+            [self buttonEvent:btn];
+            
+        }else if ([[_EditPostDirectory valueForKey:@"activity_type"]intValue]==2) {
+            selectedIndex= 1;
+            btn=(UIButton *)[buttonArray objectAtIndex:0];
+            [self buttonEvent:btn];
+            
+        }else if ([[_EditPostDirectory valueForKey:@"activity_type"]intValue]==3) {
+            selectedIndex= 2;
+            btn=(UIButton *)[buttonArray objectAtIndex:0];
+            [self buttonEvent:btn];
+            
+        }else if ([[_EditPostDirectory valueForKey:@"activity_type"]intValue]==6) {
+            selectedIndex= 3;
+            btn=(UIButton *)[buttonArray objectAtIndex:0];
+            [self buttonEvent:btn];
+        }
+        descriptionTextView.text=[_EditPostDirectory valueForKey:@"activity_description"];
+        _txtPlaceSearch.text=[[[_EditPostDirectory valueForKey:@"refertitle"]objectAtIndex:1]valueForKey:@"name"];
+        
+        //Checked for post Image
+        NSString * urlStringForPostImage =[[[_EditPostDirectory valueForKey:@"image"]lastObject]valueForKey:@"image"];
+        if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
+            [postImageView sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
+            postImageViewHeight.constant=250;
+            [postImageView layoutIfNeeded];
+        }
+        descriptionTextView.textColor = [UIColor blackColor];
+  }
+}
+
+
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
@@ -98,6 +141,7 @@
 #pragma mark====================On Selection of Segment===============================
 -(void)buttonEvent:(UIButton*)sender
 {
+[[NSNotificationCenter defaultCenter] postNotificationName:throwRefreshPage object:nil];
     NSInteger index= sender.tag;
     selectedIndex= (int) index;
     
@@ -401,8 +445,13 @@
     }else if ([descriptionTextView.text isEqualToString:@"  This place is known for ? How to get it ? Things to do ? Famous things ? etc. "]){
         [self.view makeToast:@"Please insert some description about place" duration:toastDuration position:toastPositionBottomUp];
     }else{
-        [self.view showLoader];
-        [self upload];
+        if (_EditPostDirectory) {
+            [self.view showLoader];
+            [self upload];
+        }else{
+            [self.view showLoader];
+            [self upload];
+        }
     }
 }
 
@@ -458,5 +507,53 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)edit {
+    
+    NSString * selectedActivityType=@"";
+    
+    switch (selectedIndex) {
+        case 0:
+            selectedActivityType=@"1";
+            break;
+        case 1:
+            selectedActivityType=@"2";
+            break;
+        case 2:
+            selectedActivityType=@"3";
+            break;
+        case 3:
+            selectedActivityType=@"6";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSDictionary *parameters = @{
+                                 @"action": ACTION_ADD_ACTIVITY,
+                                 @"userId": [UserData getUserID],
+                                 @"cityId": [_selectedCityDict valueForKey:@"id"],
+                                 @"title": _txtPlaceSearch.text,
+                                 @"description": descriptionTextView.text,
+                                 @"activity_type": selectedActivityType
+                                 };
+    [[WebHandler sharedHandler]uploadDataWithImage:postImageView.image forKey:@"file1" andParameters:parameters OnUrl:URL_CONST completion:^(NSDictionary * responceDict) {
+        if (responceDict) {
+            int status =[[responceDict valueForKey:@"status"] intValue];
+            if (status == 1) {
+                [self.view hideLoader];
+                [self.view makeToast:@"Post successfully Posted" duration:toastDuration position:toastPositionBottomUp];
+                [self performSelector:@selector(backToCities) withObject:nil afterDelay:2];
+                [[NSNotificationCenter defaultCenter] postNotificationName:throwRefreshPage object:nil];
+            }else{
+                [self.view hideLoader];
+                [self.view makeToast:[responceDict valueForKey:@"message"] duration:toastDuration position:toastPositionBottomUp];
+            }
+        }else{
+            [self.view hideLoader];
+            [self.view makeToast:no_internet_message duration:toastDuration position:toastPositionBottomUp];
+        }
+    }];
+}
 
 @end

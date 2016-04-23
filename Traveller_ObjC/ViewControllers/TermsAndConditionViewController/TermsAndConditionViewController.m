@@ -16,10 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden=NO;
     [self setUpNavigationBar];
     self.title=@"Terms And Conditions";
 }
 -(void)setUpNavigationBar{
+    self.navigationController.navigationBarHidden=NO;
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
                                 [UIColor whiteColor], NSForegroundColorAttributeName, nil];
@@ -42,19 +44,5 @@
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -143,8 +143,8 @@ if (citiesArray.count==0||citiesArray==nil) {
         cell.followNameLbl.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
         cell.followBackView.backgroundColor=Like_Color;
     }
-    
-    
+    cell.followBtn.tag=indexPath.row;
+    [cell.followBtn addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 
 
 
@@ -308,7 +308,7 @@ if (citiesArray.count==0||citiesArray==nil) {
         dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
     }
     
-    NSString * publicId =[dataDict valueForKey:@"mid"];
+    NSString * publicId =[dataDict valueForKey:@"id"];
     NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];

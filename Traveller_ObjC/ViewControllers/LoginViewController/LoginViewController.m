@@ -98,7 +98,8 @@
              NSDictionary * dict = @{
                                      @"name":[NSString stringWithFormat:@"%@ %@",[result valueForKey:@"first_name"],[result valueForKey:@"last_name"]],
                                       @"fb_id":[result valueForKey:@"id"],
-                                        @"email":[result valueForKey:@"email"]
+                                        @"email":[result valueForKey:@"email"],
+                                     @"image":[[[result valueForKey:@"picture"]valueForKey:@"data"]valueForKey:@"url"]
                                      };
              [self loginForFacebook:dict];
          }
@@ -110,23 +111,55 @@
 }
 // its in developement phase
 -(void)loginForFacebook:(NSDictionary*)FBDict{
-    NSString * name=[FBDict valueForKey:@"name"];
-    NSString * email=[FBDict valueForKey:@"email"];
-    NSString * fb_id=[FBDict valueForKey:@"fb_id"];
-    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,ACTION_SIGNUP];
+    
+    fbdict=FBDict;
+    [self performSelectorInBackground:@selector(facebookwebservice) withObject:nil];
+
+    }
+
+-(void)facebookwebservice{
+    NSString * name=[fbdict valueForKey:@"name"];
+    NSString * email=[fbdict valueForKey:@"email"];
+    NSString * fb_id=[fbdict valueForKey:@"fb_id"];
+    NSString * image = [fbdict valueForKey:@"image"];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&fb_id=%@&signupType=facebook",URL_CONST,ACTION_SIGNUP,name,email,fb_id];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
-        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-        if ( [status isEqual: SUCESS]) {
-            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
-        }else{
-            NSString * msg =[dict valueForKey:@"message"];
-            [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:msg waitUntilDone:YES];
-        }
+        NSDictionary * data =@{
+                               @"name":name,
+                               @"signupType":@"facebook",
+                               @"user_type":@"facebook",
+                               @"email":email,
+                               @"fb_id":fb_id,
+                               @"id":[dict valueForKey:@"mid"],
+                               @"add_date" : @"",
+                               @"city" : @"pune to",
+                               @"country": @"",
+                               @"gcm_regid" :@"",
+                               @"gender" : @"0",
+                               @"gp_id" : @"",
+                               @"mobile" : @"",
+                               @"my_status" : @"",
+                               @"next_destination" : @"",
+                               @"state" : @"",
+                               @"status" : @"0",
+                               @"weburl" : @"",
+                               @"password":@""
+                               };
+        NSDictionary * main=  @{
+                                @"data":@[data],
+                                @"image":image
+                                };
+        
+        [UserData saveUserDict:main];
+        [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
+        
     }else{
         [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:no_internet_message waitUntilDone:YES];
     }
+
 }
+
 
 #pragma mark====================Login With Google===============================
 
@@ -198,8 +231,8 @@
 - (IBAction)loginClick:(id)sender {
     [self.view endEditing:YES];
 #if DEBUG
-    userNameTextField.text=@"sagarshirbhate@gmail.com";
-    passwordTextField.text=@"qwertyuiop";
+    userNameTextField.text=@"nitin@gmail.com";
+    passwordTextField.text=@"nitin123";
   #endif
 
     if ([userNameTextField validate]&&[passwordTextField validate]) {

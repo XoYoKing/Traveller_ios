@@ -24,6 +24,9 @@
     NSMutableArray * ask_for_tip;
     NSMutableArray * follow ;
     NSMutableArray * message;
+    
+    NSDictionary * itemDelete;
+    NSString * msgForService;
 }
 @property(assign)BOOL fromMenu;
 @end

@@ -37,6 +37,7 @@
 -(NSDictionary *)getDataFromWebservice:(NSString *)urlString{
     
     if ([self connected]) {
+        urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL * url =[NSURL URLWithString:urlString];
         if (url==nil) {
             return nil;

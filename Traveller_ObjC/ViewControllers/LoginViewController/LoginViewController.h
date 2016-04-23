@@ -25,6 +25,7 @@
     IBOutlet UIButton *googleBtn;
     IBOutlet UIButton *faceBookButton;
     IBOutlet NSLayoutConstraint *aboveConstraint;
+    NSDictionary * fbdict;
 }
 @property ABCIntroView *introView;
 

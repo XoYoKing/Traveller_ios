@@ -201,15 +201,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   UITableViewCell *cell ;
     if (selectedIndex==0) {
-        Notification1TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification1TableViewCell"];
+    
+        Notification4TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification4TableViewCell"];
         NSDictionary * dict =[invitation objectAtIndex:indexPath.row];
-           return cell;
+        cell.lbl.text=[dict valueForKey:@"invitation"];
+        cell.deleteButton.tag=indexPath.row;
+        [cell.deleteButton addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+
     }else if(selectedIndex==1){
         Notification2TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification2TableViewCell"];
         NSDictionary * dict =[ask_for_tip objectAtIndex:indexPath.row];
         cell.msgLbl.text =[dict valueForKey:@"ask_for_tip"];
         cell.replyButton.tag=indexPath.row;
         [cell.replyButton addTarget:self action:@selector(replyForAskTips:) forControlEvents:UIControlEventTouchUpInside];
+        cell.deleteButton.tag=indexPath.row;
+        [cell.deleteButton addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
         cell.textView.delegate=self;
         return cell;
     }else if (selectedIndex==2){
@@ -219,12 +226,15 @@
         cell.textView.delegate=self;
         cell.replyButton.tag=indexPath.row;
         [cell.replyButton addTarget:self action:@selector(replyForMsg:) forControlEvents:UIControlEventTouchUpInside];
+        cell.deleteButton.tag=indexPath.row;
+        [cell.deleteButton addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }else if (selectedIndex==3){
         Notification4TableViewCell * cell =[notificationTableView dequeueReusableCellWithIdentifier:@"Notification4TableViewCell"];
         NSDictionary * dict =[follow objectAtIndex:indexPath.row];
         cell.lbl.text=[dict valueForKey:@"ask_for_tip"];
-        
+        cell.deleteButton.tag=indexPath.row;
+        [cell.deleteButton addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
     return cell;
@@ -288,28 +298,96 @@
 
 -(void)replyForAskTips:(UIButton *)btn{
     [self.view endEditing:YES];
+    itemDelete=[ask_for_tip objectAtIndex:btn.tag];
     NSIndexPath * ip =[NSIndexPath indexPathForRow:btn.tag inSection:0];
     Notification2TableViewCell * cell = [notificationTableView cellForRowAtIndexPath:ip];
     if ( [cell.textView.text isEqualToString:@"Write Message"]) {
         [self.view makeToast:@"Please write message" duration:toastDuration position:toastPositionBottomUp];
     }else{
-        
+          msgForService=cell.textView.text;
+           [self performSelectorInBackground:@selector(askForTipsWebservice) withObject:nil];
     }
 }
+
+
 -(void)askForTipsWebservice{
-    
+    NSString * userID =[UserData getUserID];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
+    [[WebHandler sharedHandler]getDataFromWebservice:str];
 }
+
+
 -(void)replyForMsg:(UIButton *)btn{
     [self.view endEditing:YES];
+    itemDelete=[message objectAtIndex:btn.tag];
     NSIndexPath * ip =[NSIndexPath indexPathForRow:btn.tag inSection:0];
     Notification2TableViewCell * cell = [notificationTableView cellForRowAtIndexPath:ip];
     if ( [cell.textView.text isEqualToString:@"Write Message"]) {
         [self.view makeToast:@"Please write message" duration:toastDuration position:toastPositionBottomUp];
     }else{
-        
+        msgForService=cell.textView.text;
+        [self performSelectorInBackground:@selector(replyForMessageWebservice) withObject:nil];
     }
 }
--(void)msgWebservice{
-    
+
+-(void)replyForMessageWebservice{
+    NSString * userID =[UserData getUserID];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
+    [[WebHandler sharedHandler]getDataFromWebservice:str];
+}
+
+-(void)deleteWebservice{
+        NSString * userID =[UserData getUserID];
+        NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&taskId=%@&type=%@",URL_CONST,ACTION_DELETE_NOTIFICATION,userID,[itemDelete valueForKey:@"id"],[itemDelete valueForKey:@"type"]];
+         [[WebHandler sharedHandler]getDataFromWebservice:str];
+}
+-(void)delete:(UIButton *)sender{
+    NSIndexPath * ip ;
+    int index =sender.tag;
+    if (selectedIndex==0) {
+        itemDelete=[invitation objectAtIndex:index];
+        if(invitation.count==1){
+        invitation=nil;
+        [notificationTableView reloadData];
+        }else{
+        [invitation removeObjectAtIndex:index];
+        ip =[NSIndexPath indexPathForRow:index inSection:0];
+        }
+        
+    }else if (selectedIndex==1){
+        itemDelete=[ask_for_tip objectAtIndex:index];
+        if(ask_for_tip.count==1){
+            ask_for_tip=nil;
+            [notificationTableView reloadData];
+        }else{
+        [ask_for_tip removeObjectAtIndex:index];
+        ip =[NSIndexPath indexPathForRow:index inSection:0];
+        }
+    }else if (selectedIndex==2){
+        itemDelete=[message objectAtIndex:index];
+        if(message.count==1){
+            message=nil;
+            [notificationTableView reloadData];
+        }else{
+        [message removeObjectAtIndex:index];
+        ip =[NSIndexPath indexPathForRow:index inSection:0];
+        }
+    }else{
+        itemDelete=[follow objectAtIndex:index];
+        if(follow.count==1){
+            follow=nil;
+            [notificationTableView reloadData];
+        }else{
+        [follow removeObjectAtIndex:index];
+        ip =[NSIndexPath indexPathForRow:index inSection:0];
+        }
+    }
+    if (ip) {
+        [notificationTableView beginUpdates];
+        [notificationTableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+        [notificationTableView endUpdates];
+        [notificationTableView reloadData];
+        [self performSelectorInBackground:@selector(deleteWebservice) withObject:nil];
+    }
 }
 @end

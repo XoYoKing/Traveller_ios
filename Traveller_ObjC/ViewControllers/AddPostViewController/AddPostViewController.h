@@ -46,5 +46,5 @@
 }
 @property (weak, nonatomic) IBOutlet MVPlaceSearchTextField *txtPlaceSearch;
 @property(strong,nonatomic)NSDictionary * selectedCityDict;
-
+@property(strong,nonatomic)NSDictionary * EditPostDirectory;
 @end

@@ -25,6 +25,8 @@
     HPGrowingTextView *messageInputView;// Growing TextView For Meassage
     UIButton *sendButton;// Send Button
      UIView *containerView; // Container View for Bottom text view
+    NSString * userInputtedMsg;
+    NSDictionary * commentToDelete;
 }
 @property(nonatomic,strong)NSString * activityId;
 @property(nonatomic,strong)NSString * postedById;

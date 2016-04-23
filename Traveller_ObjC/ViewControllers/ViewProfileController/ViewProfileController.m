@@ -25,39 +25,80 @@
 #pragma mark====================View Controller Life Cycles===============================
 
 -(void)viewDidAppear:(BOOL)animated{
-    
-    
+    [RFRateMe showRateAlertAfterTimesOpened:30];
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
-        
         if ([UserData getNotificationDict].count==0) {
             [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
         }
     }
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    if (firstTimePageOpen==NO) {
+        self.navigationController.navigationBarHidden=NO;
+        self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+        self.navigationController.navigationBar.barTintColor=[UIColor clearColor];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.navigationController.navigationBarHidden=YES;
-    
     homeFeedPage=1;
     followerPage=1;
     followingPage=1;
     wishToPage=1;
     visitedCitiesPage=1;
     selectedIndex=0;
-    
     homeFeedData=[NSMutableArray new];
     followerData=[NSMutableArray new];
     followingData=[NSMutableArray new];
     wishToData=[NSMutableArray new];
     visitedCitiesData=[NSMutableArray new];
-    
     firstTimePageOpen=YES;
     homeFeedPageShouldDoPaging=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLikeCell:) name:throwRefreshLike object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCommentCell:) name:throwRefreshComment object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:throwRefreshPage object:nil];
+}
+
+-(void)refreshView{
+    switch (selectedIndex) {
+            //=====================1st click ====================
+        case 0:
+        {
+            
+            [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
+            
+        }break;
+            //=====================2st click ====================
+        case 1:
+            
+            [self performSelectorInBackground:@selector(getVisitedCitiesData) withObject:nil];
+            
+            break;
+            //=====================3st click ====================
+        case 2:
+            
+            [self performSelectorInBackground:@selector(getWishData) withObject:nil];
+            
+            break;
+            //=====================4st click ====================
+        case 3:
+            
+            [self performSelectorInBackground:@selector(getFollowerData) withObject:nil];
+            
+            break;
+            //=====================5st click ====================
+        case 4:
+            
+            [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
+            break;
+        default:
+            break;
+    }
+    
 }
 
 -(void)updateNotificationCount:(NSNotification *)notification{
@@ -66,6 +107,65 @@
     badgeView.badgeValue = count;
 }
 
+-(void)refreshLikeCell:(NSNotification *)notification{
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForLikeNotification inSection:0];
+    
+    if (ip!=nil) {
+        FeedsTableViewCell *cell = (FeedsTableViewCell *)[self.tableView cellForRowAtIndexPath:ip];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        
+        if ([[dataDict valueForKey:@"is_like"]intValue] == 1) {
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"0" forKey:@"is_like"];
+            int like =[[dataDict valueForKey:@"total_like"]intValue];
+            like--;
+            [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
+            [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+            [self.view makeToast:@"You removed your like of the post"duration:toastDuration position:toastPositionBottomUp];
+            
+        }else{
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"1" forKey:@"is_like"];
+            int like =[[dataDict valueForKey:@"total_like"]intValue];
+            like++;
+            [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_like"];
+            [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+            [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
+        }
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+
+-(void)refreshCommentCell:(NSNotification *)notification{
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForCommentNotification inSection:0];
+    if (ip!=nil) {
+        FeedsTableViewCell *cell = (FeedsTableViewCell *)[self.tableView cellForRowAtIndexPath:ip];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        if ([[dataDict valueForKey:@"is_my"]intValue] == 1) {
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"0" forKey:@"is_my"];
+            int like =[[dataDict valueForKey:@"total_comments"]intValue];
+            like--;
+            [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_comments"];
+            [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+        }else{
+            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+            [newDict addEntriesFromDictionary:dataDict];
+            [newDict setObject:@"1" forKey:@"is_my"];
+            int like =[[dataDict valueForKey:@"total_comments"]intValue];
+            like++;
+            [newDict setObject:[NSString stringWithFormat:@"%d",like] forKey:@"total_comments"];
+            [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
+        }
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
 
 #pragma mark====================Notification View===============================
 -(void)addNotificationView{
@@ -273,8 +373,7 @@
     UIButton *btn =  [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0,0,25,25);
     btn.titleLabel.font =[UIFont fontWithName:fontIcomoon size:25];
-    [btn setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal] ;
-    btn.titleLabel.textColor  = [UIColor whiteColor];
+    [btn setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(menuToggle) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem =   barBtn;
@@ -445,7 +544,7 @@
 
 -(void)tappedOnUserImage{
     ViewUserProfileViewController *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewUserProfileViewController"];
-    vc.userID=[UserData getUserID];
+    vc.userID=_userId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -524,6 +623,10 @@
         //created dictionary from array object
         NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
         
+        NSString * miliseconds =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"add_date"]];
+        
+        [cell.agoLbl setAgoText:miliseconds];
+        
         //detail text
         NSString * details =[dataDict valueForKey:@"activity_description"];
         cell.extraFeedLabel.text=details;
@@ -539,8 +642,13 @@
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
         if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
-            NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
-            [cell.postImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
+            [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage]
+                              placeholderImage:[UIImage imageNamed:@"Placeholder"]
+                                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                         cell.postImage.clipsToBounds=YES;
+                                         cell.postImage.contentMode=UIViewContentModeScaleAspectFill;
+                                         cell.postImage.image = image;
+                                     }];
         }
         
         
@@ -565,12 +673,6 @@
             imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
         }
         
-        if([userID isEqualToString:[UserData getUserID]]){
-            cell.menuBtnOfPost.hidden=NO;
-        }else{
-            cell.menuBtnOfPost.hidden=YES;
-        }
-        
         //mainstr have title and Also Links Managed.
         NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
         
@@ -592,8 +694,8 @@
         
         void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
             if ([substring isEqualToString:userName]) {
-                [self openUserProfile:userID:userName:urlStringForProfileImage];
-            }else{
+                [self openUserProfile:userID :userName: urlStringForProfileImage];
+            }else   if ([substring isEqualToString:cityName]) {
                 [self openLocationFeedView:locId :cityName :imageUrl];
             }
         };
@@ -750,6 +852,7 @@
                 [self performSelectorInBackground:@selector(getVisitedCitiesDataForPaging) withObject:nil];
             }
         }
+        cell.deleteButton.hidden=YES;
         cell.deleteButton.tag=indexPath.row;
         [cell.deleteButton addTarget:self action:@selector(deletePlaceVisited:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
@@ -799,6 +902,7 @@
         
         cell.deleteButton.tag=indexPath.row;
         [cell.deleteButton addTarget:self action:@selector(deleteWishTo:) forControlEvents:UIControlEventTouchUpInside];
+        cell.deleteButton.hidden=NO;
         
         return cell;
         
@@ -843,6 +947,13 @@
                 [self performSelectorInBackground:@selector(getWishDataForPaging) withObject:nil];
             }
         }
+        if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
+            [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        }else{
+            [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        }
+        
+        
         
         cell.followButton.tag=indexPath.row;
         [cell.followButton addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -854,31 +965,141 @@
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
         FollowingTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FollowingTableViewCell"];
         
+        NSDictionary * dataDict =[followingData objectAtIndex:indexPath.row];
+        NSString * city =[dataDict valueForKey:@"city"];
+        NSString * country =[dataDict valueForKey:@"country"];
+        NSString * name =[dataDict valueForKey:@"name"];
+        
+        if (![city isKindOfClass:[NSNull class]]&&![country isKindOfClass:[NSNull class]]) {
+            if ([city isEqualToString:country]) {
+                cell.addressLbl.text =[NSString stringWithFormat:@" %@ ",city];
+            }else {
+                cell.addressLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city , country];
+            }
+        }else{
+            cell.addressLbl.text =@"City Name Not Available Now";
+        }
+        
+        if (![name isKindOfClass:[NSNull class]]) {
+            cell.nameLbl.text=name;
+        }else {
+            cell.nameLbl.text=@"Country Name Not Available Now";
+        }
+        
+        //Checked for post Image
+        NSString * urlStringForImage =[dataDict valueForKey:@"image"];
+        if (![urlStringForImage isKindOfClass:[NSNull class]]) {
+            NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
+            [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+        }
         
         // For Paging Mechanism
-        if (indexPath.row==wishToData.count -3) {
-            if (followingPageShouldDoPaging==YES) {
-                followingPage++;
-                [self performSelectorInBackground:@selector(getFollowListDataForPaging) withObject:nil];
+        if (indexPath.row==followerData.count -3) {
+            if (followerPageShouldDoPaging==YES) {
+                followerPage++;
+                [self performSelectorInBackground:@selector(getWishDataForPaging) withObject:nil];
             }
         }
         
         cell.followButton.tag=indexPath.row;
         [cell.followButton addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        return cell;
+        if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
+            [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        }else{
+            [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        }
         
+        return cell;
     }
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (selectedIndex==1){
+        
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        NSString *cityName;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+            [self openLocationFeedView:locId :cityName :imageUrl];
+        }
+        
+        
+    }else if (selectedIndex==2){
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        NSString *userName;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+            [self openLocationFeedView:locId :cityName :imageUrl];
+        }
+        
+        
+    }else if (selectedIndex==3){
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        
+        //Checked for User Image
+        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+        NSString *userName;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+        }
+        
+        [self openUserProfile:userID :userName: urlStringForProfileImage];
+        
+    }else if (selectedIndex==4){
+        //created dictionary from array object
+        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
+        //Checked for User Image
+        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+        NSString *userName;
+        NSString *cityName;
+        NSString * userID;
+        NSString * locId;
+        NSString * imageUrl;
+        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+        if (refertitle!=nil) {
+            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
+            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
+        }
+        
+        [self openUserProfile:userID :userName: urlStringForProfileImage];
+    }
+}
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     NSArray * namesOfMenus =@[@"Feeds",@"Places Visited",@"Wish To",@"Followers",@"Following"];
     
-    myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
+    myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;
     buttonArray=[[NSMutableArray alloc]init];
     for ( int j=0; j<namesOfMenus.count; j++)
@@ -908,8 +1129,9 @@
         scrollWidth= scrollWidth+strikeWidth+20;
         
         if (j==selectedIndex) {
-            button.backgroundColor= Check_Color;
-            [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+            button.backgroundColor=segment_selected_Color ;
+            [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -917,9 +1139,9 @@
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }
         }else {
-            button.backgroundColor= [UIColor blackColor];
-            //[self removeShaddowToView:button];
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
+            button.backgroundColor=segment_disselected_Color;
+            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
+            [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }else{
@@ -927,12 +1149,15 @@
             }
         }
         
+        
         [buttonArray addObject:button];
         [myScrollView addSubview:button];
         
     }
     myScrollView.contentSize = CGSizeMake(scrollWidth, 30.f);
     myScrollView.pagingEnabled = NO;
+    myScrollView.backgroundColor=[UIColor whiteColor];
+    
     [myScrollView setShowsHorizontalScrollIndicator:NO];
     [myScrollView setShowsVerticalScrollIndicator:NO];
     return myScrollView;
@@ -949,8 +1174,9 @@
     {
         UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
         if (i==selectedIndex) {
-            button.backgroundColor= Check_Color;
-            [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+            button.backgroundColor=segment_selected_Color ;
+            [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -958,9 +1184,9 @@
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }
         }else {
-            button.backgroundColor= [UIColor blackColor];
-            //[self removeShaddowToView:button];
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
+            button.backgroundColor=segment_disselected_Color;
+            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+            [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }else{
@@ -977,7 +1203,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
+    return 42;
 }
 
 
@@ -1081,9 +1307,121 @@
 
 #pragma mark====================Edit User Feed Post=============================
 -(void)editPost:(UIButton*)btn{
-    [self showAlert];
+    
     selectedDictForDelete =[homeFeedData objectAtIndex:btn.tag];
+    
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    UIAlertAction* edit = [UIAlertAction
+                           actionWithTitle:@"Edit"
+                           style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action)
+                           {
+                               [self editPost];
+                               [self dismissViewControllerAnimated:YES completion:nil];
+                           }];
+    UIAlertAction* delete = [UIAlertAction
+                             actionWithTitle:@"Delete"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self doDeleteOfFeed];
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    UIAlertAction* share = [UIAlertAction
+                            actionWithTitle:@"Share"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [self performSelector:@selector(sharePost:) withObject:btn afterDelay:1];
+                                [self dismissViewControllerAnimated:YES completion:nil];
+                            }];
+    
+    
+    NSString * userID;
+    
+    NSArray *refertitle =[selectedDictForDelete valueForKey:@"refertitle"];
+    if (refertitle!=nil) {
+        userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+    }
+    
+    [view addAction:ok];
+    [view addAction:share];
+    
+    if ([userID isEqualToString:[UserData getUserID]]) {
+        [view addAction:edit];
+        [view addAction:delete];
+    }
+    
+    CGPoint windowPoint = [btn convertPoint:btn.bounds.origin toView:self.view.window];
+    view.popoverPresentationController.sourceView = self.view;
+    view.popoverPresentationController.sourceRect = CGRectMake(btn.frame.origin.x, windowPoint.y+15, btn.frame.size.width, btn.frame.size.height);;
+    [self presentViewController: view animated:YES completion:nil];
+    
 }
+-(void)editPost{
+    AddPostViewController * vc= [self.storyboard instantiateViewControllerWithIdentifier:@"AddPostViewController"];
+    vc.EditPostDirectory=selectedDictForDelete;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)sharePost:(UIButton *)btn{
+    
+    //detail text
+    NSString * details =[selectedDictForDelete valueForKey:@"activity_description"];
+    
+    //Checked for post Image
+    UIImageView * tempImageView =[UIImageView new];
+    NSString * urlStringForPostImage =[[[selectedDictForDelete valueForKey:@"image"]lastObject]valueForKey:@"image"];
+    if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
+        NSURL * profileUrl =[NSURL URLWithString:urlStringForPostImage];
+        [tempImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
+    }
+    
+    NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[selectedDictForDelete valueForKey:@"activity_title"]];
+    
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
+                                                            withString:@"to eat 🍕 "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to visit"
+                                                            withString:@"to visit 🌄  "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to shopping"
+                                                            withString:@"to shopping 👗 "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to stay"
+                                                            withString:@"to stay 🏠 "];
+    mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"travelling to"
+                                                            withString:@"travelling to ✈️ "];
+    
+    NSString * str =@"Post is Shared From Traweller App.";
+    UIImage *imagetoshare = tempImageView.image;
+    NSArray *activityItems = @[mainTitleStr, imagetoshare,details,str];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    activityVC.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypePostToTwitter, UIActivityTypePostToWeibo,UIActivityTypeOpenInIBooks,UIActivityTypeAirDrop,UIActivityTypeMessage];
+    
+    //if iPhone
+    if (!iPAD) {
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
+    //if iPad
+    else {
+        // Change Rect to position Popover
+        
+        CGPoint windowPoint = [btn convertPoint:btn.bounds.origin toView:self.view.window];
+        UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+        [popup presentPopoverFromRect: CGRectMake(btn.frame.origin.x, windowPoint.y+15, btn.frame.size.width, btn.frame.size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+}
+
+
+#pragma mark======delete========
 -(void)deletePlaceVisited:(UIButton*)btn{
     [self showAlert];
     selectedDictForDelete =[visitedCitiesData objectAtIndex:btn.tag];
@@ -1102,7 +1440,7 @@
         vc.imageUrl=urlStringForProfileImage;
         [self.navigationController pushViewController:vc animated:YES];
     }
-
+    
 }
 
 #pragma mark====================Open Location Feeds=============================
@@ -1118,6 +1456,7 @@
 #pragma mark====================Open Who Likes the Post=============================
 -(void)openLikeMenu:(UIButton*)btn{
     BOOL shouldOpenMenu =NO;
+    indexForLikeNotification=(int)btn.tag;
     NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
     int isLikedByYou=[[dataDict valueForKey:@"is_like"]intValue];
     if (isLikedByYou==1) {
@@ -1146,6 +1485,8 @@
     if (shouldOpenMenu==YES) {
         
         LikeViewController *newVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LikeViewController"];
+        newVC.activityId=[dataDict valueForKey:@"id"];
+        newVC.userId=[dataDict valueForKey:@"posted_by"];
         [self setPresentationStyleForSelfController:self presentingController:newVC];
         UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:newVC];
         [self presentViewController:nav animated:YES completion:nil];
@@ -1180,55 +1521,104 @@
         [homeFeedData replaceObjectAtIndex:indexPath.row withObject:newDict];
         [self.view makeToast:@"You liked the post"duration:toastDuration position:toastPositionBottomUp];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    forLike=dataDict;
+    [self performSelectorInBackground:@selector(likeWebservice) withObject:nil];
 }
 
+-(void)likeWebservice{
+    NSString * postid =[forLike valueForKey:@"id"];
+    NSString * posted_by =[forLike valueForKey:@"posted_by"];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicID=%@&activityId=%@",URL_CONST,ACTION_ADD_LIKE,userID,posted_by,postid];
+    NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
+}
 
 #pragma mark====================Open Who commented on the Post=============================
 -(void)openCommentMenu:(UIButton*)btn{
-    
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
+    indexForCommentNotification=btn.tag;
     CommentsViewController * v =[self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
+    v.activityId=[dataDict valueForKey:@"id"];
+    v.postedById=[dataDict valueForKey:@"posted_by"];
     [self setPresentationStyleForSelfController:self presentingController:v];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:v];
     [self presentViewController:nav animated:YES completion:nil];
-    
-    
 }
 
 #pragma mark ====================FollowMechanism=============================
 -(void)followButtonClick:(UIButton *)btn{
     selectedUserIdex =(int)btn.tag;
+    ipForFollow =[NSIndexPath indexPathForRow:selectedUserIdex inSection:0];
     [self.view showLoader];
     [self performSelectorInBackground:@selector(followWebservice) withObject:nil];
 }
 -(void)followWebservice{
-    NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
-    NSString * publicId =[dataDict valueForKey:@"id"];
+    NSDictionary * dataDict ;
+    if (selectedIndex==3) {
+        dataDict =[followerData objectAtIndex:selectedUserIdex];
+    }else{
+        dataDict =[followingData objectAtIndex:selectedUserIdex];
+    }
+    
+    NSString * publicId =[dataDict valueForKey:@"mid"];
     NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
-    if (homefeed) {
-        if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
-            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
-            [newDict addEntriesFromDictionary:dataDict];
-            [newDict setObject:@"1" forKey:@"follow"];
-            [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
-            [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
-        }else{
-            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
-            [newDict addEntriesFromDictionary:dataDict];
-            [newDict setObject:@"0" forKey:@"follow"];
-            [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
-            [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
-        }
-    }
-    [self performSelectorOnMainThread:@selector(reloadTableRow) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(reloadTableRow:) withObject:homefeed waitUntilDone:YES];
 }
 
--(void)reloadTableRow{
-    NSIndexPath * path =[NSIndexPath indexPathForRow:selectedUserIdex inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.view hideLoader];
+-(void)reloadTableRow:(NSDictionary *)homefeed{
+    NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
+    
+    if (selectedIndex==3) {
+        if (homefeed) {
+            if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
+                NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+                [newDict addEntriesFromDictionary:dataDict];
+                [newDict setObject:@"1" forKey:@"follow"];
+                [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+                [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
+            }else{
+                NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+                [newDict addEntriesFromDictionary:dataDict];
+                [newDict setObject:@"0" forKey:@"follow"];
+                [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+                [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
+            }
+        }
+        
+        [self.tableView reloadRowsAtIndexPaths:@[ipForFollow] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.view hideLoader];
+        
+    }else{
+        if (homefeed) {
+            if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
+                NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+                [newDict addEntriesFromDictionary:dataDict];
+                [newDict setObject:@"1" forKey:@"follow"];
+                [followingData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+                [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
+            }else{
+                NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+                [newDict addEntriesFromDictionary:dataDict];
+                [newDict setObject:@"0" forKey:@"follow"];
+                [followingData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+                [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
+            }
+        }
+        
+        
+        [followingData removeObjectAtIndex:ipForFollow.row];
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[ipForFollow] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        [self.view hideLoader];
+    }
 }
 
 
@@ -1248,21 +1638,23 @@
 #pragma mark====================Get HomeFeed Data From Webservice=============================
 -(void)getHomeFeedData{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,_userId,homeFeedPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [homeFeedData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     
     if (firstTimePageOpen==YES) {
         [self performSelectorOnMainThread:@selector(setHomeView) withObject:nil waitUntilDone:YES];
         firstTimePageOpen=NO;
+    }else{
+         [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
     }
 }
 
 -(void)getHomeFeedDataForPaging{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,_userId,homeFeedPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_ACTIVITY,userID,homeFeedPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {
@@ -1277,8 +1669,8 @@
 #pragma mark====================Get Follower Data Data From Webservice=============================
 -(void)getFollowerData{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,_userId,followerPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,followerPage];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followerData addObjectsFromArray:[dict valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
@@ -1286,8 +1678,8 @@
 
 -(void)getFollowerDataForPaging{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,_userId,followerPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,followerPage];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[dict valueForKey:@"data"];
     if (data.count==0) {
@@ -1303,8 +1695,8 @@
 #pragma mark====================Get Follow List Data From Webservice=============================
 -(void)getFollowListData{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOW_LIST,_userId,followingPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followingPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
@@ -1313,8 +1705,8 @@
 
 -(void)getFollowListDataForPaging{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOW_LIST,_userId,followingPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followingPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {
@@ -1328,8 +1720,8 @@
 
 #pragma mark====================Get Wish Data From Webservice=============================
 -(void)getWishData{
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_WISH_TO,_userId,wishToPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_WISH_TO,userID,wishToPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [wishToData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
@@ -1337,8 +1729,8 @@
 
 -(void)getWishDataForPaging{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_WISH_TO,_userId,wishToPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_WISH_TO,userID,wishToPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {
@@ -1353,8 +1745,8 @@
 #pragma mark====================Get Visited Cities From Webservice=============================
 -(void)getVisitedCitiesData{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_VISITED_CITIES,_userId,visitedCitiesPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_VISITED_CITIES,userID,visitedCitiesPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [visitedCitiesData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
@@ -1363,8 +1755,8 @@
 
 -(void)getVisitedCitiesDataForPaging{
     
-     
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_VISITED_CITIES,_userId,visitedCitiesPage];
+    NSString * userID =_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_VISITED_CITIES,userID,visitedCitiesPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {
@@ -1437,52 +1829,66 @@
 
 #pragma mark ==== Delete===
 -(void)showAlert{
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Traweller" message:@"Do you want to delete ?" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
-    }]];
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:@"Do you want to delete ?"
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        if (selectedIndex==0) {
-            [self doDeleteOfFeed];
-        }else if(selectedIndex==1){
-            [self doDeletePlaceToVisited];
-        }else if(selectedIndex==2){
-            [self doDeleteWishedTo];
-        }
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
     
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
-    }]];
+    UIAlertAction* delete = [UIAlertAction
+                             actionWithTitle:@"Delete"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action)
+                             {
+                                 if (selectedIndex==0) {
+                                     [self doDeleteOfFeed];
+                                 }else if(selectedIndex==2){
+                                     [self doDeleteWishedTo];
+                                 }
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                             }];
     
-    [self presentViewController:actionSheet animated:YES completion:nil];
+    
+    
+    
+    [view addAction:ok];
+    [view addAction:delete];
+    view.popoverPresentationController.sourceRect = self.tableView.frame;
+    [self presentViewController: view animated:YES completion:nil];
+    
 }
 -(void)doDeleteOfFeed{
     [homeFeedData containsObject:selectedDictForDelete];
     NSInteger i =  [homeFeedData indexOfObject:selectedDictForDelete];
     [homeFeedData removeObjectAtIndex:i];
     NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
-    
-}
--(void)doDeletePlaceToVisited{
-    [visitedCitiesData containsObject:selectedDictForDelete];
-    NSInteger i =  [visitedCitiesData indexOfObject:selectedDictForDelete];
-    [visitedCitiesData removeObjectAtIndex:i];
-    NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
-    [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
+    [self performSelectorInBackground:@selector(feedDeleteWebservice) withObject:nil];
 }
 -(void)doDeleteWishedTo{
     [wishToData containsObject:selectedDictForDelete];
     NSInteger i =  [wishToData indexOfObject:selectedDictForDelete];
     [wishToData removeObjectAtIndex:i];
     NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
+}
+-(void)feedDeleteWebservice{
+    NSString * taskID =[selectedDictForDelete valueForKey:@"id"];
+    NSString * type = [selectedDictForDelete valueForKey:@"activity_type"];
+    NSString * apiURL=[NSString stringWithFormat:@"http://trasquare.com/traveller_api/checkurl.php?action=%@&userId=%@&&taskId=%@&type=%@",ACTION_FEED_DELETE,[UserData getUserID],taskID,type];
+    [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    
 }
 @end
