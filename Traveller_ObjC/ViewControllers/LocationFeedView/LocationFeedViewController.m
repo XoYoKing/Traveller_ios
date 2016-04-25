@@ -35,11 +35,11 @@
     }
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if (firstTimePageOpen==NO) {
+    
         self.navigationController.navigationBarHidden=NO;
         self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
         self.navigationController.navigationBar.barTintColor=[UIColor clearColor];
-    }
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -677,13 +677,7 @@
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
         if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
-            [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage]
-                              placeholderImage:[UIImage imageNamed:@"Placeholder"]
-                                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                         cell.postImage.clipsToBounds=YES;
-                                         cell.postImage.contentMode=UIViewContentModeScaleAspectFill;
-                                         cell.postImage.image = image;
-                                     }];
+            [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
         }
         
         
@@ -1375,10 +1369,13 @@
 }
 -(void)followWebservice{
     NSDictionary * dataDict ;
+    if (selectedIndex==3) {
+        dataDict =[followerData objectAtIndex:selectedUserIdex];
+    }else{
         dataDict =[followingData objectAtIndex:selectedUserIdex];
+    }
     
-    
-    NSString * publicId =[dataDict valueForKey:@"id"];
+    NSString * publicId =[dataDict valueForKey:@"mid"];
     NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
@@ -1386,21 +1383,22 @@
 }
 
 -(void)reloadTableRow:(NSDictionary *)homefeed{
-    NSDictionary * dataDict =[followingData objectAtIndex:selectedUserIdex];
+    
     
     if (selectedIndex==3) {
+        NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
         if (homefeed) {
             if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
                 [newDict setObject:@"1" forKey:@"follow"];
-                [followingData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+                [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
                 [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
             }else{
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
                 [newDict setObject:@"0" forKey:@"follow"];
-                [followingData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
+                [followerData replaceObjectAtIndex:selectedUserIdex withObject:newDict];
                 [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
             }
         }
@@ -1410,6 +1408,7 @@
         
     }else{
         if (homefeed) {
+            NSDictionary * dataDict =[followingData objectAtIndex:selectedUserIdex];
             if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
@@ -1425,11 +1424,7 @@
             }
         }
         
-        
-        [followingData removeObjectAtIndex:ipForFollow.row];
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[ipForFollow] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [self.tableView reloadData];
         [self.view hideLoader];
     }
 }

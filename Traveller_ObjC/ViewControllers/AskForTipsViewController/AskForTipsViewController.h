@@ -31,6 +31,7 @@
 }
 
 @property(strong,nonatomic)NSDictionary * selectedCityDict;
+@property(strong,nonatomic)NSString * forWhichMenu;
 - (IBAction)sendClick:(id)sender;
 
 

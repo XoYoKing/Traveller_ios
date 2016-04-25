@@ -798,8 +798,6 @@
         [cell.menuBtnOfPost addTarget:self action:@selector(editPost:) forControlEvents:UIControlEventTouchUpInside];
         
         
-        [cell.contentView layoutIfNeeded];
-        
         // For Paging Mechanism
         if (indexPath.row==homeFeedData.count -3) {
             if (homeFeedPageShouldDoPaging==YES) {
@@ -807,6 +805,8 @@
                 [self performSelectorInBackground:@selector(getHomeFeedDataForPaging) withObject:nil];
             }
         }
+        
+        [cell.contentView setTranslatesAutoresizingMaskIntoConstraints:YES];
         
         return cell;
         
@@ -1521,11 +1521,10 @@ NSString * str =@"Post is Shared From Traweller App.";
 #pragma mark====================Open Who commented on the Post=============================
 -(void)openCommentMenu:(UIButton*)btn{
     NSDictionary * dataDict =[homeFeedData objectAtIndex:btn.tag];
-    indexForCommentNotification=btn.tag;
+    indexForCommentNotification=(int)btn.tag;
     CommentsViewController * v =[self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
     v.activityId=[dataDict valueForKey:@"id"];
     v.postedById=[dataDict valueForKey:@"posted_by"];
-     [self setPresentationStyleForSelfController:self presentingController:v];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:v];
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -1553,9 +1552,10 @@ NSString * str =@"Post is Shared From Traweller App.";
 }
 
 -(void)reloadTableRow:(NSDictionary *)homefeed{
-    NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
+    
     
     if (selectedIndex==3) {
+        NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
         if (homefeed) {
             if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
@@ -1577,6 +1577,7 @@ NSString * str =@"Post is Shared From Traweller App.";
         
     }else{
         if (homefeed) {
+            NSDictionary * dataDict =[followingData objectAtIndex:selectedUserIdex];
             if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
@@ -1594,9 +1595,7 @@ NSString * str =@"Post is Shared From Traweller App.";
         
 
         [followingData removeObjectAtIndex:ipForFollow.row];
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[ipForFollow] withRowAnimation:UITableViewRowAnimationAutomatic];
-          [self.tableView endUpdates];
+        [self.tableView reloadData];
         [self.view hideLoader];
     }
 }
@@ -1850,7 +1849,7 @@ NSString * str =@"Post is Shared From Traweller App.";
     [homeFeedData containsObject:selectedDictForDelete];
     NSInteger i =  [homeFeedData indexOfObject:selectedDictForDelete];
     [homeFeedData removeObjectAtIndex:i];
-    NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:i inSection:0];
       [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
       [self.tableView endUpdates];
@@ -1860,7 +1859,7 @@ NSString * str =@"Post is Shared From Traweller App.";
     [wishToData containsObject:selectedDictForDelete];
     NSInteger i =  [wishToData indexOfObject:selectedDictForDelete];
     [wishToData removeObjectAtIndex:i];
-    NSIndexPath * ip =[NSIndexPath indexPathForItem:i inSection:0];
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:i inSection:0];
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView endUpdates];

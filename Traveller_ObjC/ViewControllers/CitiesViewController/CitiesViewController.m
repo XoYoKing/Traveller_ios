@@ -26,6 +26,11 @@
           [self performSelectorInBackground:@selector(getCitiesData) withObject:nil];
     }
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+     [self setUpNavigationBar];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
@@ -136,15 +141,14 @@
     }
 
 }
-
-- (void)collectionView:(UICollectionViewCell *)collectionView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary * dict =[globalArrayToShow objectAtIndex:indexPath.row];
     NSString * cityid=[dict valueForKey:@"id"];
     NSString * name=[dict valueForKey:@"city"];
     NSString * image=[dict valueForKey:@"image"];
     [self openLocationFeedView:cityid :name :image];
 }
+
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
     

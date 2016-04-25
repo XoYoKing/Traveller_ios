@@ -18,6 +18,8 @@
     _profileImageView.layer.cornerRadius=30;
     _profileImageView.clipsToBounds=YES;
     
+    _followBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

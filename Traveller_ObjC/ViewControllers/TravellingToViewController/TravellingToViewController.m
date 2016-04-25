@@ -15,7 +15,17 @@
 @end
 
 @implementation TravellingToViewController
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
 -(void)viewDidAppear:(BOOL)animated{
     if (badgeView==nil) {
         [self addNotificationView];
@@ -27,7 +37,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
+      [self setUpNavigationBar];
     self.title=@"Travelling To";
     citiesArray=[NSMutableArray new];
     citiesPage=1;
@@ -133,15 +145,14 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionViewCell *)collectionView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary * dict =[globalArrayToShow objectAtIndex:indexPath.row];
     NSString * cityid=[dict valueForKey:@"id"];
     NSString * name=[dict valueForKey:@"city"];
     NSString * image=[dict valueForKey:@"image"];
     [self openLocationFeedView:cityid :name :image];
-
 }
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -182,13 +193,17 @@
 
 
 -(void)openPostForm:(UIButton *)btn{
-    InviteToJoinViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"InviteToJoinViewController"];
+    AskForTipsViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"AskForTipsViewController"];
     vc.selectedCityDict=[globalArrayToShow objectAtIndex:btn.tag];
+    vc.forWhichMenu=@"InviteToJoin";
+    vc.title=@"Invite To Join";
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)openWishedToForm:(UIButton *)btn{
     AskForTipsViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"AskForTipsViewController"];
     vc.selectedCityDict=[globalArrayToShow objectAtIndex:btn.tag];
+    vc.forWhichMenu=@"AskForTip";
+    vc.title=@"Ask For Tips";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

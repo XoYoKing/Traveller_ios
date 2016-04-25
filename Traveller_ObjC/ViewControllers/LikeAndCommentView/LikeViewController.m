@@ -15,10 +15,49 @@
 
 @implementation LikeViewController
 
-- (IBAction)dismicclick:(id)sender
+- (IBAction)dismisclick:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:Nil];
 }
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
+
+
+-(void)setUpNavigationBar{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    self.navigationController.navigationBarHidden=NO;
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+    
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    btnClose.tintColor=back_btn_Color;
+    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_CROSS] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(dismisclick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+    self.navigationItem.leftBarButtonItem = leftbarButton;
+}
+
+
 
 -(void)getWholeLikeData{
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&activity_id=%@&page=%d",URL_CONST,ACTION_GET_LIKE_DETAILS,[UserData getUserID],_activityId,likePage];
@@ -44,7 +83,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden=YES;
+    self.navigationController.navigationBarHidden=NO;
+    [self setUpNavigationBar];
+    self.title=@"Likes";
     likePage=1;
     // Do any additional setup after loading the view.
     [self setupView];
@@ -115,15 +156,16 @@
               [ cell.followBtn removeTarget:self action:@selector(likeBtn:) forControlEvents:UIControlEventTouchUpInside];
         [ cell.followBtn addTarget:self action:@selector(followBtn:)  forControlEvents:UIControlEventTouchUpInside];
 
-        if ( [[dict valueForKey:@"follow"]intValue]==1){
-            [cell.followBtn setTitle:@"Following" forState:UIControlStateNormal] ;
-            cell.followBtn.backgroundColor=userShouldDOButoonColor;
+        
+        
+        if ([[dict valueForKey:@"follow"]integerValue]==1) {
+            [cell.followBtn setTitle:@" Following " forState:UIControlStateNormal];
+            cell.followBtn.backgroundColor=Uncheck_Color;
+        }else{
+            [cell.followBtn setTitle:@" Follow " forState:UIControlStateNormal];
+            cell.followBtn.backgroundColor=Check_Color;
         }
-       else{
-           [cell.followBtn setTitle:@"Follow" forState:UIControlStateNormal] ;
-           cell.followBtn.backgroundColor=userShouldDOButoonColor;
-         }
-         }
+    }
     
     //Checked for post Image
     NSString * urlStringForImage =[dict valueForKey:@"image"];

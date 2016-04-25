@@ -666,14 +666,9 @@
         
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
-        if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
-            [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage]
-                              placeholderImage:[UIImage imageNamed:@"Placeholder"]
-                                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                         cell.postImage.clipsToBounds=YES;
-                                         cell.postImage.contentMode=UIViewContentModeScaleAspectFill;
-                                         cell.postImage.image = image;
-                                     }];
+        NSURL * url =[NSURL URLWithString:urlStringForPostImage] ;
+        if (![url isKindOfClass:[NSNull class]]) {
+                  [cell.postImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Placeholder"]];
         }
         
         
@@ -1116,7 +1111,7 @@
         if (j==selectedIndex) {
             button.backgroundColor=segment_selected_Color ;
             [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1125,7 +1120,7 @@
             }
         }else {
             button.backgroundColor=segment_disselected_Color;
-            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
+            [button addLayerAndCornerRadius:0 AndWidth:0 AndColor:segment_disselected_Color];;
             [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1161,7 +1156,7 @@
         if (i==selectedIndex) {
             button.backgroundColor=segment_selected_Color ;
             [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1170,7 +1165,7 @@
             }
         }else {
             button.backgroundColor=segment_disselected_Color;
-            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:0 AndColor:segment_disselected_Color];
             [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1552,9 +1547,10 @@
 }
 
 -(void)reloadTableRow:(NSDictionary *)homefeed{
-    NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
+    
     
     if (selectedIndex==3) {
+        NSDictionary * dataDict =[followerData objectAtIndex:selectedUserIdex];
         if (homefeed) {
             if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
@@ -1576,6 +1572,7 @@
         
     }else{
         if (homefeed) {
+            NSDictionary * dataDict =[followingData objectAtIndex:selectedUserIdex];
             if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
@@ -1590,15 +1587,11 @@
                 [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
             }
         }
-        
-        
-        [followingData removeObjectAtIndex:ipForFollow.row];
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[ipForFollow] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [self.tableView reloadData];
         [self.view hideLoader];
     }
 }
+
 #pragma mark====================For Presenting Like/Comment Menu Proper=============================
 - (void)setPresentationStyleForSelfController:(UIViewController *)selfController presentingController:(UIViewController *)presentingController
 {

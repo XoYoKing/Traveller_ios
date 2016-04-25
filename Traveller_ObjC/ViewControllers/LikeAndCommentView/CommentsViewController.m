@@ -17,10 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden=YES;
+    self.title=@"Comments";
     // Do any additional setup after loading the view.
     [self setupView];
-    
+    [self setUpNavigationBar];
     commentPage=1;
     // Do any additional setup after loading the view.
     [self setupView];
@@ -48,8 +48,36 @@
 -(void)handleSingleTap{
     [self.view endEditing:YES];
 }
+
+-(void)setUpNavigationBar{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
+                                                                           fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    self.navigationController.navigationBarHidden=NO;
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+    
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    btnClose.tintColor=back_btn_Color;
+    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_CROSS] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(dismissClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+    self.navigationItem.leftBarButtonItem = leftbarButton;
+}
+
+
+
 -(void)viewWillAppear:(BOOL)animated{
-    // to scroll tableview at bottom
+
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+    
     if (commentTableView.contentSize.height > commentTableView.frame.size.height)
     {
         CGPoint offset = CGPointMake(0, commentTableView.contentSize.height -     commentTableView.frame.size.height);
@@ -58,6 +86,12 @@
     
     [self.view showLoader];
     [self performSelectorInBackground:@selector(getWholeLikeData) withObject:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -99,31 +133,16 @@
 
 -(void)setupView{
   commentTableView.tableFooterView=[UIView new];
-    closeButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:25];
-    [closeButton setTitle:[NSString stringWithUTF8String:ICOMOON_CROSS] forState:UIControlStateNormal];
-    closeButton.layer.cornerRadius=20;
-    closeButton.backgroundColor=[UIColor whiteColor];
-    [self addShaddowToView:closeButton];
-    [bgView layoutIfNeeded];
-    [self performSelector:@selector(addShadowTobackground) withObject:nil afterDelay:1];
-   
 }
 #pragma mark - load bottom message sending view
 - (void)loadView1{
     
     [self.view layoutIfNeeded];
     
-    CGPoint windowPoint = [commentTableView convertPoint:commentTableView.bounds.origin toView:self.view.window];
-    
-    CGRect Frame ;
-    
-    if (iPhone6||iPhone6plus||iPAD) {
-        Frame = CGRectMake(commentTableView.frame.origin.x, windowPoint.y+15, commentTableView.frame.size.width, commentTableView.frame.size.height) ;
-    }else{
-        Frame = CGRectMake(commentTableView.frame.origin.x, windowPoint.y, commentTableView.frame.size.width, commentTableView.frame.size.height) ;
-    }
 
-    containerView = [[UIView alloc] initWithFrame:CGRectMake(20, Frame.size.height+80, commentTableView.frame.size.width, 50)];
+    
+
+    containerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-60, self.view.frame.size.width, 60) ];
     containerView.backgroundColor=[UIColor whiteColor];
     containerView.layer.borderWidth=1;
     messageInputView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, containerView.frame.size.width-60, 44)];
@@ -157,7 +176,8 @@
     [containerView addSubview:messageInputView];
     
     UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 8, 63, 27);
+    doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 8, 63, 35);
+    [doneBtn addBlackLayerAndCornerRadius:5 AndWidth:1];
     doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
     doneBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     doneBtn.tintColor=userShouldDOButoonColor;
@@ -383,6 +403,7 @@
 
 - (IBAction)dismissClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+ //   [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)openUserProfile{
     ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];

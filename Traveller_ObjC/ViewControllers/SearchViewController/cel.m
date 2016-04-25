@@ -7,7 +7,7 @@
 //
 
 #import "SearchViewController.h"
-
+#import "ViewProfileController.h"
 @interface SearchViewController ()
 
 @end
@@ -22,6 +22,19 @@ if (citiesArray.count==0||citiesArray==nil) {
     [self performSelectorInBackground:@selector(getCitiesData) withObject:nil];
 }
 }
+
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
@@ -53,6 +66,7 @@ if (citiesArray.count==0||citiesArray==nil) {
     
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
@@ -93,7 +107,7 @@ if (citiesArray.count==0||citiesArray==nil) {
 {
     SearchCollectionViewCell *cell=[searchCollectionView dequeueReusableCellWithReuseIdentifier:@"SearchCollectionViewCell" forIndexPath:indexPath];
     cell.contentView.frame = [cell bounds];
-    NSDictionary * dataDict =[citiesArray objectAtIndex:indexPath.row];
+    NSDictionary * dataDict =[globalArrayToShow objectAtIndex:indexPath.row];
 
     NSString * city =[dataDict valueForKey:@"city"];
     NSString * country =[dataDict valueForKey:@"country"];
@@ -134,7 +148,7 @@ if (citiesArray.count==0||citiesArray==nil) {
     cell.imageView.clipsToBounds=YES;
     
    cell.followLogoLbl.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    if ([[dataDict valueForKey:@"follow" ] intValue] == 1){
+    if ([[dataDict valueForKey:@"follow" ] intValue] == 0){
         cell.followNameLbl.text=@"Follow";
         cell.followLogoLbl.text=   [NSString stringWithUTF8String:ICOMOON_USER_ICONPlus];
         cell.followNameLbl.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -189,6 +203,15 @@ if (citiesArray.count==0||citiesArray==nil) {
         }
     }
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary * dict =[globalArrayToShow objectAtIndex:indexPath.row];
+    NSString * uid=[dict valueForKey:@"id"];
+    NSString * name=[dict valueForKey:@"name"];
+    NSString * image =[dict valueForKey:@"image"];
+    [self openUserProfile:uid :name :image];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
     
     //1. Setup the CATransform3D structure
@@ -326,7 +349,17 @@ if (citiesArray.count==0||citiesArray==nil) {
     textField.text=@"";
     return YES;
 }
-
+#pragma mark====================Open User Profile=============================
+-(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
+    if (![userId isEqualToString:[UserData getUserID]]&& userId!=nil) {
+        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+        vc.userId=userId;
+        vc.name=userName;
+        vc.imageUrl=urlStringForProfileImage;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+}
 - (IBAction)searchClick:(id)sender {
     if ([searchTF.text isEqualToString:@""]) {
         [self.view makeToast:@"Please add some text in search textfield" duration:toastDuration position:toastPositionBottomUp];

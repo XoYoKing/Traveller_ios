@@ -7,7 +7,7 @@
 //
 
 #import "AskForTipsViewController.h"
-
+#import "ViewProfileController.h"
 @interface AskForTipsViewController ()
 
 @end
@@ -22,7 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
-    self.title=@"Ask For Tips";
     citiesArray=[NSMutableArray new];
     citiesPage=1;
     citiesPagingBoolean=YES;
@@ -49,10 +48,15 @@
     
     [sendButton setTitle:@"Send" forState:UIControlStateNormal];
     sendButton.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
-    [sendButton setBackgroundColor:userShouldDOButoonColor];
+    [sendButton setBackgroundColor:segment_disselected_Color];
+    [sendButton addBlackLayerAndCornerRadius:3 AndWidth:1];
     
-    [textView addBlackLayerAndCornerRadius:3 AndWidth:1];
     textView.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+    textView.text = @"This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
+    textView.textColor = [UIColor lightGrayColor];
+    textView.layer.borderWidth=1;
+    textView.layer.cornerRadius=5;
+    textView.layer.borderColor=[UIColor lightGrayColor].CGColor;
     
     searchBackView.hidden=YES;
     searchBtn.hidden=YES;
@@ -60,6 +64,28 @@
     wishToTableView.hidden=YES;
     
 }
+
+# pragma mark  UITextView Delegates
+- (void)textViewDidBeginEditing:(UITextView *)textView1
+{
+    if ([textView.text isEqualToString:@"This place is known for ? How to get it ? Things to do ? Famous things ? etc. "]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
+}
+
+
+- (void)textViewDidEndEditing:(UITextView *)textView1
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
+        textView.textColor = [UIColor lightGrayColor];
+    }
+    [textView resignFirstResponder];
+}
+
+
 -(void)setUpNavigationBar{
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont
                                                                            fontWithName:font_bold size:font_size_normal_regular], NSFontAttributeName,
@@ -168,8 +194,22 @@
     
     cell.followButton.tag=indexPath.row;
     [cell.followButton addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
+        [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        cell.followButton.backgroundColor=Uncheck_Color;
+    }else{
+        [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        cell.followButton.backgroundColor=Check_Color;
+    }
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
 
 -(void)addShaddowToView:(UIView *)view{
     view.layer.shadowOffset = CGSizeMake(2, 2);
@@ -317,13 +357,18 @@
 }
 
 -(void)setupViewAndCallInvitationView{
-    textView.hidden=YES;
-    sendButton.hidden=YES;
-    textViewHeight.constant=0;
-    searchViewaboveConstraint.constant=-50;
-    [self.view layoutIfNeeded];
-    [self performSelector:@selector(callMethodLate) withObject:nil afterDelay:2];
-}
+    
+    if ([_forWhichMenu isEqualToString:@"AskForTips"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        textView.hidden=YES;
+        sendButton.hidden=YES;
+        textViewHeight.constant=0;
+        searchViewaboveConstraint.constant=-50;
+        [self.view layoutIfNeeded];
+        [self performSelector:@selector(callMethodLate) withObject:nil afterDelay:2];
+    }
+   }
 -(void)callMethodLate{
      [self performSelectorInBackground:@selector(getCitiesData) withObject:nil];
 }
@@ -376,4 +421,16 @@
         [wishToTableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.view hideLoader];
         }
+
+#pragma mark====================Open User Profile=============================
+-(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
+    if (![userId isEqualToString:[UserData getUserID]]) {
+        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+        vc.userId=userId;
+        vc.name=userName;
+        vc.imageUrl=urlStringForProfileImage;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 @end
