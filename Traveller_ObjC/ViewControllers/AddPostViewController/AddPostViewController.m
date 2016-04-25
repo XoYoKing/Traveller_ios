@@ -107,24 +107,26 @@
         scrollWidth= scrollWidth+strikeWidth+10;
         
         if (j==selectedIndex) {
-            button.backgroundColor= Check_Color;
-            [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
-            [button addShaddow];
-            if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
-            }else {
-                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
-            }
-        }else {
-            button.backgroundColor= [UIColor blackColor];
-            //[self removeShaddowToView:button];
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
-            if (iPhone6||iPhone6plus) {
-                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
-            }else{
-                button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
-            }
-        }
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
+                    button.backgroundColor=segment_selected_Color ;
+                    [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
+                    [button addShaddow];
+                    if (iPhone6||iPhone6plus) {
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }else {
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }
+                }else {
+                    button.backgroundColor=segment_disselected_Color;
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
+                    [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
+                    if (iPhone6||iPhone6plus) {
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }else{
+                        button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
+                    }
+                }
+
         
         [buttonArray addObject:button];
         [myScrollView addSubview:button];
@@ -149,8 +151,9 @@
     {
         UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
         if (i==selectedIndex) {
-            button.backgroundColor= Check_Color;
-            [button addWhiteLayerAndCornerRadius:2 AndWidth:1];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
+            button.backgroundColor=segment_selected_Color ;
+            [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -158,9 +161,9 @@
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }
         }else {
-            button.backgroundColor= [UIColor blackColor];
-            //[self removeShaddowToView:button];
-            button.layer.borderColor=[UIColor whiteColor].CGColor;
+            button.backgroundColor=segment_disselected_Color;
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
+            [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
             }else{
@@ -168,7 +171,7 @@
             }
         }
     }
-    
+
     CGRect frame1 = myScrollView.frame;
     UIButton * bt=(UIButton*)[buttonArray objectAtIndex:index];
     frame1 =bt.frame ;
@@ -249,8 +252,8 @@
     btnGallery.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
 
     
-    btnCamera.backgroundColor=userShouldDOButoonColor;
-    btnGallery.backgroundColor=userShouldNOTDOButoonColor;
+    btnCamera.backgroundColor=segment_disselected_Color;
+    btnGallery.backgroundColor=segment_disselected_Color;
     [btnCamera addShaddow];
     [btnGallery addShaddow];
 
@@ -270,12 +273,11 @@
     logo4.text=[NSString stringWithUTF8String:ICOMOON_EDIT1];
     
     descriptionTextView.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
-    [descriptionTextView addBlackLayerAndCornerRadius:3 AndWidth:1];
-    [descriptionTextView addShaddow];
-    
-    descriptionTextView.text = @"  This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
+    descriptionTextView.text = @"This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
     descriptionTextView.textColor = [UIColor lightGrayColor];
-
+    descriptionTextView.layer.borderWidth=1;
+    descriptionTextView.layer.cornerRadius=5;
+    descriptionTextView.layer.borderColor=[UIColor lightGrayColor].CGColor;
 
 }
 -(void)setUpNavigationBar{
@@ -299,10 +301,19 @@
     self.navigationItem.leftBarButtonItem = leftbarButton;
     
     UIButton *btnSend = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btnSend setFrame:CGRectMake(0, 0, 30, 30)];
-    btnSend.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
-    btnSend.tintColor=Check_Color;
-    [btnSend setTitle:[NSString stringWithUTF8String:ICOMOON_CHECK_CIRCLE]  forState:UIControlStateNormal];
+    [btnSend setFrame:CGRectMake(0, 0, 50, 30)];
+    btnSend.backgroundColor=segment_disselected_Color;
+    [btnSend addWhiteLayerAndCornerRadius:3 AndWidth:1];
+    btnSend.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    btnSend.tintColor=[UIColor whiteColor];
+    
+     if (_EditPostDirectory) {
+          [btnSend setTitle:@"Update" forState:UIControlStateNormal];
+     }else{
+          [btnSend setTitle:@"Post" forState:UIControlStateNormal];
+     }
+    
+   
     [btnSend addTarget:self action:@selector(savePost) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sendBarBtn = [[UIBarButtonItem alloc] initWithCustomView:btnSend];
 
@@ -411,7 +422,7 @@
 # pragma mark  UITextView Delegates
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-            if ([textView.text isEqualToString:@"  This place is known for ? How to get it ? Things to do ? Famous things ? etc. "]) {
+            if ([textView.text isEqualToString:@"This place is known for ? How to get it ? Things to do ? Famous things ? etc. "]) {
                 textView.text = @"";
                 textView.textColor = [UIColor blackColor]; //optional
             }
@@ -429,7 +440,7 @@
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
              if ([textView.text isEqualToString:@""]) {
-                textView.text = @"  This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
+                textView.text = @"This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
                 textView.textColor = [UIColor lightGrayColor];
             }
             [textView resignFirstResponder];

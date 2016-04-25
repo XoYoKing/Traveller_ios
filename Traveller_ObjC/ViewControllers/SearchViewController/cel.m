@@ -130,6 +130,8 @@ if (citiesArray.count==0||citiesArray==nil) {
         NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
         [cell.imageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
     }
+    cell.imageView.layer.cornerRadius=30;
+    cell.imageView.clipsToBounds=YES;
     
    cell.followLogoLbl.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
     if ([[dataDict valueForKey:@"follow" ] intValue] == 1){

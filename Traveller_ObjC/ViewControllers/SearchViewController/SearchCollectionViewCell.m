@@ -11,13 +11,16 @@
 
 @implementation SearchCollectionViewCell
 -(void)awakeFromNib{
-    _imageView.clipsToBounds=NO;
+
     [_imageView layoutIfNeeded];
     _bgView.layer.borderColor=[UIColor whiteColor].CGColor;
     _bgView.layer.borderWidth=0;
     _bgView.layer.cornerRadius=0;
     [self addShaddowToView: _bgView ];
     
+    
+    _imageView.layer.cornerRadius=30;
+        _imageView.clipsToBounds=NO;
     _followLogoLbl.font=[UIFont fontWithName:fontIcomoon size:22];
     _followLogoLbl.textColor=[UIColor whiteColor];
     _followLogoLbl.text =[NSString stringWithUTF8String:ICOMOON_USER_ICONPlus];

@@ -155,7 +155,7 @@ The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="PlaceHolder" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="PlaceHolder" translatesAutoresizingMaskIntoConstraints="NO" id="Ln7-UO-2dS">
                                 <rect key="frame" x="0.0" y="136" width="503" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="d74-ie-qne">

@@ -643,16 +643,7 @@
         //Checked for post Image
         NSString * urlStringForPostImage =[[[dataDict valueForKey:@"image"]lastObject]valueForKey:@"image"];
         if (![urlStringForPostImage isKindOfClass:[NSNull class]]) {
-            [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage]
-                           placeholderImage:[UIImage imageNamed:@"Placeholder"]
-                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                      cell.postImage.clipsToBounds=YES;
-                                      cell.postImage.contentMode=UIViewContentModeScaleAspectFill;
-                                      cell.postImage.image = image;
-                                  }];
-            NSURL * profileUrl =[NSURL URLWithString:urlStringForProfileImage];
-            [cell.profileImage sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
-
+            [cell.postImage sd_setImageWithURL:[NSURL URLWithString: urlStringForPostImage] placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
         }
         
         
@@ -1059,7 +1050,7 @@
                 if (j==selectedIndex) {
                     button.backgroundColor=segment_selected_Color ;
                     [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-                    [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     [button addShaddow];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1067,8 +1058,8 @@
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
                     }
                 }else {
+                         [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     button.backgroundColor=segment_disselected_Color;
-                    [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
                     [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1102,9 +1093,9 @@
             {
                 UIButton * button =(UIButton*)[buttonArray objectAtIndex:i];
                 if (i==selectedIndex) {
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     button.backgroundColor=segment_selected_Color ;
                     [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-                    [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
                     [button addShaddow];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1113,7 +1104,7 @@
                     }
                 }else {
                     button.backgroundColor=segment_disselected_Color;
-                     [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+                     [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];

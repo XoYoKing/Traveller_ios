@@ -59,6 +59,7 @@
     
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
