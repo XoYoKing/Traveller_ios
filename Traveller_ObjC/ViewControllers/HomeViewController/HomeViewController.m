@@ -342,9 +342,9 @@
     constraint.priority = 801;
     [self.view addConstraint: constraint];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self fillBlurredImageCache];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self fillBlurredImageCache];
+//    });
 
     [self.tableView reloadData];
     self.tableView.backgroundColor=[UIColor whiteColor];
@@ -415,11 +415,11 @@
     if(yPos > _headerSwitchOffset +20 && yPos <= _headerSwitchOffset +20 +40){
         CGFloat delta = (40 +20 - (yPos-_headerSwitchOffset));
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:delta forBarMetrics:UIBarMetricsDefault];
-        self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
+      //  self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
     }
     if(!_barAnimationComplete && yPos > _headerSwitchOffset +20 +40) {
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:0 forBarMetrics:UIBarMetricsDefault];
-        self.imageHeaderView.image = [self blurWithImageAt:1.0];
+       // self.imageHeaderView.image = [self blurWithImageAt:1.0];
         _barAnimationComplete = true;
     }
 }

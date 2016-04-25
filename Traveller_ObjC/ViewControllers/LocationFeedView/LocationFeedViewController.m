@@ -32,9 +32,6 @@
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
-        if ([UserData getNotificationDict].count==0) {
-            [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
-        }
     }
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -344,9 +341,9 @@
     constraint.priority = 801;
     [self.view addConstraint: constraint];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self fillBlurredImageCache];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self fillBlurredImageCache];
+//    });
     
     [self.tableView reloadData];
     self.tableView.backgroundColor=[UIColor whiteColor];
@@ -417,11 +414,11 @@
     if(yPos > _headerSwitchOffset +20 && yPos <= _headerSwitchOffset +20 +40){
         CGFloat delta = (40 +20 - (yPos-_headerSwitchOffset));
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:delta forBarMetrics:UIBarMetricsDefault];
-        self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
+       // self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
     }
     if(!_barAnimationComplete && yPos > _headerSwitchOffset +20 +40) {
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:0 forBarMetrics:UIBarMetricsDefault];
-        self.imageHeaderView.image = [self blurWithImageAt:1.0];
+        //self.imageHeaderView.image = [self blurWithImageAt:1.0];
         _barAnimationComplete = true;
     }
 }
@@ -954,7 +951,7 @@
         if (j==selectedIndex) {
             button.backgroundColor=segment_selected_Color ;
             [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -963,7 +960,7 @@
             }
         }else {
             button.backgroundColor=segment_disselected_Color;
-            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
+            [button addLayerAndCornerRadius:0 AndWidth:0 AndColor:segment_disselected_Color];;
             [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -999,7 +996,7 @@
         if (i==selectedIndex) {
             button.backgroundColor=segment_selected_Color ;
             [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1008,7 +1005,7 @@
             }
         }else {
             button.backgroundColor=segment_disselected_Color;
-            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:0 AndColor:segment_disselected_Color];
             [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1603,40 +1600,6 @@
     
     // Present the view controller.
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
-    
-}
-
-#pragma mark====================getAllNotifications  =============================
-
--(void)getAllNotifications{
-    NSString * userID =[UserData getUserID];
-    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@",URL_CONST,ACTION_GET_NOTIFICATION,userID];
-    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
-    if (dict!=nil) {
-        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-        if ( [status isEqual: SUCESS]) {
-            int totalCount =[[dict valueForKey:@"tip_count"]intValue];
-            [UserData setNotificationCount:totalCount];
-            
-            NSArray * invitation =[[NSArray alloc]initWithArray:[dict valueForKey:@"invitation"]];
-            NSArray * ask_for_tip =[[NSArray alloc]initWithArray:[dict valueForKey:@"ask_for_tip"]];
-            NSArray * follow =[[NSArray alloc]initWithArray:[dict valueForKey:@"follow"]];
-            NSArray * message =[[NSArray alloc]initWithArray:[dict valueForKey:@"message"]];
-            
-            NSDictionary * dict =@{
-                                   @"invitation":invitation,
-                                   @"ask_for_tip":ask_for_tip,
-                                   @"follow":follow,
-                                   @"message":message
-                                   };
-            [UserData setNotificationDict:dict];
-            
-            NSDictionary * not_Dict=@{@"tip_count":[NSString stringWithFormat:@"%d",totalCount]};
-            [[NSNotificationCenter defaultCenter] postNotificationName:throwNotificationStatus object:not_Dict];
-        }
-    }else{
-        
-    }
     
 }
 
