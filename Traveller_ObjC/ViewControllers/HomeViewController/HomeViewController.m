@@ -672,12 +672,14 @@
         if (refertitle!=nil) {
             userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
             cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            userID =[dataDict valueForKey:@"posted_by"];
             locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
             imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
         }
         
         //mainstr have title and Also Links Managed.
+        
+         [cell.mainTitle clearActionDictionary];
         NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
         
         mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
@@ -718,6 +720,7 @@
               [substringArr addObject:@"to shopping 👗 "];
               [substringArr addObject:@"to stay 🏠 "];
             [substringArr addObject:@"travelling to ✈️ "];
+           
             [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
         }
 
@@ -954,8 +957,10 @@
         }
         if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
             [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Uncheck_Color;
         }else{
-               [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Check_Color;
         }
 
         
@@ -1011,15 +1016,78 @@
         
         if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
             [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Uncheck_Color;
         }else{
             [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Check_Color;
         }
         
         return cell;
     }
     return cell;
 }
+
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation" context:NULL];
+    [UIView setAnimationDuration:0.8];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
+    
+}
+
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(selectedIndex==3){
+        NSDictionary * dict =[followerData objectAtIndex:indexPath.row];
+        NSString * uid=[dict valueForKey:@"mid"];
+        NSString * name=[dict valueForKey:@"name"];
+        NSString * imageUrl =[dict valueForKey:@"image"];
+        [self openUserProfile:uid :name :imageUrl];
+    }
+    if (selectedIndex==4) {
+        NSDictionary * dict =[followingData objectAtIndex:indexPath.row];
+        NSString * uid=[dict valueForKey:@"mid"];
+        NSString * name=[dict valueForKey:@"name"];
+        NSString * imageUrl =[dict valueForKey:@"image"];
+        [self openUserProfile:uid :name :imageUrl];
+
+    }
+    if (selectedIndex==2) {
+        NSDictionary * dict =[wishToData objectAtIndex:indexPath.row];
+        NSString * cityid=[dict valueForKey:@"id"];
+        NSString * name=[dict valueForKey:@"city"];
+        NSString * image=[dict valueForKey:@"image"];
+        [self openLocationFeedView:cityid :name :image];
+    }
+    if (selectedIndex==1) {
+        NSDictionary * dict =[visitedCitiesData objectAtIndex:indexPath.row];
+        NSString * cityid=[dict valueForKey:@"id"];
+        NSString * name=[dict valueForKey:@"city"];
+        NSString * image=[dict valueForKey:@"image"];
+        [self openLocationFeedView:cityid :name :image];
+    }
    }
 
 #pragma mark====================Set up Segment here===============================
@@ -1059,7 +1127,7 @@
                 if (j==selectedIndex) {
                     button.backgroundColor=segment_selected_Color ;
                     [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-                    [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     [button addShaddow];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1068,7 +1136,7 @@
                     }
                 }else {
                     button.backgroundColor=segment_disselected_Color;
-                    [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];;
                     [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1104,7 +1172,7 @@
                 if (i==selectedIndex) {
                     button.backgroundColor=segment_selected_Color ;
                     [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-                    [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+                    [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     [button addShaddow];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1113,7 +1181,7 @@
                     }
                 }else {
                     button.backgroundColor=segment_disselected_Color;
-                     [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+                     [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
                     [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
                     if (iPhone6||iPhone6plus) {
                         button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1212,21 +1280,15 @@
             break;
 //=====================4st click ====================
         case 3:
-            if (followerData.count==0) {
+               followerData=[NSMutableArray new];
                 [self performSelectorInBackground:@selector(getFollowerData) withObject:nil];
-            }else{
-                [self.view hideLoader];
-                [self reloadTable];
-            }
+          
             break;
 //=====================5st click ====================
         case 4:
-            if (followingData.count==0) {
+               followingData=[NSMutableArray new];
                 [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
-            }else{
-                [self.view hideLoader];
-                [self reloadTable];
-            }
+           
             break;
         default:
             break;
@@ -1361,12 +1423,13 @@ NSString * str =@"Post is Shared From Traweller App.";
 
 #pragma mark====================Open User Profile=============================
 -(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
-
+    if (![userId isEqualToString:[UserData getUserID]]) {
         ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
         vc.userId=userId;
         vc.name=userName;
         vc.imageUrl=urlStringForProfileImage;
         [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark====================Open Location Feeds=============================
@@ -1596,6 +1659,7 @@ NSString * str =@"Post is Shared From Traweller App.";
     
     NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,followerPage];
+    followerPage=1;
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followerData addObjectsFromArray:[dict valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
@@ -1622,6 +1686,7 @@ NSString * str =@"Post is Shared From Traweller App.";
     
     NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followingPage];
+    followingPage=1;
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
     [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];

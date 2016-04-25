@@ -576,23 +576,23 @@
     
     if (selectedIndex==0) {
         if(homeFeedData.count==0){
-            [self.view makeToast:@"No Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Place Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==1) {
         if( visitedCitiesData.count==0){
-            [self.view makeToast:@"None of city you had visited." duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Food Feeds Available Now." duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==2) {
         if(wishToData.count==0){
-            [self.view makeToast:@"No cities is found in your wishlist destinations" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Accomodation Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==3) {
         if( followerData.count==0){
-            [self.view makeToast:@"No one is following you" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Shopping Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==4) {
         if(followingData.count==0){
-            [self.view makeToast:@" You dont follow anyone" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@" No one visited this place." duration:toastDuration position:toastPositionBottomUp];
         }
     }
     
@@ -612,6 +612,33 @@
         return followingData.count;
     }else
         return 0;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation" context:NULL];
+    [UIView setAnimationDuration:0.8];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -679,7 +706,7 @@
         if (refertitle!=nil) {
             userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
             cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            userID =[dataDict valueForKey:@"posted_by"];
             locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
             imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
         }
@@ -724,6 +751,7 @@
             [substringArr addObject:@"to shopping 👗 "];
             [substringArr addObject:@"to stay 🏠 "];
             [substringArr addObject:@"travelling to ✈️ "];
+            [cell.mainTitle clearActionDictionary];
             [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
         }
         
@@ -868,98 +896,31 @@
         
         if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
             [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Uncheck_Color;
         }else{
             [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Check_Color;
         }
         
         return cell;
     }
     return cell;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (selectedIndex==1){
-        
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        NSString *cityName;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-            [self openLocationFeedView:locId :cityName :imageUrl];
-        }
-        
-        
-    }else if (selectedIndex==2){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-            [self openLocationFeedView:locId :cityName :imageUrl];
-        }
-        
-        
-    }else if (selectedIndex==3){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        
-        //Checked for User Image
-        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-        [self openUserProfile:userID :userName: urlStringForProfileImage];
-        
-    }else if (selectedIndex==4){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        //Checked for User Image
-        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-        [self openUserProfile:userID :userName: urlStringForProfileImage];
+    if (selectedIndex==4) {
+        NSDictionary * dict =[followingData objectAtIndex:indexPath.row];
+        NSString * uid=[dict valueForKey:@"mid"];
+        NSString * name=[dict valueForKey:@"name"];
+        NSString * imageUrl =[dict valueForKey:@"image"];
+        [self openUserProfile:uid :name :imageUrl];
     }
 }
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    NSArray * namesOfMenus =@[@"Feeds",@"Places Visited",@"Wish To",@"Followers",@"Following"];
+    NSArray * namesOfMenus =@[@"Place Feeds",@"Eat",@"Stay",@"Shopping",@"Visited By"];
     
     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;
@@ -1155,12 +1116,8 @@
             break;
             //=====================5st click ====================
         case 4:
-            if (followingData.count==0) {
+              followingData=[NSMutableArray new];
                 [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
-            }else{
-                [self.view hideLoader];
-                [self reloadTable];
-            }
             break;
         default:
             break;

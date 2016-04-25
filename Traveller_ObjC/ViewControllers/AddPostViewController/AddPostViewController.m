@@ -503,6 +503,56 @@
         }
     }];
 }
+
+- (void)updatePost {
+    
+    NSString * selectedActivityType=@"";
+    
+    switch (selectedIndex) {
+        case 0:
+            selectedActivityType=@"1";
+            break;
+        case 1:
+            selectedActivityType=@"2";
+            break;
+        case 2:
+            selectedActivityType=@"3";
+            break;
+        case 3:
+            selectedActivityType=@"6";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSDictionary *parameters = @{
+                                 @"action": ACTION_EDIT_POST,
+                                 @"userId": [UserData getUserID],
+                                 @"activityId":[_EditPostDirectory valueForKey:@"id"],
+                                 @"cityId": [_selectedCityDict valueForKey:@"id"],
+                                 @"title": _txtPlaceSearch.text,
+                                 @"description": descriptionTextView.text,
+                                 @"activity_type": selectedActivityType
+                                 };
+    [[WebHandler sharedHandler]uploadDataWithImage:postImageView.image forKey:@"file1" andParameters:parameters OnUrl:URL_CONST completion:^(NSDictionary * responceDict) {
+        if (responceDict) {
+            int status =[[responceDict valueForKey:@"status"] intValue];
+            if (status == 1) {
+                [self.view hideLoader];
+                [self.view makeToast:@"Post successfully Posted" duration:toastDuration position:toastPositionBottomUp];
+                [self performSelector:@selector(backToCities) withObject:nil afterDelay:2];
+            }else{
+                [self.view hideLoader];
+                [self.view makeToast:[responceDict valueForKey:@"message"] duration:toastDuration position:toastPositionBottomUp];
+            }
+        }else{
+            [self.view hideLoader];
+            [self.view makeToast:no_internet_message duration:toastDuration position:toastPositionBottomUp];
+        }
+    }];
+}
+
 -(void)backToCities{
     [self.navigationController popViewControllerAnimated:YES];
 }
