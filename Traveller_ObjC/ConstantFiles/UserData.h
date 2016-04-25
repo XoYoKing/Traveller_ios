@@ -68,5 +68,7 @@
 
 +(void )setIntroShown;
 
++(void )setImageUrl:(NSString *)url;
+
 +(void ) setLogOutStatus;
 @end

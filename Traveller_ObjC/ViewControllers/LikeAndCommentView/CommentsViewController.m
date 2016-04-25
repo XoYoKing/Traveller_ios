@@ -235,6 +235,33 @@
     self.view.frame = containerFrame;
     [UIView commitAnimations];
 }
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation" context:NULL];
+    [UIView setAnimationDuration:0.8];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
+    
+}
 
 -(void) keyboardWillHide:(NSNotification *)note{
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -299,6 +326,7 @@
     NSDictionary * dataDict =[commentArr objectAtIndex:indexPath.row];
     NSString * username=[dataDict valueForKey:@"name"];
     NSString * comment=[dataDict valueForKey:@"comment"];
+    NSString * userId =[dataDict valueForKey:@"id"];
     NSString * image=[dataDict valueForKey:@"image"];
     int  ismyComment=[[dataDict valueForKey:@"is_my"]intValue];
     
@@ -308,7 +336,7 @@
     void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
         if ([substring isEqualToString:username]) {
             [self.view endEditing:YES];
-        //    [self openUserProfile];
+            [self openUserProfile:userId :username :image];
         }
     };
     [cell.commentLbl setLinksForSubstrings:@[username] withLinkHandler:handler];
@@ -361,6 +389,15 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
+#pragma mark====================Open User Profile=============================
+-(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
+    if (![userId isEqualToString:[UserData getUserID]]) {
+        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+        vc.userId=userId;
+        vc.name=userName;
+        vc.imageUrl=urlStringForProfileImage;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 
 @end

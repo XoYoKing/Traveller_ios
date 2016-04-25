@@ -14,7 +14,7 @@
     
     int milisecond =[miliSeconds intValue];
     
-    NSDate *dateA= [NSDate dateWithTimeIntervalSince1970:(milisecond / 1000.0)];
+    NSDate * dateA = [NSDate dateWithTimeIntervalSince1970:milisecond];
     NSDate *dateB=[NSDate date];
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] ;

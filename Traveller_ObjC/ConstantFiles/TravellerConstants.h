@@ -109,6 +109,7 @@
 #define ACTION_SIGNUP @"signUp"
 #define ACTION_UPDATE_PROFILE @"editProfile"
 #define ACTION_GET_MY_ACTIVITY @"getMyActivity"
+#define ACTION_GET_USER_ACTIVITY @"getUserActivity"
 #define ACTION_FORGET_PASSWORD @"forgotPassword"
 #define ACTION_GET_FOLLOWER_LIST @"getFollowerList"
 #define ACTION_GET_FOLLOW_LIST @"getFollowList"
@@ -136,7 +137,7 @@
 #define ACTION_FEED_DELETE @"delete"
 #define ACTION_DELETE_NOTIFICATION @"delete"
 #define ACTION_NOTIFICATION_REPLY @"sendMessage"
-
+#define ACTION_EDIT_POST @"editActivities"
 
 #pragma mark --------------------------Color Codes-------------------------------
 #define userShouldDOButoonColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]

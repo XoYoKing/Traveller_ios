@@ -7,6 +7,7 @@
 //
 
 #import "LikeViewController.h"
+#import "ViewProfileController.h"
 
 @interface LikeViewController ()
 
@@ -49,12 +50,10 @@
     [self setupView];
     likeTableView.estimatedRowHeight=90;
     likeTableView.rowHeight=UITableViewAutomaticDimension;
-}
-
--(void)viewWillAppear:(BOOL)animated{
     [self.view showLoader];
     [self performSelectorInBackground:@selector(getWholeLikeData) withObject:nil];
 }
+
 -(void)setupView{
     closeButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:25];
     [closeButton setTitle:[NSString stringWithUTF8String:ICOMOON_CROSS] forState:UIControlStateNormal];
@@ -132,10 +131,17 @@
         NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
         [cell.profileImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
     }
-    
 return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary * dict =[totalLike objectAtIndex:indexPath.row];
+    if (![[UserData getUserID] isEqualToString:[dict valueForKey:@"id"]]) {
+        NSString * uiD=[dict valueForKey:@"id"];
+        NSString * image=[dict valueForKey:@"image"];
+        NSString * name=[dict valueForKey:@"name"];
+        [self openUserProfile:uiD  :name :image];
+    }
+}
 -(void)followBtn:(UIButton *)btn{
     selectedUserIdex =(int)btn.tag;
     [self.view showLoader];
@@ -197,5 +203,42 @@ return cell;
     view.layer.shadowColor = [[UIColor blackColor] CGColor];
     view.layer.shadowRadius = 4.0f;
     view.layer.shadowOpacity = 0.80f;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation" context:NULL];
+    [UIView setAnimationDuration:0.8];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
+    
+}
+#pragma mark====================Open User Profile=============================
+-(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
+    if (![userId isEqualToString:[UserData getUserID]]) {
+        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+        vc.userId=userId;
+        vc.name=userName;
+        vc.imageUrl=urlStringForProfileImage;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 @end

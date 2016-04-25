@@ -32,9 +32,6 @@
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
-        if ([UserData getNotificationDict].count==0) {
-            [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
-        }
     }
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -344,9 +341,9 @@
     constraint.priority = 801;
     [self.view addConstraint: constraint];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self fillBlurredImageCache];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self fillBlurredImageCache];
+//    });
     
     [self.tableView reloadData];
     self.tableView.backgroundColor=[UIColor whiteColor];
@@ -417,11 +414,11 @@
     if(yPos > _headerSwitchOffset +20 && yPos <= _headerSwitchOffset +20 +40){
         CGFloat delta = (40 +20 - (yPos-_headerSwitchOffset));
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:delta forBarMetrics:UIBarMetricsDefault];
-        self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
+       // self.imageHeaderView.image = [self blurWithImageAt:((60-delta)/60.0)];
     }
     if(!_barAnimationComplete && yPos > _headerSwitchOffset +20 +40) {
         [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:0 forBarMetrics:UIBarMetricsDefault];
-        self.imageHeaderView.image = [self blurWithImageAt:1.0];
+        //self.imageHeaderView.image = [self blurWithImageAt:1.0];
         _barAnimationComplete = true;
     }
 }
@@ -576,23 +573,23 @@
     
     if (selectedIndex==0) {
         if(homeFeedData.count==0){
-            [self.view makeToast:@"No Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Place Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==1) {
         if( visitedCitiesData.count==0){
-            [self.view makeToast:@"None of city you had visited." duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Food Feeds Available Now." duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==2) {
         if(wishToData.count==0){
-            [self.view makeToast:@"No cities is found in your wishlist destinations" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Accomodation Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==3) {
         if( followerData.count==0){
-            [self.view makeToast:@"No one is following you" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@"No Shopping Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==4) {
         if(followingData.count==0){
-            [self.view makeToast:@" You dont follow anyone" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:@" No one visited this place." duration:toastDuration position:toastPositionBottomUp];
         }
     }
     
@@ -612,6 +609,33 @@
         return followingData.count;
     }else
         return 0;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation" context:NULL];
+    [UIView setAnimationDuration:0.8];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -679,7 +703,7 @@
         if (refertitle!=nil) {
             userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
             cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
+            userID =[dataDict valueForKey:@"posted_by"];
             locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
             imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
         }
@@ -724,6 +748,7 @@
             [substringArr addObject:@"to shopping 👗 "];
             [substringArr addObject:@"to stay 🏠 "];
             [substringArr addObject:@"travelling to ✈️ "];
+            [cell.mainTitle clearActionDictionary];
             [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
         }
         
@@ -868,98 +893,31 @@
         
         if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
             [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Uncheck_Color;
         }else{
             [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            cell.followButton.backgroundColor=Check_Color;
         }
         
         return cell;
     }
     return cell;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (selectedIndex==1){
-        
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        NSString *cityName;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-            [self openLocationFeedView:locId :cityName :imageUrl];
-        }
-        
-        
-    }else if (selectedIndex==2){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-            [self openLocationFeedView:locId :cityName :imageUrl];
-        }
-        
-        
-    }else if (selectedIndex==3){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        
-        //Checked for User Image
-        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-        [self openUserProfile:userID :userName: urlStringForProfileImage];
-        
-    }else if (selectedIndex==4){
-        //created dictionary from array object
-        NSDictionary * dataDict =[homeFeedData objectAtIndex:indexPath.row];
-        //Checked for User Image
-        NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
-        NSString *userName;
-        NSString *cityName;
-        NSString * userID;
-        NSString * locId;
-        NSString * imageUrl;
-        NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
-        if (refertitle!=nil) {
-            userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
-            cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
-            userID =[[refertitle objectAtIndex:0]valueForKey:@"id"];
-            locId =[[refertitle objectAtIndex:1]valueForKey:@"id"];
-            imageUrl =[[refertitle objectAtIndex:1]valueForKey:@"image"];
-        }
-        
-        [self openUserProfile:userID :userName: urlStringForProfileImage];
+    if (selectedIndex==4) {
+        NSDictionary * dict =[followingData objectAtIndex:indexPath.row];
+        NSString * uid=[dict valueForKey:@"mid"];
+        NSString * name=[dict valueForKey:@"name"];
+        NSString * imageUrl =[dict valueForKey:@"image"];
+        [self openUserProfile:uid :name :imageUrl];
     }
 }
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    NSArray * namesOfMenus =@[@"Feeds",@"Places Visited",@"Wish To",@"Followers",@"Following"];
+    NSArray * namesOfMenus =@[@"Place Feeds",@"Eat",@"Stay",@"Shopping",@"Visited By"];
     
     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;
@@ -993,7 +951,7 @@
         if (j==selectedIndex) {
             button.backgroundColor=segment_selected_Color ;
             [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1002,7 +960,7 @@
             }
         }else {
             button.backgroundColor=segment_disselected_Color;
-            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];;
+            [button addLayerAndCornerRadius:0 AndWidth:0 AndColor:segment_disselected_Color];;
             [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1038,7 +996,7 @@
         if (i==selectedIndex) {
             button.backgroundColor=segment_selected_Color ;
             [button setTitleColor:segment_disselected_Color forState:UIControlStateNormal];
-            [button addLayerAndCornerRadius:2 AndWidth:1 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:1 AndColor:segment_disselected_Color];
             [button addShaddow];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1047,7 +1005,7 @@
             }
         }else {
             button.backgroundColor=segment_disselected_Color;
-            [button addLayerAndCornerRadius:2 AndWidth:0 AndColor:segment_disselected_Color];
+            [button addLayerAndCornerRadius:0 AndWidth:0 AndColor:segment_disselected_Color];
             [button setTitleColor:segment_selected_Color forState:UIControlStateNormal];
             if (iPhone6||iPhone6plus) {
                 button.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
@@ -1155,12 +1113,8 @@
             break;
             //=====================5st click ====================
         case 4:
-            if (followingData.count==0) {
+              followingData=[NSMutableArray new];
                 [self performSelectorInBackground:@selector(getFollowListData) withObject:nil];
-            }else{
-                [self.view hideLoader];
-                [self reloadTable];
-            }
             break;
         default:
             break;
@@ -1646,40 +1600,6 @@
     
     // Present the view controller.
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
-    
-}
-
-#pragma mark====================getAllNotifications  =============================
-
--(void)getAllNotifications{
-    NSString * userID =[UserData getUserID];
-    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@",URL_CONST,ACTION_GET_NOTIFICATION,userID];
-    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
-    if (dict!=nil) {
-        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-        if ( [status isEqual: SUCESS]) {
-            int totalCount =[[dict valueForKey:@"tip_count"]intValue];
-            [UserData setNotificationCount:totalCount];
-            
-            NSArray * invitation =[[NSArray alloc]initWithArray:[dict valueForKey:@"invitation"]];
-            NSArray * ask_for_tip =[[NSArray alloc]initWithArray:[dict valueForKey:@"ask_for_tip"]];
-            NSArray * follow =[[NSArray alloc]initWithArray:[dict valueForKey:@"follow"]];
-            NSArray * message =[[NSArray alloc]initWithArray:[dict valueForKey:@"message"]];
-            
-            NSDictionary * dict =@{
-                                   @"invitation":invitation,
-                                   @"ask_for_tip":ask_for_tip,
-                                   @"follow":follow,
-                                   @"message":message
-                                   };
-            [UserData setNotificationDict:dict];
-            
-            NSDictionary * not_Dict=@{@"tip_count":[NSString stringWithFormat:@"%d",totalCount]};
-            [[NSNotificationCenter defaultCenter] postNotificationName:throwNotificationStatus object:not_Dict];
-        }
-    }else{
-        
-    }
     
 }
 

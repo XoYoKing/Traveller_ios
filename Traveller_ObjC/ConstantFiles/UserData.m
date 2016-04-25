@@ -85,6 +85,13 @@
     [plistDict writeToFile:[self filePath] atomically:YES];
 }
 
+
++(void )setImageUrl:(NSString *)url{
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:url forKey:@"ImageUrl"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
+}
+
 #pragma mark======================= Getter Methods======================
 
 +(NSDictionary *) getNotificationDict{
