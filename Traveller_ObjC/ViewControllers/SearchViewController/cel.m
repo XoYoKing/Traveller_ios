@@ -143,6 +143,20 @@ if (citiesArray.count==0||citiesArray==nil) {
         cell.followNameLbl.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
         cell.followBackView.backgroundColor=Like_Color;
     }
+    
+    if ([[dataDict valueForKey:@"mid"] isEqualToString: [UserData getUserID]]) {
+        cell.followNameLbl.hidden=YES;
+        cell.followLogoLbl.hidden=YES;
+        cell.followNameLbl.hidden=YES;
+        cell.followBackView.hidden=YES;
+    }else{
+        cell.followNameLbl.hidden=NO;
+        cell.followLogoLbl.hidden=NO;
+        cell.followNameLbl.hidden=NO;
+        cell.followBackView.hidden=NO;
+    }
+    
+    
     cell.followBtn.tag=indexPath.row;
     [cell.followBtn addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 

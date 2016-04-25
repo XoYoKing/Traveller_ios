@@ -928,12 +928,10 @@
         
         cell.deleteButton.tag=indexPath.row;
         [cell.deleteButton addTarget:self action:@selector(deleteWishTo:) forControlEvents:UIControlEventTouchUpInside];
-        cell.deleteButton.hidden=NO;
-        
+        cell.deleteButton.hidden=YES;
         return cell;
         
     }else if (selectedIndex==3){
-        
         UINib *nib = [UINib nibWithNibName:@"FollowingTableViewCell" bundle:nil];
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
         FollowingTableViewCell *cell =  [self.tableView dequeueReusableCellWithIdentifier:@"FollowingTableViewCell"];
@@ -1030,6 +1028,12 @@
         
         cell.followButton.tag=indexPath.row;
         [cell.followButton addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if ([[dataDict valueForKey:@"mid"] isEqualToString: [UserData getUserID]]) {
+            cell.followButton.hidden=YES;
+        }else{
+            cell.followButton.hidden=NO;
+        }
         
         if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
             [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
