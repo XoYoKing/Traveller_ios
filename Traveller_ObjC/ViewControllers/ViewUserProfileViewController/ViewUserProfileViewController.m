@@ -26,7 +26,7 @@
 }
 
 -(void)getUserDetailsWebservice{
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@",URL_CONST,ACTION_GET_USER_DETAILS,[UserData getUserID],_userID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@",URL_CONST,ACTION_GET_USER_DETAILS,_userID,[UserData getUserID]];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     if (dict) {
         [self performSelectorOnMainThread:@selector(setValues:) withObject:dict waitUntilDone:YES];
@@ -52,7 +52,25 @@
     dict1 = @{@"key":@"Web Url" ,@"value":[userDict valueForKey:@"weburl"]};
     [userdataArray addObject:dict1];
   
+    int followStatus =[[userDict valueForKey:@"follow"]intValue];
+    if (followStatus==1) {
+        //following
+        followBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        followBtn.tintColor=[UIColor whiteColor];
+        [followBtn setTitle:[NSString stringWithUTF8String:ICOMOON_USERICON_minus] forState:UIControlStateNormal];
+        [followBtn setBackgroundColor:[UIColor redColor]];
+    }else{
+        followBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        followBtn.tintColor=[UIColor whiteColor];
+        [followBtn setTitle:[NSString stringWithUTF8String:ICOMOON_USER_ICONPlus] forState:UIControlStateNormal];
+         [followBtn setBackgroundColor:[UIColor greenColor]];
+    }
+    
+    
     statusLbl.text = [userDict valueForKey:@"my_status"];
+    if ([statusLbl.text isEqualToString:@""]) {
+        statusLbl.text=@"No status set Yet !!!";
+    }
     userNameLbl.text=[userDict valueForKey:@"name"];
     
     follower.text=[NSString stringWithFormat:@"%@",[dict valueForKey:@"follow_count"]];
@@ -65,6 +83,7 @@
         [userImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"PlaceHolder"]];
     }
     [userImageView addBlackLayerAndCornerRadius:50 AndWidth:1];
+    [imageBackgroundView addBlackLayerAndCornerRadius:55 AndWidth:3];
     userImageView.clipsToBounds=YES;
     [_viewProfileTableView reloadData];
     tableHeight.constant= _viewProfileTableView.contentSize.height;
@@ -77,27 +96,30 @@
     [self.view layoutIfNeeded];
 }
 -(void)setupView{
+    [writeMsgBtn addBlackLayerAndCornerRadius:20 AndWidth:1];
+    writeMsgBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    writeMsgBtn.tintColor=[UIColor whiteColor];
+    [writeMsgBtn setTitle:[NSString stringWithUTF8String:ICOMOON_COMMENT1] forState:UIControlStateNormal];
+    
+    followBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    followBtn.tintColor=[UIColor whiteColor];
+     [followBtn addBlackLayerAndCornerRadius:20 AndWidth:1];
+    
+    changeImageButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+    changeImageButton.tintColor=[UIColor whiteColor];
+    [changeImageButton setTitle:[NSString stringWithUTF8String:ICOMOON_PHOTOCAMERA] forState:UIControlStateNormal];
+     [changeImageButton addBlackLayerAndCornerRadius:18 AndWidth:1];
     
     if ([_userID isEqualToString:[UserData getUserID]]) {
-        if(iPAD){
-            imageAboveHeight.constant=100;
-        }else{
-            imageAboveHeight.constant=10;
-        }
         writeMsgBtn.hidden=YES;
-        messageLogo.hidden=YES;
         followBtn.hidden=YES;
-        followLogo.hidden=YES;
+        changeImageButton.hidden=NO;
         userNameLbl.text=[UserData getUserName];
         statusLbl.text=[UserData getUserMyStatus];
     }else{
-        if(iPAD){
-            imageAboveHeight.constant=150;
-        }
         writeMsgBtn.hidden=NO;
-        messageLogo.hidden=NO;
         followBtn.hidden=NO;
-        followLogo.hidden=NO;
+        changeImageButton.hidden=YES;
     }
     tableHeight.constant= _viewProfileTableView.contentSize.height;
     [self.view layoutIfNeeded];
@@ -128,11 +150,19 @@
     
     btnClose.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
     btnClose.tintColor=[UIColor whiteColor];
-    [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
-    [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (_fromMenu==YES) {
+        [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_MENU] forState:UIControlStateNormal];
+        [btnClose addTarget:self action:@selector(toggleMenu) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [btnClose setTitle:[NSString stringWithUTF8String:ICOMOON_BACK_CIECLE_LEFT] forState:UIControlStateNormal];
+        [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+    }
     UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
     self.navigationItem.leftBarButtonItem = leftbarButton;
     
+    
+      if ([_userID isEqualToString:[UserData getUserID]]) {
     UIButton *btnSend = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnSend setFrame:CGRectMake(0, 0, 30, 30)];
     btnSend.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
@@ -154,6 +184,7 @@
     [buttonArray addObject:sendBarBtn];
     [buttonArray addObject:right];
     self.navigationItem.rightBarButtonItems = buttonArray;
+      }
 }
 
 -(void)changePassClick{
@@ -165,6 +196,11 @@
     SignUpViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SignUpViewController"];
     vc.fromWhichMenu=@"Update";
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)toggleMenu{
+    AppDelegate *d = [[UIApplication sharedApplication] delegate];
+    [d.drawerView showLeftPanelAnimated:YES ];
 }
 
 -(void)backClick{
@@ -181,13 +217,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ViewProfileTableViewCell * cell =[_viewProfileTableView dequeueReusableCellWithIdentifier:@"ViewProfileTableViewCell"];
     cell.title.text=[[userdataArray objectAtIndex:indexPath.row]valueForKey:@"key"];
-    cell.value.text=[NSString stringWithFormat:@": %@",[[userdataArray objectAtIndex:indexPath.row]valueForKey:@"value"]];
-    
-    if (indexPath.row%2==0) {
-        cell.backgroundColor=[UIColor lightGrayColor];
-    }else{
-        cell.backgroundColor=[UIColor whiteColor];
+    cell.value.text=[NSString stringWithFormat:@"%@",[[userdataArray objectAtIndex:indexPath.row]valueForKey:@"value"]];
+    if ([cell.value.text isEqualToString:@""]) {
+        cell.value.text=@"Not specified";
     }
+
     
     
     return cell;
@@ -196,45 +230,25 @@
 
 #pragma mark - ImagePickerController Delegate
 - (IBAction)clickonImage:(id)sender {
-    UIAlertController * view=   [UIAlertController
-                                 alertControllerWithTitle:@"Traweller"
-                                 message:@"Change Profile picture"
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    UIImageView * imageview = userImageView;
     
-    UIAlertAction* ok = [UIAlertAction
-                         actionWithTitle:@"Cancel"
-                         style:UIAlertActionStyleCancel
-                         handler:^(UIAlertAction * action)
-                         {
-                             [self dismissViewControllerAnimated:YES completion:nil];
-                         }];
-    UIAlertAction* camera = [UIAlertAction
-                           actionWithTitle:@"Camera"
-                           style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action)
-                           {
-                                [self dismissViewControllerAnimated:YES completion:nil];
-                               [self btnCameraClick];
-                              
-                           }];
-    UIAlertAction* gallery = [UIAlertAction
-                             actionWithTitle:@"Gallery"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [self dismissViewControllerAnimated:YES completion:nil];
-                                 [self btnGalleryClick];
-                                
-                             }];
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = imageview.image;
+    imageInfo.referenceRect = imageview.frame;
+    imageInfo.referenceView = self.view;
+    imageInfo.referenceContentMode = imageview.contentMode;
+    imageInfo.referenceCornerRadius = imageview.layer.cornerRadius;
     
-    [view addAction:ok];
-    [view addAction:gallery];
-    [view addAction:camera];
-    CGPoint windowPoint = [userImageView convertPoint:userImageView.bounds.origin toView:self.view.window];
-    view.popoverPresentationController.sourceView = self.view;
-    view.popoverPresentationController.sourceRect = CGRectMake(userImageView.frame.origin.x, windowPoint.y+15, userImageView.frame.size.width, userImageView.frame.size.height);;
-    [self presentViewController: view animated:YES completion:nil];
-}
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    }
 
 
 
@@ -283,11 +297,78 @@
 }
 
 
-- (IBAction)followClick:(id)sender {
+- (IBAction)changeImageButtonClick:(id)sender {
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:@"Traweller"
+                                 message:@"Change Profile picture"
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleCancel
+                         handler:^(UIAlertAction * action)
+                         {
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    UIAlertAction* camera = [UIAlertAction
+                             actionWithTitle:@"Camera"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                                 [self btnCameraClick];
+                                 
+                             }];
+    UIAlertAction* gallery = [UIAlertAction
+                              actionWithTitle:@"Gallery"
+                              style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction * action)
+                              {
+                                  [self dismissViewControllerAnimated:YES completion:nil];
+                                  [self btnGalleryClick];
+                                  
+                              }];
+    
+    [view addAction:ok];
+    [view addAction:gallery];
+    [view addAction:camera];
+    CGPoint windowPoint = [userImageView convertPoint:userImageView.bounds.origin toView:self.view.window];
+    view.popoverPresentationController.sourceView = self.view;
+    view.popoverPresentationController.sourceRect = CGRectMake(userImageView.frame.origin.x, windowPoint.y+15, userImageView.frame.size.width, userImageView.frame.size.height);;
+    [self presentViewController: view animated:YES completion:nil];
+
 }
+
+- (IBAction)followClick:(id)sender {
+    
+    if ([followBtn.titleLabel.text isEqualToString:[NSString stringWithUTF8String:ICOMOON_USERICON_minus]]) {
+        //following
+        followBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        followBtn.tintColor=[UIColor whiteColor];
+        [followBtn setTitle:[NSString stringWithUTF8String:ICOMOON_USER_ICONPlus] forState:UIControlStateNormal];
+        [followBtn setBackgroundColor:[UIColor greenColor]];
+    }else{
+        followBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        followBtn.tintColor=[UIColor whiteColor];
+        [followBtn setTitle:[NSString stringWithUTF8String:ICOMOON_USERICON_minus] forState:UIControlStateNormal];
+        [followBtn setBackgroundColor:[UIColor redColor]];
+    }
+     [self performSelectorInBackground:@selector(followWebservice) withObject:nil];
+    
+}
+
+-(void)followWebservice{
+    NSString * publicId =_userID;
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
+    [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+  
+}
+
 
 - (IBAction)messgeClick:(id)sender {
     WriteMessage_ViewController * vc=[self.storyboard instantiateViewControllerWithIdentifier:@"WriteMessage_ViewController"];
+    vc.publicId=_userID;
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

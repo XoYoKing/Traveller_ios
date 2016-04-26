@@ -11,7 +11,7 @@
 @implementation ViewProfileTableViewCell
 
 - (void)awakeFromNib {
-    _title.font=[UIFont fontWithName:font_bold  size:font_size_normal_bold];
+ //   _title.font=[UIFont fontWithName:font_bold  size:font_size_normal_bold];
     _value.font=[UIFont fontWithName:font_regular size:font_size_normal_bold];
 }
 

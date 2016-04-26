@@ -106,7 +106,7 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-                  timestampString = "483305179.026492"
+                  timestampString = "483391001.781715"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "89"
@@ -121,7 +121,7 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-                  timestampString = "483305179.026828"
+                  timestampString = "483391001.781973"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -136,7 +136,7 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-                  timestampString = "483305179.027098"
+                  timestampString = "483391001.782182"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -487,11 +487,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1406"
-            endingLineNumber = "1406"
+            startingLineNumber = "1412"
+            endingLineNumber = "1412"
             landmarkName = "-deletePlaceVisited:"
             landmarkType = "5">
          </BreakpointContent>
@@ -503,11 +503,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1405"
-            endingLineNumber = "1405"
+            startingLineNumber = "1411"
+            endingLineNumber = "1411"
             landmarkName = "-deletePlaceVisited:"
             landmarkType = "5">
          </BreakpointContent>
@@ -519,11 +519,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1380"
-            endingLineNumber = "1380"
+            startingLineNumber = "1386"
+            endingLineNumber = "1386"
             landmarkName = "-sharePost:"
             landmarkType = "5">
          </BreakpointContent>
@@ -535,11 +535,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1342"
-            endingLineNumber = "1342"
+            startingLineNumber = "1348"
+            endingLineNumber = "1348"
             landmarkName = "-editPost:"
             landmarkType = "5">
          </BreakpointContent>
@@ -551,11 +551,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1321"
-            endingLineNumber = "1321"
+            startingLineNumber = "1327"
+            endingLineNumber = "1327"
             landmarkName = "-editPost:"
             landmarkType = "5">
             <Locations>
@@ -563,26 +563,26 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__31-[HomeViewController editPost:]_block_invoke763"
+                  symbolName = "__31-[HomeViewController editPost:]_block_invoke765"
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.052542"
+                  timestampString = "483391001.803528"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1321"
-                  endingLineNumber = "1321"
+                  startingLineNumber = "1327"
+                  endingLineNumber = "1327"
                   offsetFromSymbolStart = "121">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_766"
+                  symbolName = "__copy_helper_block_768"
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.052756"
+                  timestampString = "483391001.803745"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -593,11 +593,11 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_767"
+                  symbolName = "__destroy_helper_block_769"
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.052961"
+                  timestampString = "483391001.803949"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -614,11 +614,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1325"
-            endingLineNumber = "1325"
+            startingLineNumber = "1331"
+            endingLineNumber = "1331"
             landmarkName = "-editPost:"
             landmarkType = "5">
          </BreakpointContent>
@@ -630,11 +630,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1337"
-            endingLineNumber = "1337"
+            startingLineNumber = "1343"
+            endingLineNumber = "1343"
             landmarkName = "-editPost:"
             landmarkType = "5">
          </BreakpointContent>
@@ -652,22 +652,6 @@
             startingLineNumber = "142"
             endingLineNumber = "142"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Traveller_ObjC/ViewControllers/LikeAndCommentView/LikeViewController.m"
-            timestampString = "483298375.745618"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-getWholeLikeData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -902,11 +886,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/LocationFeedView/LocationFeedViewController.m"
-            timestampString = "483304685.073919"
+            timestampString = "483391226.959765"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1495"
-            endingLineNumber = "1495"
+            startingLineNumber = "1515"
+            endingLineNumber = "1515"
             landmarkName = "-getFollowerDataForPaging"
             landmarkType = "5">
          </BreakpointContent>
@@ -918,11 +902,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/ViewUserProfileViewController/ViewUserProfileViewController.m"
-            timestampString = "483101400.629629"
+            timestampString = "483390447.176154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "-btnGalleryClick"
             landmarkType = "5">
          </BreakpointContent>
@@ -934,11 +918,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/ViewUserProfileViewController/ViewUserProfileViewController.m"
-            timestampString = "483101400.629629"
+            timestampString = "483390447.176154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1158,11 +1142,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1538"
-            endingLineNumber = "1538"
+            startingLineNumber = "1544"
+            endingLineNumber = "1544"
             landmarkName = "-followButtonClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1174,11 +1158,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1556"
-            endingLineNumber = "1556"
+            startingLineNumber = "1562"
+            endingLineNumber = "1562"
             landmarkName = "-reloadTableRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1190,39 +1174,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1543"
-            endingLineNumber = "1543"
-            landmarkName = "-followWebservice"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1541"
-            endingLineNumber = "1541"
-            landmarkName = "-followWebservice"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1549"
@@ -1238,11 +1190,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1554"
-            endingLineNumber = "1554"
+            startingLineNumber = "1547"
+            endingLineNumber = "1547"
+            landmarkName = "-followWebservice"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
+            timestampString = "483390984.93174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1555"
+            endingLineNumber = "1555"
+            landmarkName = "-followWebservice"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
+            timestampString = "483390984.93174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1560"
+            endingLineNumber = "1560"
             landmarkName = "-reloadTableRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1254,11 +1238,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1558"
-            endingLineNumber = "1558"
+            startingLineNumber = "1564"
+            endingLineNumber = "1564"
             landmarkName = "-reloadTableRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1270,11 +1254,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1577"
-            endingLineNumber = "1577"
+            startingLineNumber = "1583"
+            endingLineNumber = "1583"
             landmarkName = "-reloadTableRow:"
             landmarkType = "5">
             <Locations>
@@ -1286,11 +1270,11 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.09077"
+                  timestampString = "483391001.840508"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1578"
-                  endingLineNumber = "1578"
+                  startingLineNumber = "1584"
+                  endingLineNumber = "1584"
                   offsetFromSymbolStart = "1104">
                </Location>
                <Location
@@ -1301,11 +1285,11 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.090981"
+                  timestampString = "483391001.84072"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1578"
-                  endingLineNumber = "1578"
+                  startingLineNumber = "1584"
+                  endingLineNumber = "1584"
                   offsetFromSymbolStart = "1112">
                </Location>
             </Locations>
@@ -1318,11 +1302,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1578"
-            endingLineNumber = "1578"
+            startingLineNumber = "1584"
+            endingLineNumber = "1584"
             landmarkName = "-reloadTableRow:"
             landmarkType = "5">
             <Locations>
@@ -1334,11 +1318,11 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.092227"
+                  timestampString = "483391001.841826"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1578"
-                  endingLineNumber = "1578"
+                  startingLineNumber = "1584"
+                  endingLineNumber = "1584"
                   offsetFromSymbolStart = "1104">
                </Location>
                <Location
@@ -1349,11 +1333,11 @@
                   moduleName = "Traveller_ObjC"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sandip/Traveller_ios/Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-                  timestampString = "483305179.092441"
+                  timestampString = "483391001.842046"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1578"
-                  endingLineNumber = "1578"
+                  startingLineNumber = "1584"
+                  endingLineNumber = "1584"
                   offsetFromSymbolStart = "1112">
                </Location>
             </Locations>
@@ -1366,11 +1350,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/HomeViewController/HomeViewController.m"
-            timestampString = "483302940.729602"
+            timestampString = "483390984.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1596"
-            endingLineNumber = "1596"
+            startingLineNumber = "1602"
+            endingLineNumber = "1602"
             landmarkName = "-reloadTableRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1436,6 +1420,22 @@
             startingLineNumber = "671"
             endingLineNumber = "671"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Traveller_ObjC/ViewControllers/LikeAndCommentView/LikeViewController.m"
+            timestampString = "483383487.484155"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-getWholeLikeData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

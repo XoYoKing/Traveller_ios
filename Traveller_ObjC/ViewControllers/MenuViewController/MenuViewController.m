@@ -154,11 +154,15 @@
         return 60;
     }
 }
--(void)openUserProfile{
-    ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+- (IBAction)tapedOnProfile:(id)sender {
+    ViewUserProfileViewController *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewUserProfileViewController"];
+    vc.userID=[UserData getUserID];
+    vc.fromMenu=YES;
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
     appdelegate.drawerView.centerPanel=nav;
+
 }
+
 -(void)openCitiesMenu{
     CitiesViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"CitiesViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];

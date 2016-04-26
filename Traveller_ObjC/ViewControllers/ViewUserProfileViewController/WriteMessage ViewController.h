@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface WriteMessage_ViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UIButton *sendBtn;
+@property(nonatomic,strong)NSString * publicId;
+- (IBAction)sendButtonClick:(id)sender;
 @end
