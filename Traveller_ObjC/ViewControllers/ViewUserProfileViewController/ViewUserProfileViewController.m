@@ -19,6 +19,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden=NO;
     if (userdataArray.count==0) {
+        [self.view.subviews setValue:@YES forKeyPath:@"hidden"]; // For Hiding All subview of View
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getUserDetailsWebservice) withObject:nil];
     }
@@ -47,7 +48,7 @@
     [userdataArray addObject:dict1];
     dict1 = @{@"key":@"Mobile" ,@"value":[userDict valueForKey:@"mobile"]};
     [userdataArray addObject:dict1];
-    dict1 = @{@"key":@"Destination" ,@"value":[userDict valueForKey:@"next_destination"]};
+    dict1 = @{@"key":@"Next Destination" ,@"value":[userDict valueForKey:@"next_destination"]};
     [userdataArray addObject:dict1];
     dict1 = @{@"key":@"Web Url" ,@"value":[userDict valueForKey:@"weburl"]};
     [userdataArray addObject:dict1];
@@ -124,6 +125,7 @@
     tableHeight.constant= _viewProfileTableView.contentSize.height;
     [self.view layoutIfNeeded];
     [self.view hideLoader];
+      [self.view.subviews setValue:@NO forKeyPath:@"hidden"]; // For Hiding All subview of View
 }
 
 
@@ -260,12 +262,29 @@
         [popover dismissPopoverAnimated:YES];
     }
     userImageView.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self imageuploadWebservice];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+-(void)imageuploadWebservice{
+    NSDictionary *parameters = @{
+                                 @"action": ACTION_CHANGE_PROFILE_PIC,
+                                 @"userId": [UserData getUserID],
+                                 };
+    [[WebHandler sharedHandler]uploadDataWithImage:userImageView.image forKey:@"userFile" andParameters:parameters OnUrl:URL_CONST completion:^(NSDictionary *dict) {
+        if (dict) {
+            int status =[[dict valueForKey:@"status"] intValue];
+            if (status == 1) {
+                [UserData setImageUrl:[dict valueForKey:@"image"]];
+            }
+        }
+    }];
+}
+
+
 - (void)btnGalleryClick
 {
     ipc= [[UIImagePickerController alloc] init];

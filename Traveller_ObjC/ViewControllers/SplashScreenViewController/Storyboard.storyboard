@@ -3094,7 +3094,7 @@ END GENERAL CONDITIONS
                                             <constraint firstItem="Juv-HV-ZNJ" firstAttribute="top" secondItem="Vsw-Wh-Mko" secondAttribute="bottom" id="ymv-bz-fnp"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3b-Tb-CYU">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3b-Tb-CYU">
                                         <rect key="frame" x="20" y="303" width="560" height="26"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -3114,7 +3114,7 @@ END GENERAL CONDITIONS
                                             <action selector="messgeClick:" destination="fpn-M1-jgh" eventType="touchUpInside" id="wE8-GK-5Rn"/>
                                         </connections>
                                     </button>
-                                    <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="97" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RFC-fD-8ah">
+                                    <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="97" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RFC-fD-8ah">
                                         <rect key="frame" x="0.0" y="329" width="600" height="128"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -3228,7 +3228,7 @@ END GENERAL CONDITIONS
                                     <constraint firstItem="nk4-zi-X0V" firstAttribute="top" secondItem="Vqd-a9-1T2" secondAttribute="bottom" constant="8" id="fQL-2a-jGx"/>
                                     <constraint firstItem="n0w-LZ-evF" firstAttribute="centerX" secondItem="4st-4U-jn6" secondAttribute="centerX" id="lfn-hS-yqA"/>
                                     <constraint firstItem="n0w-LZ-evF" firstAttribute="leading" secondItem="4st-4U-jn6" secondAttribute="leading" constant="20" id="qqD-jP-tnc"/>
-                                    <constraint firstItem="r3b-Tb-CYU" firstAttribute="top" secondItem="nk4-zi-X0V" secondAttribute="bottom" constant="8" id="qwM-Yn-hHs"/>
+                                    <constraint firstItem="r3b-Tb-CYU" firstAttribute="top" secondItem="nk4-zi-X0V" secondAttribute="bottom" id="qwM-Yn-hHs"/>
                                     <constraint firstAttribute="trailing" secondItem="82h-1E-XWd" secondAttribute="trailing" id="rYZ-gn-rwd"/>
                                     <constraint firstItem="82h-1E-XWd" firstAttribute="top" secondItem="4st-4U-jn6" secondAttribute="top" constant="-5" id="sq8-lA-ctJ"/>
                                     <constraint firstItem="p5q-Ob-sUl" firstAttribute="centerY" secondItem="Wph-wU-hSw" secondAttribute="centerY" id="wyl-bX-Fus"/>
@@ -3926,6 +3926,9 @@ END GENERAL CONDITIONS
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="vz6-aP-ybY" id="n7d-Y3-ea0"/>
+                                </connections>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unI-1Z-3gj">
                                 <rect key="frame" x="510" y="343" width="70" height="35"/>

@@ -913,6 +913,14 @@
             cell.followButton.backgroundColor=Check_Color;
         }
         
+        
+        if ([[dataDict valueForKey:@"id"] isEqualToString: [UserData getUserID]]) {
+            cell.followButton.hidden=YES;
+        }else{
+            cell.followButton.hidden=NO;
+        }
+        
+        
         return cell;
     }
     return cell;
@@ -921,7 +929,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (selectedIndex==4) {
         NSDictionary * dict =[followingData objectAtIndex:indexPath.row];
-        NSString * uid=[dict valueForKey:@"mid"];
+        NSString * uid=[dict valueForKey:@"id"];
         NSString * name=[dict valueForKey:@"name"];
         NSString * imageUrl =[dict valueForKey:@"image"];
         [self openUserProfile:uid :name :imageUrl];
@@ -931,7 +939,7 @@
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    NSArray * namesOfMenus =@[@"Place Feeds",@"Eat",@"Stay",@"Shopping",@"Visited By"];
+    NSArray * namesOfMenus =@[@"Place",@"Eat",@"Stay",@"Shopping",@"Visited"];
     
     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;

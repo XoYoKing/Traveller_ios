@@ -10,7 +10,7 @@
 #import "FollowingTableViewCell.h"
 #import "GIBadgeView.h"
 #import "NotificationsViewController.h"
-@interface AskForTipsViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface AskForTipsViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>
 {
     __weak IBOutlet UITableView *wishToTableView;
     GIBadgeView * badgeView;

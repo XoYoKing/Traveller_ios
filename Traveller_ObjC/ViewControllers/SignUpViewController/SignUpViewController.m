@@ -121,6 +121,15 @@
         termButton.hidden=YES;
         [self setValues];
         self.title=@"Update Profile";
+        
+        if ([[UserData getUserSignupType]isEqualToString:@"facebook"]||[[UserData getUserSignupType]isEqualToString:@"google"]) {
+            userNameTF.userInteractionEnabled=NO;
+            passwordTF.userInteractionEnabled=NO;
+            emailTF.userInteractionEnabled=NO;
+            confirmPasswordTF.userInteractionEnabled=NO;
+            phoneNoTF.userInteractionEnabled=NO;
+        }
+        
     }else{
         updateBtn.hidden=YES;
         cancelBtn.hidden=YES;
@@ -141,6 +150,12 @@
     registerBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     cancelBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     updateBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+    
+    [userNameTF addRegx:@"[A-Za-z0-9]{3,10}" withMsg: @"Only alpha numeric characters are allowed"];
+     [emailTF addRegx:@"[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" withMsg: @"Enter valid email"];
+     [passwordTF addRegx:@"^.{6,20}$" withMsg: @"Password characters limit should be come between 6-20"];
+     [confirmPasswordTF addConfirmValidationTo:passwordTF withMsg:@"Confirm password didn’t match"];
+     [phoneNoTF addRegx:@"[0-9]{5,20}" withMsg: @"Only numeric characters are allowed"];
     
 }
 
@@ -185,13 +200,15 @@
 }
 
 - (IBAction)updateClick:(id)sender {
+    if ([[UserData getUserSignupType]isEqualToString:@"facebook"]||[[UserData getUserSignupType]isEqualToString:@"google"]){
+        [self.view showLoader];
+        [self performSelectorInBackground:@selector(updateWebservice) withObject:nil];
+    }else{
     if ([userNameTF validate]&&[emailTF validate]&&[passwordTF validate]&&[confirmPasswordTF validate]) {
-     
             [self.view showLoader];
             [self performSelectorInBackground:@selector(updateWebservice) withObject:nil];
-
     }
-
+    }
 }
 -(void)updateWebservice{
     NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&password=%@&mobile=%@&city=%@&country=%@&my_status=%@&weburl=%@&nextDestination=%@&gender=%@",URL_CONST,ACTION_UPDATE_PROFILE,userNameTF.text,emailTF.text,passwordTF.text,phoneNoTF.text,cityTF.text,countryTF.text,statusTF.text,websiteTF.text,nextDestinationTF.text,gender];
@@ -250,15 +267,17 @@
 }
 
 - (IBAction)registerClick:(id)sender {
+    [self.view endEditing:YES];
     if ([userNameTF validate]&&[emailTF validate]&&[passwordTF validate]&&[confirmPasswordTF validate]) {
-        if ([termButton.titleLabel.text isEqualToString:[NSString stringWithUTF8String:ICOMOON_RADIO_CHECK]]) {
-              [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:@"Please accept tems and conditions" waitUntilDone:YES];
+        if ([termButton.titleLabel.text isEqualToString:[NSString stringWithUTF8String:ICOMOON_RADIO_UNCHECK]]) {
+            [self showToast:@"Please accept tems and conditions"];
         }else{
             [self.view showLoader];
             [self performSelectorInBackground:@selector(registerWebservice) withObject:nil];
         }
     }
 }
+
 
 - (IBAction)cancelClick:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -289,6 +308,7 @@
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
         if ( [status isEqual: SUCESS]) {
             [UserData saveUserDict:dict];
+            [UserData setPassword:passwordTF.text];
             [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
         }else{
             NSString * msg =[dict valueForKey:@"message"];

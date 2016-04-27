@@ -18,7 +18,7 @@
     [_followButton addShaddow];
     
     _profileImageView.clipsToBounds=YES;
-    [_profileImageView addBlackLayerAndCornerRadius:45 AndWidth:1];
+    [_profileImageView addBlackLayerAndCornerRadius:30 AndWidth:1];
     
     
 }

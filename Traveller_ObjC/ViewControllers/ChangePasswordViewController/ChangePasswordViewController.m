@@ -30,6 +30,7 @@
     [confirmNewPass addConfirmValidationTo:newPass withMsg:@"Confirm password didn’t match."];
     [self setUpNavigationBar];
     self.title=@"Change Password";
+    [self checkSignUpType];
 }
 
 -(void)setUpNavigationBar{
@@ -64,33 +65,45 @@
     self.navigationItem.rightBarButtonItem = rightBarBtn;
 }
 
+-(void)checkSignUpType{
+    if ([[UserData getUserSignupType]isEqualToString:@"facebook"]||[[UserData getUserSignupType]isEqualToString:@"google"]) {
+         [self.view makeToast:@"You have been login via Facebook/Google you have no access change password" duration:toastDuration position:toastPositionBottomUp];
+        [self performSelector:@selector(backClick) withObject:nil afterDelay:2];
+    }
+}
+
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)saveClick{
     if ([oldPass validate]&&[newPass validate]&&[confirmNewPass validate]) {
+        [self.view showLoader];
         [self performSelectorInBackground:@selector(changePassWebservice) withObject:nil];
     }
 }
 -(void)changePassWebservice{
-    
-//    NSString * str =[NSString stringWithFormat:@"%@email=%@&password=%@&action=%@",URL_CONST,userNameTextField.text,passwordTextField.text,ACTION_LOGIN];
-//    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
-//    if (dict!=nil) {
-//        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-//        if ( [status isEqual: SUCESS]) {
-//    
-    
-    
-    
-    [self performSelectorOnMainThread:@selector(showErrorMsg) withObject:nil waitUntilDone:YES];
+    NSString * str =[NSString stringWithFormat:@"%@action=%@&userId=%@&oldpassword=%@&password=%@&cpassword=%@",URL_CONST,ACTION_CHANGE_PASSWORD,[UserData getUserID],oldPass.text,newPass.text,confirmNewPass.text];
+    NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
+    if (dict!=nil) {
+        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
+        if ( [status isEqual: SUCESS]) {
+                [UserData setPassword:newPass.text];
+                [self performSelectorOnMainThread:@selector(showSuccessMsg) withObject:nil waitUntilDone:YES];
+        }else{
+            [self performSelectorOnMainThread:@selector(showErrorMsg) withObject:nil waitUntilDone:YES];
+        }
+    }else{
+            [self performSelectorOnMainThread:@selector(showErrorMsg) withObject:nil waitUntilDone:YES];
+    }
 }
 
 -(void)showSuccessMsg{
+    [self.view hideLoader];
     [self.view makeToast:@"Password Change Successfully" duration:toastDuration position:toastPositionBottomUp];
      [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)showErrorMsg{
+     [self.view hideLoader];
      [self.view makeToast:@"Password Didn't Change Successfully Please Try Again" duration:toastDuration position:toastPositionBottomUp];
 }
 - (void)didReceiveMemoryWarning {

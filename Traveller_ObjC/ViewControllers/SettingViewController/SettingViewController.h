@@ -28,7 +28,8 @@
     //Push Notification
     __weak IBOutlet UIView *changePasswordBackView;
     __weak IBOutlet UILabel *changePasswordLbl;
-    __weak IBOutlet UILabel *changePasswordDetailTxt;
+    
+    __weak IBOutlet UITextView *detailsTextView;
  
 }
 - (IBAction)pushClick:(UISwitch *)sender;

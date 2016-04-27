@@ -1258,22 +1258,13 @@
         }break;
    //=====================2st click ====================
         case 1:
-            if (visitedCitiesData.count==0) {
+                visitedCitiesData=[NSMutableArray new];
                 [self performSelectorInBackground:@selector(getVisitedCitiesData) withObject:nil];
-            }
-            else{
-                [self.view hideLoader];
-                [self reloadTable];
-            }
             break;
 //=====================3st click ====================
         case 2:
-            if (wishToData.count==0) {
+                wishToData=[NSMutableArray new];
                 [self performSelectorInBackground:@selector(getWishData) withObject:nil];
-            }else{
-                [self.view hideLoader];
-                [self reloadTable];
-            }
             break;
 //=====================4st click ====================
         case 3:

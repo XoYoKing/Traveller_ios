@@ -12,12 +12,12 @@
 
 -(void)awakeFromNib{
     _profileImageView.clipsToBounds=YES;
-    [_profileImageView addBlackLayerAndCornerRadius:40 AndWidth:1];
+    [_profileImageView addBlackLayerAndCornerRadius:30 AndWidth:1];
     [self addShaddowToView:_profileImageView];
     
     _deleteButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:20];
     [_deleteButton setTitle:[NSString stringWithUTF8String:ICOMOON_DELET] forState:UIControlStateNormal] ;
-    _deleteButton.titleLabel.textColor  = userShouldNOTDOButoonColor;
+    _deleteButton.titleLabel.textColor  = [UIColor redColor];
     _deleteButton.tintColor =userShouldNOTDOButoonColor ;
 }
 

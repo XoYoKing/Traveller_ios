@@ -269,7 +269,7 @@ if (citiesArray.count==0||citiesArray==nil) {
 
 -(void)getCitiesData{
 
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&type=user&page=%d",URL_CONST,ACTION_SEARCH_USER,citiesPage];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&type=user&page=%d&userId=%@",URL_CONST,ACTION_SEARCH_USER,citiesPage,[UserData getUserID]];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [citiesArray addObjectsFromArray:[dict valueForKey:@"data"]];
     globalArrayToShow = citiesArray;
@@ -278,7 +278,7 @@ if (citiesArray.count==0||citiesArray==nil) {
 
 -(void)getCitiesDataPaging{
 
- NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&type=user&page=%d",URL_CONST,ACTION_SEARCH_USER,citiesPage];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&type=user&page=%d&userId=%@",URL_CONST,ACTION_SEARCH_USER,citiesPage,[UserData getUserID]];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[dict valueForKey:@"data"];
     if (data.count==0) {
@@ -374,12 +374,7 @@ if (citiesArray.count==0||citiesArray==nil) {
 }
 -(void)followWebservice{
     NSDictionary * dataDict ;
-    if (selectedIndex==3) {
-        dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
-    }else{
-        dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
-    }
-    
+    dataDict =[globalArrayToShow objectAtIndex:selectedIndex];
     NSString * publicId =[dataDict valueForKey:@"id"];
     NSString * userID =[UserData getUserID];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];

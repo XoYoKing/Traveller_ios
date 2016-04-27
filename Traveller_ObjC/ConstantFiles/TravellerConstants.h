@@ -64,7 +64,7 @@
 #define font_bold @".SFUIText-Semibold"
 #define fontIcomoon @"icomoon"
 
-
+#define font_size_LoginButtons iPAD ? 20 : (IS_IPHONE_6 ? 16.0f : 15.0f)
 #define font_size_normal_regular iPAD ? 20 : (IS_IPHONE_6 ? 18.0f : 16.0f)
 #define font_size_normal_bold iPAD ? 20 : (IS_IPHONE_6 ? 19.0f : 15.0f)
 #define font_size_ComentLike iPAD ? 20 : (IS_IPHONE_6 ? 14.0f : 12.0f)
@@ -138,6 +138,8 @@
 #define ACTION_DELETE_NOTIFICATION @"delete"
 #define ACTION_NOTIFICATION_REPLY @"sendMessage"
 #define ACTION_EDIT_POST @"editActivities"
+#define ACTION_CHANGE_PASSWORD @"changepassword"
+#define ACTION_CHANGE_PROFILE_PIC @"addProfilePic"
 
 #pragma mark --------------------------Color Codes-------------------------------
 #define userShouldDOButoonColor [UIColor colorWithRed:14.0f/255.0f green:176.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
