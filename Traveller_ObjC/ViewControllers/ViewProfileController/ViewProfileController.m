@@ -982,6 +982,12 @@
         }
         
         
+        if ([[dataDict valueForKey:@"mid"] isEqualToString: [UserData getUserID]]) {
+            cell.followButton.hidden=YES;
+        }else{
+            cell.followButton.hidden=NO;
+        }
+        
         cell.followButton.tag=indexPath.row;
         [cell.followButton addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         return cell;

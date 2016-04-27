@@ -52,10 +52,11 @@
     [sendButton addBlackLayerAndCornerRadius:3 AndWidth:1];
     
     textView.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
-    textView.text = @"This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
+    textView.text = @"TAsk about this place to users who have visited the place";
     textView.textColor = [UIColor lightGrayColor];
     textView.layer.borderWidth=1;
     textView.layer.cornerRadius=5;
+    textView.delegate=self;
     textView.layer.borderColor=[UIColor lightGrayColor].CGColor;
     
     searchBackView.hidden=YES;
@@ -68,7 +69,7 @@
 # pragma mark  UITextView Delegates
 - (void)textViewDidBeginEditing:(UITextView *)textView1
 {
-    if ([textView.text isEqualToString:@"This place is known for ? How to get it ? Things to do ? Famous things ? etc. "]) {
+    if ([textView.text isEqualToString:@"Ask about this place to users who have visited the place"]) {
         textView.text = @"";
         textView.textColor = [UIColor blackColor]; //optional
     }
@@ -79,7 +80,7 @@
 - (void)textViewDidEndEditing:(UITextView *)textView1
 {
     if ([textView.text isEqualToString:@""]) {
-        textView.text = @"This place is known for ? How to get it ? Things to do ? Famous things ? etc. ";
+        textView.text = @"Ask about this place to users who have visited the place";
         textView.textColor = [UIColor lightGrayColor];
     }
     [textView resignFirstResponder];
@@ -197,10 +198,10 @@
     
     
     if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
-        [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        [cell.followButton setTitle:@"Invited" forState:UIControlStateNormal];
         cell.followButton.backgroundColor=Uncheck_Color;
     }else{
-        [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        [cell.followButton setTitle:@"invite" forState:UIControlStateNormal];
         cell.followButton.backgroundColor=Check_Color;
     }
     return cell;

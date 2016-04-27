@@ -70,5 +70,7 @@
 
 +(void )setImageUrl:(NSString *)url;
 
++(void )setPassword:(NSString *)password;
+
 +(void ) setLogOutStatus;
 @end

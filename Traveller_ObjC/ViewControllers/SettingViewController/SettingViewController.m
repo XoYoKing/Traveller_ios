@@ -16,6 +16,13 @@
 
 @implementation SettingViewController
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"Settings";
@@ -27,6 +34,18 @@
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    [self setupView];
+}
+
+-(void)setupView{
+    pushNotificationLbl.font=[UIFont fontWithName:font_bold size:font_size_bold];
+    pushNotificationDetailTxt.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+    
+    editProfileLbl.font=[UIFont fontWithName:font_bold size:font_size_bold];
+    editProfileDetailTxt.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
+    
+    changePasswordLbl.font=[UIFont fontWithName:font_bold size:font_size_bold];
+    detailsTextView.font=[UIFont fontWithName:font_regular size:font_size_normal_regular];
 }
 
 -(void)updateNotificationCount:(NSNotification *)notification{

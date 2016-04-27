@@ -252,8 +252,8 @@
     btnGallery.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
 
     
-    btnCamera.backgroundColor=segment_disselected_Color;
-    btnGallery.backgroundColor=segment_disselected_Color;
+    btnCamera.backgroundColor=userShouldDOButoonColor;
+    btnGallery.backgroundColor=userShouldDOButoonColor;
     [btnCamera addShaddow];
     [btnGallery addShaddow];
 

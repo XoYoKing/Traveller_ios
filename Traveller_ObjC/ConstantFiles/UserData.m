@@ -92,6 +92,12 @@
     [plistDict writeToFile:[self filePath] atomically:YES];
 }
 
++(void )setPassword:(NSString *)password{
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:password forKey:@"Password"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
+}
+
 #pragma mark======================= Getter Methods======================
 
 +(NSDictionary *) getNotificationDict{

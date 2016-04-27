@@ -19,6 +19,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden=NO;
     if (userdataArray.count==0) {
+        [self.view.subviews setValue:@YES forKeyPath:@"hidden"]; // For Hiding All subview of View
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getUserDetailsWebservice) withObject:nil];
     }
@@ -47,7 +48,7 @@
     [userdataArray addObject:dict1];
     dict1 = @{@"key":@"Mobile" ,@"value":[userDict valueForKey:@"mobile"]};
     [userdataArray addObject:dict1];
-    dict1 = @{@"key":@"Destination" ,@"value":[userDict valueForKey:@"next_destination"]};
+    dict1 = @{@"key":@"Next Destination" ,@"value":[userDict valueForKey:@"next_destination"]};
     [userdataArray addObject:dict1];
     dict1 = @{@"key":@"Web Url" ,@"value":[userDict valueForKey:@"weburl"]};
     [userdataArray addObject:dict1];
@@ -124,6 +125,7 @@
     tableHeight.constant= _viewProfileTableView.contentSize.height;
     [self.view layoutIfNeeded];
     [self.view hideLoader];
+      [self.view.subviews setValue:@NO forKeyPath:@"hidden"]; // For Hiding All subview of View
 }
 
 

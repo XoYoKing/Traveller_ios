@@ -45,8 +45,8 @@
         }
         [self.view layoutIfNeeded];
     }
-    forgetPasswordBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_button];
-    needAnAccountBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_button];
+    forgetPasswordBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_LoginButtons];
+    needAnAccountBtn.titleLabel.font=[UIFont fontWithName:font_bold size:font_size_LoginButtons];
     usernameLogo.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
     passwordLogo.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
     showHidePasswordBtn.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
@@ -249,6 +249,7 @@
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
         if ( [status isEqual: SUCESS]) {
             [UserData saveUserDict:dict];
+            [UserData setPassword:passwordTextField.text];
             [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
         }else{
             NSString * msg =[dict valueForKey:@"message"];
