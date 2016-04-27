@@ -30,7 +30,7 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     // For Google+
-    [[GPPSignIn sharedInstance] setClientID:@"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com"];
+    [[GPPSignIn sharedInstance] setClientID:@"214469689121-i1abnkkcgt07kuah3o46f5o974s2fikb.apps.googleusercontent.com"];
     [GPPSignIn sharedInstance].delegate = self;
     [GMSServices provideAPIKey:@"AIzaSyA0Zxe_1JxR0Iemvi8RLel0ZEzWEBNPfqM"];
 
@@ -81,7 +81,6 @@
 #ifdef DEBUG
     NSLog(@"%@",url.scheme);
 #endif
-    
     // Url Scheme for Google
     return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation] ||[[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
     

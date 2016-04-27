@@ -379,7 +379,7 @@
 }
 -(void)delete:(UIButton *)sender{
     NSIndexPath * ip ;
-    int index =sender.tag;
+    int index =(int)sender.tag;
     if (selectedIndex==0) {
         itemDelete=[invitation objectAtIndex:index];
         if(invitation.count==1){

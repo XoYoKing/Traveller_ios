@@ -58,6 +58,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLikeCell:) name:throwRefreshLike object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCommentCell:) name:throwRefreshComment object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:throwRefreshPage object:nil];
+    
 }
 
 -(void)refreshView{

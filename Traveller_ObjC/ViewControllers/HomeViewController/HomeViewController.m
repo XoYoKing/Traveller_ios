@@ -425,7 +425,7 @@
 }
 - (UIImageView*) createAvatarImage {
     UIImageView* avatarView = [[UIImageView alloc] init];
-    avatarView.contentMode = UIViewContentModeScaleToFill;
+    avatarView.contentMode = UIViewContentModeScaleAspectFill;
     [avatarView addWhiteLayerAndCornerRadius:mainUserProfileICornerRadius AndWidth:borderWidth_Image];
     avatarView.clipsToBounds = YES;
     return avatarView;

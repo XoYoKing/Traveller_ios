@@ -30,10 +30,10 @@
                                            selector:@selector(targetMethod)
                                            userInfo:nil
                                             repeats:YES];
-    image.layer.shadowOffset = CGSizeMake(1, 1);
-    image.layer.shadowColor = [[UIColor blackColor] CGColor];
-    image.layer.shadowRadius = 4.0f;
-    image.layer.shadowOpacity = 0.80f;
+//    image.layer.shadowOffset = CGSizeMake(1, 1);
+//    image.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    image.layer.shadowRadius = 4.0f;
+//    image.layer.shadowOpacity = 0.80f;
 }
 
 - (void)viewDidLoad {

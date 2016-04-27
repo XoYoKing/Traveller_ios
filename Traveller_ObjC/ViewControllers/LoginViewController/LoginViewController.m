@@ -99,7 +99,7 @@
                                      @"name":[NSString stringWithFormat:@"%@ %@",[result valueForKey:@"first_name"],[result valueForKey:@"last_name"]],
                                       @"fb_id":[result valueForKey:@"id"],
                                         @"email":[result valueForKey:@"email"],
-                                     @"image":[[[result valueForKey:@"picture"]valueForKey:@"data"]valueForKey:@"url"]
+                                     @"image":[NSString stringWithFormat:@"http://graph.facebook.com/\%@/picture?type=large",[result valueForKey:@"id"]]
                                      };
              [self loginForFacebook:dict];
          }
@@ -164,7 +164,7 @@
 #pragma mark====================Login With Google===============================
 
 - (IBAction)googleClick:(id)sender {
-    [GPPSignIn sharedInstance].clientID = @"748214312326-57qjoec3g5762tlcktag90cha9ngj6be.apps.googleusercontent.com";
+    [GPPSignIn sharedInstance].clientID = @"214469689121-i1abnkkcgt07kuah3o46f5o974s2fikb.apps.googleusercontent.com";
     [GPPSignIn sharedInstance].scopes= [NSArray arrayWithObjects:kGTLAuthScopePlusLogin, nil];
     [GPPSignIn sharedInstance].shouldFetchGoogleUserID=YES;
     [GPPSignIn sharedInstance].shouldFetchGoogleUserEmail=YES;
