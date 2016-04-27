@@ -262,7 +262,7 @@
     views[@"avatarImageView"] = avatarImageView;
     avatarImageView.userInteractionEnabled=YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnUserImage)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnUserImage:)];
     tap.cancelsTouchesInView = YES;
     tap.numberOfTapsRequired = 1;
     [avatarImageView addGestureRecognizer:tap];
@@ -542,10 +542,24 @@
 
 #pragma mark====================Tapped On User Profile Image===============================
 
--(void)tappedOnUserImage{
-    ViewUserProfileViewController *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewUserProfileViewController"];
-    vc.userID=_cityId;
-    [self.navigationController pushViewController:vc animated:YES];
+-(void)tappedOnUserImage:(UITapGestureRecognizer *)sender{
+    UIImageView * imageview =(UIImageView *)sender.view;
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = imageview.image;
+    imageInfo.referenceRect = imageview.frame;
+    imageInfo.referenceView = self.view;
+    imageInfo.referenceContentMode = imageview.contentMode;
+    imageInfo.referenceCornerRadius = imageview.layer.cornerRadius;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
 }
 
 #pragma mark====================Memory Release===============================
@@ -680,6 +694,12 @@
             [cell.postImage sd_setImageWithURL:[NSURL URLWithString:urlStringForPostImage] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
         }
         
+        //On Click of Image Should Open
+        cell.profileImage.userInteractionEnabled=YES;
+        cell.profileImage.tag=indexPath.row;
+        UITapGestureRecognizer *tapRecognizerq = [[UITapGestureRecognizer alloc] init];
+        [tapRecognizerq addTarget:self action:@selector(clickedOnProfileImage:)];
+        [cell.profileImage addGestureRecognizer:tapRecognizerq];
         
         //On Click of Image Should Open
         cell.postImage.userInteractionEnabled=YES;
@@ -1595,6 +1615,33 @@
     
     // Present the view controller.
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    
+}
+-(void)clickedOnProfileImage:(UITapGestureRecognizer *)sender{
+    int index=(int) sender.view.tag;
+    //created dictionary from array object
+    NSDictionary * dataDict ;
+    if (selectedIndex==0) {
+        dataDict =[homeFeedData objectAtIndex:index];
+    }else   if (selectedIndex==1) {
+        dataDict =[visitedCitiesData objectAtIndex:index];
+    }else   if (selectedIndex==2) {
+        dataDict =[wishToData objectAtIndex:index];
+    }else   if (selectedIndex==3) {
+        dataDict =[followerData objectAtIndex:index];
+    }
+
+    NSString *userName;
+    NSString *cityName;
+    NSString * userID;
+    NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+    NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+    if (refertitle!=nil) {
+        userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+        cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+        userID =[dataDict valueForKey:@"posted_by"];
+        [self openUserProfile:userID :userName: urlStringForProfileImage];
+    }
     
 }
 

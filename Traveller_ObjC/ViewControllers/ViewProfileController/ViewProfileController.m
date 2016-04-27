@@ -672,6 +672,12 @@
                   [cell.postImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Placeholder"]];
         }
         
+        //On Click of Image Should Open
+        cell.profileImage.userInteractionEnabled=YES;
+        cell.profileImage.tag=indexPath.row;
+        UITapGestureRecognizer *tapRecognizerq = [[UITapGestureRecognizer alloc] init];
+        [tapRecognizerq addTarget:self action:@selector(clickedOnProfileImage:)];
+        [cell.profileImage addGestureRecognizer:tapRecognizerq];
         
         //On Click of Image Should Open
         cell.postImage.userInteractionEnabled=YES;
@@ -1763,6 +1769,23 @@
     
     // Present the view controller.
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    
+}
+-(void)clickedOnProfileImage:(UITapGestureRecognizer *)sender{
+    int index=(int) sender.view.tag;
+    //created dictionary from array object
+    NSDictionary * dataDict =[homeFeedData objectAtIndex:index];
+    NSString *userName;
+    NSString *cityName;
+    NSString * userID;
+    NSString * urlStringForProfileImage =[dataDict valueForKey:@"userImage"];
+    NSArray *refertitle =[dataDict valueForKey:@"refertitle"];
+    if (refertitle!=nil) {
+        userName=[[refertitle objectAtIndex:0]valueForKey:@"name"];
+        cityName=[[refertitle objectAtIndex:1]valueForKey:@"name"];
+        userID =[dataDict valueForKey:@"posted_by"];
+        [self openUserProfile:userID :userName: urlStringForProfileImage];
+    }
     
 }
 

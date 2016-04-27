@@ -11,7 +11,6 @@
 @interface ViewUserProfileViewController : UIViewController<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextViewDelegate>
 {
     __weak IBOutlet UILabel *infoTitleLbl;
-    __weak IBOutlet NSLayoutConstraint *imageAboveHeight;
      __weak IBOutlet UILabel * userNameLbl;
      __weak IBOutlet UILabel * statusLbl;
      __weak IBOutlet UIImageView * userImageView;
@@ -21,19 +20,22 @@
     __weak IBOutlet UILabel *follower;
     __weak IBOutlet UIButton *writeMsgBtn;
     __weak IBOutlet UIButton *followBtn;
-    __weak IBOutlet UILabel *followLogo;
-    __weak IBOutlet UILabel *messageLogo;
     __weak IBOutlet NSLayoutConstraint *tableHeight;
     NSMutableArray * userdataArray;
+    __weak IBOutlet UIView *imageBackgroundView;
     
+    __weak IBOutlet UIButton *changeImageButton;
     UIImagePickerController *ipc;
     UIPopoverController *popover;
+    __weak IBOutlet UIImageView *backgroundImageView;
     
 }
 
 
 @property (weak, nonatomic) IBOutlet UITableView *viewProfileTableView;
 @property(strong,nonatomic)NSString * userID;
+@property(assign,nonatomic)BOOL fromMenu;
+- (IBAction)changeImageButtonClick:(id)sender;
 
 - (IBAction)followClick:(id)sender;
 - (IBAction)messgeClick:(id)sender;
