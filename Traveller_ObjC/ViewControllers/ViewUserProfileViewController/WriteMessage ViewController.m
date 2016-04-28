@@ -60,7 +60,7 @@
 }
 -(void)messageWebservice{
     NSString * userID =[UserData getUserID];
-    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=message&message=%@",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,_publicId,_descriptionTextView.text];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=message&message=%@&type=phone_message",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,_publicId,_descriptionTextView.text];
  NSDictionary * dict =  [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;

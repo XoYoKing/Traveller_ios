@@ -17,15 +17,24 @@
 @implementation SettingViewController
 
 
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"Settings";
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont

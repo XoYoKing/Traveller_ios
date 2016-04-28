@@ -16,6 +16,7 @@
 {
         UIScrollView * myScrollView;
         GIBadgeView * badgeView;
+        UIImageView* avatarImageView;
     
         NSMutableArray * buttonArray;
         NSMutableArray * homeFeedData;

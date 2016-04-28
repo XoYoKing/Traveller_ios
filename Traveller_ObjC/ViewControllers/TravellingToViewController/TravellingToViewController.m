@@ -37,9 +37,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];
-      [self setUpNavigationBar];
+    [self setUpNavigationBar];
     self.title=@"Travelling To";
     citiesArray=[NSMutableArray new];
     citiesPage=1;

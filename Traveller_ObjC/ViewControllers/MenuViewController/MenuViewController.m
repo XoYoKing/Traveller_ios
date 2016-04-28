@@ -42,7 +42,14 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-      [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
+    
+    NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
+    if (profileUrl) {
+        [imageViewOfUser sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+    }
+    nameOfUser.text=[UserData getUserName];
+    addressOfUser.text=[UserData getUserCity];
+    [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
 }
 
 -(void)setUpView{

@@ -14,6 +14,13 @@
 
 @implementation TermsAndConditionViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden=NO;

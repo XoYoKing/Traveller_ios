@@ -14,6 +14,12 @@
 
 @implementation ChangePasswordViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     lbl1.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];

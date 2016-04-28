@@ -37,7 +37,6 @@ if (citiesArray.count==0||citiesArray==nil) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];
     self.title=@"Search";
     citiesArray=[NSMutableArray new];
     citiesPage=1;
@@ -144,7 +143,7 @@ if (citiesArray.count==0||citiesArray==nil) {
         NSURL * profileUrl =[NSURL URLWithString:urlStringForImage];
         [cell.imageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
     }
-    cell.imageView.layer.cornerRadius=30;
+    cell.imageView.layer.cornerRadius=42;
     cell.imageView.clipsToBounds=YES;
     
    cell.followLogoLbl.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
@@ -166,10 +165,10 @@ if (citiesArray.count==0||citiesArray==nil) {
         cell.followNameLbl.hidden=YES;
         cell.followBackView.hidden=YES;
     }else{
-        cell.followNameLbl.hidden=NO;
-        cell.followLogoLbl.hidden=NO;
-        cell.followNameLbl.hidden=NO;
-        cell.followBackView.hidden=NO;
+        cell.followNameLbl.hidden=YES;
+        cell.followLogoLbl.hidden=YES;
+        cell.followNameLbl.hidden=YES;
+        cell.followBackView.hidden=YES;
     }
     
     

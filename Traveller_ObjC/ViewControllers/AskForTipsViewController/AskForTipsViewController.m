@@ -14,6 +14,13 @@
 
 @implementation AskForTipsViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
+
 -(void)viewDidAppear:(BOOL)animated{
     if (badgeView==nil) {
         [self addNotificationView];
@@ -40,7 +47,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnView)];
     tap.cancelsTouchesInView = YES;
     tap.numberOfTapsRequired = 1;
-    //    [self.view addGestureRecognizer:tap];
+      [self.view addGestureRecognizer:tap];
     
     searchBtn.titleLabel.font =[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
     [searchBtn setTitle:[NSString stringWithUTF8String:ICOMOON_SEARCH] forState:UIControlStateNormal];
@@ -370,7 +377,7 @@
         textView.hidden=YES;
         sendButton.hidden=YES;
         textViewHeight.constant=0;
-        searchViewaboveConstraint.constant=-50;
+        searchViewaboveConstraint.constant=-60;
         [self.view layoutIfNeeded];
         [self performSelector:@selector(callMethodLate) withObject:nil afterDelay:2];
     }

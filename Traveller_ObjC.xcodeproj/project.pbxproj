@@ -697,8 +697,8 @@
 			children = (
 				AA37891E1CB610C2000F151B /* MenuViewController.h */,
 				AA37891F1CB610C2000F151B /* MenuViewController.m */,
-				39F187BF1CB7E088001ABFB0 /* MenuCell.h */,
 				39F187C01CB7E088001ABFB0 /* MenuCell.m */,
+				39F187BF1CB7E088001ABFB0 /* MenuCell.h */,
 			);
 			path = MenuViewController;
 			sourceTree = "<group>";

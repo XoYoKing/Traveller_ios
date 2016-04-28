@@ -30,6 +30,8 @@
                                            selector:@selector(targetMethod)
                                            userInfo:nil
                                             repeats:YES];
+    progressBar.layer.cornerRadius=7;
+    progressBar.clipsToBounds=YES;
 //    image.layer.shadowOffset = CGSizeMake(1, 1);
 //    image.layer.shadowColor = [[UIColor blackColor] CGColor];
 //    image.layer.shadowRadius = 4.0f;

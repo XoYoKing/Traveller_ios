@@ -14,6 +14,14 @@
 
 @implementation WishToVisitViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
+    self.navigationController.navigationBar.barTintColor=navigation_background_Color;
+    self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
+}
+
+
+
 -(void)viewDidAppear:(BOOL)animated{
     if (badgeView==nil) {
         [self addNotificationView];
@@ -26,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
-    self.title=@"Wish To Visit";
+    self.title=@"Follow Visited User";
     citiesArray=[NSMutableArray new];
     citiesPage=1;
     citiesPagingBoolean=YES;
@@ -98,7 +106,7 @@
         [newDict addEntriesFromDictionary:dataDict];
         [newDict setObject:@"1" forKey:@"follow"];
         [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
-        [self.view makeToast:@"You are not following now"duration:toastDuration position:toastPositionBottomUp];
+        [self.view makeToast:@"You are not following an user"duration:toastDuration position:toastPositionBottomUp];
     }
     [self performSelectorInBackground:@selector(inviteWebservice) withObject:nil];
 }
@@ -195,11 +203,11 @@
     
     int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
     if (showFollow ==1) {
-        [cell.followButton setTitle:@"Invite" forState:UIControlStateNormal];
-        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+        [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        cell.followButton.backgroundColor=Uncheck_Color;
     }else{
-        [cell.followButton setTitle:@"UnInvite" forState:UIControlStateNormal];
-        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+        [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        cell.followButton.backgroundColor=Check_Color;
     }
     cell.followButton.tag=indexPath.row;
     [cell.followButton addTarget:self action:@selector(inviteClick:) forControlEvents:UIControlEventTouchUpInside];

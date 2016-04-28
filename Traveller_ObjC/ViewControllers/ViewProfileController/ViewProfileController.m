@@ -571,23 +571,23 @@
     
     if (selectedIndex==0) {
         if(homeFeedData.count==0){
-            [self.view makeToast:@"No Feeds Available Now" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:[NSString stringWithFormat:@" %@ Have No Feeds",_name]duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==1) {
         if( visitedCitiesData.count==0){
-            [self.view makeToast:@"None of city you had visited." duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:[NSString stringWithFormat:@" %@ hand no city visited yet !!!",_name] duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==2) {
         if(wishToData.count==0){
-            [self.view makeToast:@"No cities is found in your wishlist destinations" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:[NSString stringWithFormat:@"No cities is found in %@'s wishlist destinations",_name] duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==3) {
         if( followerData.count==0){
-            [self.view makeToast:@"No one is following you" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:[NSString stringWithFormat:@"No one is following %@",_name] duration:toastDuration position:toastPositionBottomUp];
         }
     }else   if (selectedIndex==4) {
         if(followingData.count==0){
-            [self.view makeToast:@" You dont follow anyone" duration:toastDuration position:toastPositionBottomUp];
+            [self.view makeToast:[NSString stringWithFormat:@" %@ dont follow anyone",_name]duration:toastDuration position:toastPositionBottomUp];
         }
     }
     
@@ -1652,8 +1652,8 @@
 #pragma mark====================Get Follower Data Data From Webservice=============================
 -(void)getFollowerData{
     
-    NSString * userID =_userId;
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,followerPage];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,_userId,followerPage];
     followerPage=1;
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followerData addObjectsFromArray:[dict valueForKey:@"data"]];
@@ -1662,8 +1662,8 @@
 
 -(void)getFollowerDataForPaging{
     
-    NSString * userID =_userId;
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,followerPage];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,_userId,followerPage];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[dict valueForKey:@"data"];
     if (data.count==0) {
@@ -1679,8 +1679,8 @@
 #pragma mark====================Get Follow List Data From Webservice=============================
 -(void)getFollowListData{
     
-    NSString * userID =_userId;
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followingPage];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=&publicId=%@&%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,_userId,followingPage];
     followingPage=1;
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
@@ -1690,8 +1690,8 @@
 
 -(void)getFollowListDataForPaging{
     
-    NSString * userID =_userId;
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followingPage];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=&publicId=%@&%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,_userId,followingPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {

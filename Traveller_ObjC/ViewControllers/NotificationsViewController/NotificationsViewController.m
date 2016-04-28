@@ -340,7 +340,10 @@
     if ( [cell.textView.text isEqualToString:@"Write Message"]) {
         [self.view makeToast:@"Please write message" duration:toastDuration position:toastPositionBottomUp];
     }else{
+         [self.view makeToast:@"Message sent successfully" duration:toastDuration position:toastPositionBottomUp];
           msgForService=cell.textView.text;
+        cell.textView.text = @"Write Message";
+        cell.textView.textColor = [UIColor lightGrayColor];
            [self performSelectorInBackground:@selector(askForTipsWebservice) withObject:nil];
     }
 }
@@ -348,7 +351,7 @@
 
 -(void)askForTipsWebservice{
     NSString * userID =[UserData getUserID];
-    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@&type=phone_message",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
     [[WebHandler sharedHandler]getDataFromWebservice:str];
 }
 
@@ -361,14 +364,17 @@
     if ( [cell.textView.text isEqualToString:@"Write Message"]) {
         [self.view makeToast:@"Please write message" duration:toastDuration position:toastPositionBottomUp];
     }else{
+         [self.view makeToast:@"Message Sent successfully." duration:toastDuration position:toastPositionBottomUp];
         msgForService=cell.textView.text;
+        cell.textView.text = @"Write Message";
+        cell.textView.textColor = [UIColor lightGrayColor];
         [self performSelectorInBackground:@selector(replyForMessageWebservice) withObject:nil];
     }
 }
 
 -(void)replyForMessageWebservice{
     NSString * userID =[UserData getUserID];
-    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@&type=phone_message",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
     [[WebHandler sharedHandler]getDataFromWebservice:str];
 }
 
@@ -390,6 +396,8 @@
         ip =[NSIndexPath indexPathForRow:index inSection:0];
         }
         
+         [self.view makeToast:@"Invitatation Deleted successfully" duration:toastDuration position:toastPositionBottomUp];
+        
     }else if (selectedIndex==1){
         itemDelete=[ask_for_tip objectAtIndex:index];
         if(ask_for_tip.count==1){
@@ -399,6 +407,7 @@
         [ask_for_tip removeObjectAtIndex:index];
         ip =[NSIndexPath indexPathForRow:index inSection:0];
         }
+         [self.view makeToast:@"Asked Tip Deleted successfully" duration:toastDuration position:toastPositionBottomUp];
     }else if (selectedIndex==2){
         itemDelete=[message objectAtIndex:index];
         if(message.count==1){
@@ -408,6 +417,7 @@
         [message removeObjectAtIndex:index];
         ip =[NSIndexPath indexPathForRow:index inSection:0];
         }
+         [self.view makeToast:@"Message Deleted successfully" duration:toastDuration position:toastPositionBottomUp];
     }else{
         itemDelete=[follow objectAtIndex:index];
         if(follow.count==1){
@@ -417,12 +427,16 @@
         [follow removeObjectAtIndex:index];
         ip =[NSIndexPath indexPathForRow:index inSection:0];
         }
+         [self.view makeToast:@"Follow Notification Deleted successfully" duration:toastDuration position:toastPositionBottomUp];
     }
     if (ip) {
         [notificationTableView beginUpdates];
         [notificationTableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
         [notificationTableView endUpdates];
         [notificationTableView reloadData];
+        
+        
+        
         [self performSelectorInBackground:@selector(deleteWebservice) withObject:nil];
     }
 }

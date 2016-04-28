@@ -37,6 +37,12 @@
     self.navigationController.navigationBarHidden=NO;
      self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
     self.navigationController.navigationBar.barTintColor=[UIColor clearColor];
+           
+           NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
+           if (profileUrl) {
+               [avatarImageView sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
+           }
+           
        }
 }
 - (void)viewDidLoad {
@@ -250,7 +256,7 @@
 
     tableView.tableHeaderView = tableHeaderView;
     
-    UIImageView* avatarImageView = [self createAvatarImage];
+    avatarImageView = [self createAvatarImage];
     
     NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
     if (profileUrl) {
@@ -1879,6 +1885,7 @@ NSString * str =@"Post is Shared From Traweller App.";
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView endUpdates];
+    [self performSelectorInBackground:@selector(feedDeleteWebservice) withObject:nil];
 }
 -(void)feedDeleteWebservice{
     NSString * taskID =[selectedDictForDelete valueForKey:@"id"];

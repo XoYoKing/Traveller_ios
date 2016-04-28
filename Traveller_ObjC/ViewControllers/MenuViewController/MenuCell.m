@@ -11,6 +11,12 @@
 @implementation MenuCell
 -(void)awakeFromNib{
     
+    if (iPAD) {
+           [_menuBGView addWhiteLayerAndCornerRadius:55 AndWidth:1];
+    }else{
+        [_menuBGView addWhiteLayerAndCornerRadius:20 AndWidth:1];
+    }
+    
     [self addShaddowToView:_menuBGView];
     _menuBGView.backgroundColor=menu_Color;
     _menuImgLbl.textColor=[UIColor whiteColor];
