@@ -20,12 +20,6 @@
 #pragma mark = didFinishLaunchingWithOptions
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
-    
-    UIFont *systemFont = [UIFont systemFontOfSize:12];
-    NSLog(@"what is it?    %@       %@", systemFont.familyName, systemFont.fontName);
-    
-    systemFont = [UIFont boldSystemFontOfSize:12];
-    NSLog(@"what is it?    %@       %@", systemFont.familyName, systemFont.fontName);
     //For Facebook
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
@@ -39,10 +33,6 @@
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
     [application registerUserNotificationSettings:settings];
     
-    
-
-    
-    
     return YES;
 }
 
@@ -53,17 +43,12 @@
 }
 -(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    // Prepare the Device Token for Registration (remove spaces and < >)
     NSString *devToken = [[[[deviceToken description]
                             stringByReplacingOccurrencesOfString:@"<"withString:@""]
                            stringByReplacingOccurrencesOfString:@">" withString:@""]
                           stringByReplacingOccurrencesOfString: @" " withString: @""];
     NSLog(@"My token is: %@", devToken);
-    
-    NSError*error;
-    NSString *stringToWrite = devToken;
-    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"myfile.txt"];
-    [stringToWrite writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    [UserData setDeviceTokenId:devToken];
 }
 -(void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 
@@ -71,8 +56,31 @@
     NSLog(@"Failed to get token, error: %@", error);
 }
 
+#pragma mark ++++++++++++++++  Push Notification Dictionary will come Here++++++++++++++
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    // As you got notification check dicitionary and open View just remove when you complete notification
+    
+#if DEBUG
+    
+    JASidePanelController * vc = [[JASidePanelController alloc] init];
+    UIStoryboard * main =[UIStoryboard storyboardMain];
+    vc.leftPanel = [main instantiateViewControllerWithIdentifier:@"MenuViewController"];
+    HomeViewController * homeVc = [main instantiateViewControllerWithIdentifier:@"HomeViewController"];
+    _drawerView=vc;
+    _drawerView.panningLimitedToTopViewController=NO;
+    _drawerView.recognizesPanGesture=NO;
+    if (iPAD) {
+        _drawerView.leftFixedWidth=self.window.frame.size.width/2;
+    }else{
+        _drawerView.leftFixedWidth=self.window.frame.size.width/1.5;
+    }
+    vc.centerPanel = [[UINavigationController alloc] initWithRootViewController:homeVc];
+    UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
+    self.window.rootViewController=nav;
+    
+#endif
+    
 }
 
 #pragma mark = openURL

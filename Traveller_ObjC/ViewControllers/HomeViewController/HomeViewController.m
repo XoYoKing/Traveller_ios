@@ -105,12 +105,14 @@
 
 }
 
+#pragma mark++++++++++++++++++++Update Notification Count+++++Observer Method+++++++++
 -(void)updateNotificationCount:(NSNotification *)notification{
     NSDictionary * dict =notification.object;
     int count = [[dict valueForKey:@"tip_count"] intValue];
     badgeView.badgeValue = count;
 }
 
+#pragma mark++++++++++++++++++++Refresh Cell after Like+++++Observer Method+++++++++
 -(void)refreshLikeCell:(NSNotification *)notification{
     NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForLikeNotification inSection:0];
     
@@ -143,7 +145,7 @@
     }
 }
 
-
+#pragma mark++++++++++++++++++++Refresh Cell after Comment+++++Observer Method+++++++++
 -(void)refreshCommentCell:(NSNotification *)notification{
     NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForCommentNotification inSection:0];
     if (ip!=nil) {
@@ -1163,6 +1165,9 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 42;
+}
 #pragma mark====================On Selection of Segment===============================
 -(void)buttonEvent:(UIButton*)sender
 {
@@ -1201,9 +1206,7 @@
     [self setupTableAfterClick];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 42;
-}
+
 
 
 -(void)setupTableAfterClick{
@@ -1829,7 +1832,7 @@ NSString * str =@"Post is Shared From Traweller App.";
     
 }
 
-#pragma mark ==== Delete===
+#pragma mark ++++++++++++++++++++++++++More Info Button Of Post++++++++++++++++++++++++++++++++
 -(void)showAlert{
     
     UIAlertController * view=   [UIAlertController
@@ -1867,6 +1870,8 @@ NSString * str =@"Post is Shared From Traweller App.";
     [self presentViewController: view animated:YES completion:nil];
 
 }
+
+#pragma mark ++++++++++++++++++++++++++Delete Post++++++++++++++++++++++++++++++++
 -(void)doDeleteOfFeed{
     [homeFeedData containsObject:selectedDictForDelete];
     NSInteger i =  [homeFeedData indexOfObject:selectedDictForDelete];
@@ -1877,6 +1882,8 @@ NSString * str =@"Post is Shared From Traweller App.";
       [self.tableView endUpdates];
      [self performSelectorInBackground:@selector(feedDeleteWebservice) withObject:nil];
 }
+
+#pragma mark ++++++++++++++++++++++++++Delete Wish To++++++++++++++++++++++++++++++++
 -(void)doDeleteWishedTo{
     [wishToData containsObject:selectedDictForDelete];
     NSInteger i =  [wishToData indexOfObject:selectedDictForDelete];
@@ -1887,6 +1894,8 @@ NSString * str =@"Post is Shared From Traweller App.";
     [self.tableView endUpdates];
     [self performSelectorInBackground:@selector(feedDeleteWebservice) withObject:nil];
 }
+
+#pragma mark ++++++++++++++++++++++++++Delete Webservice++++++++++++++++++++++++++++++++
 -(void)feedDeleteWebservice{
     NSString * taskID =[selectedDictForDelete valueForKey:@"id"];
     NSString * type = [selectedDictForDelete valueForKey:@"activity_type"];

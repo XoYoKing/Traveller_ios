@@ -9,10 +9,10 @@
 #import "UIStoryboard+BTAdditions.h"
 
 @implementation UIStoryboard (BTAdditions)
-+ (instancetype)storyboardWithName:(NSString *)name
++ (instancetype)storyboardMain
 {
     NSBundle *bundle = [NSBundle mainBundle];
-    NSString *storyboardName = name ?: [bundle objectForInfoDictionaryKey:@"UIMainStoryboardFile"];
+    NSString *storyboardName = [bundle objectForInfoDictionaryKey:@"Storyboard"];
     return [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
 }
 @end

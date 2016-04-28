@@ -12,7 +12,7 @@
 -(void)awakeFromNib{
     
     if (iPAD) {
-           [_menuBGView addWhiteLayerAndCornerRadius:55 AndWidth:1];
+        [_menuBGView addWhiteLayerAndCornerRadius:55 AndWidth:1];
     }else{
         [_menuBGView addWhiteLayerAndCornerRadius:20 AndWidth:1];
     }

@@ -14,25 +14,27 @@
 #import "UIAlertView+NSCookbook.h"
 @interface HomeViewController : UIViewController
 {
-        UIScrollView * myScrollView;
-        GIBadgeView * badgeView;
-        UIImageView* avatarImageView;
+        UIScrollView * myScrollView; // For Segment
+        GIBadgeView * badgeView; // For Notification Badge View
+        UIImageView* avatarImageView; // Main Profile Imageview
     
-        NSMutableArray * buttonArray;
-        NSMutableArray * homeFeedData;
-        NSMutableArray * followerData;
-        NSMutableArray * followingData;
-        NSMutableArray * wishToData;
-        NSMutableArray * visitedCitiesData;
+        NSMutableArray * buttonArray; // Segment Button Array
+        NSMutableArray * homeFeedData; // Home feed Data array
+        NSMutableArray * followerData; //// follower data Array
+        NSMutableArray * followingData; // Following Data Array
+        NSMutableArray * wishToData; // Wish to Data Array
+        NSMutableArray * visitedCitiesData; // Visited Cities Data array
 
+#pragma mark++++++++++Dont Touch this is for Scrolling Effect++++++++++
         CGFloat _headerHeight;
         CGFloat _subHeaderHeight;
         CGFloat _headerSwitchOffset;
         CGFloat _avatarImageSize;
         CGFloat _avatarImageCompressedSize;
-    
         BOOL _barIsCollapsed;
         BOOL _barAnimationComplete;
+#pragma mark ++++++++++++++++++++++++++++++++++++++++++++++
+    
         BOOL firstTimePageOpen;
         BOOL homeFeedPageShouldDoPaging;
         BOOL visitedCitiesPageShouldDoPaging;
@@ -48,7 +50,7 @@
         int selectedIndex;
         int selectedUserIdex;
         int indexForLikeNotification;
-          int indexForCommentNotification;
+        int indexForCommentNotification;
     
     NSDictionary * forLike;
     NSDictionary * selectedDictForDelete;

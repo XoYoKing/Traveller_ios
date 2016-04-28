@@ -106,22 +106,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
-            timestampString = "482739294.269809"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
-            landmarkName = "-forgetClick:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Traveller_ObjC/ViewControllers/LoginViewController/LoginViewController.m"
             timestampString = "482734566.935908"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

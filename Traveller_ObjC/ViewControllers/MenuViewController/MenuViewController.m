@@ -14,7 +14,6 @@
     __weak IBOutlet UIImageView *imageViewOfUser;
     __weak IBOutlet UILabel *nameOfUser;
     __weak IBOutlet UILabel *addressOfUser;
-    
     NSArray * menuArr;
     AppDelegate *appdelegate;
 }
@@ -23,26 +22,9 @@
 
 @implementation MenuViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    appdelegate =[[UIApplication sharedApplication] delegate];
-    menuArr=@[@"Travelline",@"Cities",@"Travelling To",@"Search",@"Settings",@"LogOut"];
-      [self setUpView];
-  
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
-  
 
-    menuTableView.backgroundColor=[UIColor whiteColor];
-}
-
--(void)updateNotificationCount:(NSNotification *)notification{
-     NSDictionary * dict =notification.object;
-    int count = [[dict valueForKey:@"tip_count"] intValue];
-    badgeView.badgeValue = count;
-}
-
+#pragma mark++++++++++++++++++++View Life Cycles+++++++++++++++++++++++++++
 -(void)viewWillAppear:(BOOL)animated{
-    
     NSURL * profileUrl =[NSURL URLWithString:[UserData getUserImageUrl]];
     if (profileUrl) {
         [imageViewOfUser sd_setImageWithURL:profileUrl placeholderImage:[UIImage imageNamed:@"No_User"]];
@@ -51,6 +33,26 @@
     addressOfUser.text=[UserData getUserCity];
     [self performSelectorInBackground:@selector(getAllNotifications) withObject:nil];
 }
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    appdelegate =[[UIApplication sharedApplication] delegate];
+    menuArr=@[@"Travelline",@"Cities",@"Travelling To",@"Search",@"Settings",@"LogOut"];
+      [self setUpView];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
+    menuTableView.backgroundColor=[UIColor whiteColor];
+}
+
+
+#pragma mark++++++++++++++++++++Update Notification Count+++++Observer Method+++++++++
+-(void)updateNotificationCount:(NSNotification *)notification{
+     NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
+}
+
+#pragma mark++++++++++++++++++++Set Up View+++++++++++++++++++++++++++++++
 
 -(void)setUpView{
     [menuTableView reloadData];
@@ -96,6 +98,9 @@
 
 }
 
+
+
+#pragma mark +++++++++++++++++++++Tableview Datasources+++++++++++++++++++++++
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return menuArr.count;
 }
@@ -161,6 +166,8 @@
         return 60;
     }
 }
+
+#pragma mark+++++++++++++++++++Open Profile View+++++++++++++++++++++++
 - (IBAction)tapedOnProfile:(id)sender {
     ViewUserProfileViewController *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewUserProfileViewController"];
     vc.userID=[UserData getUserID];
@@ -170,26 +177,35 @@
 
 }
 
+#pragma mark+++++++++++++++++++Open Cities View+++++++++++++++++++++++
 -(void)openCitiesMenu{
     CitiesViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"CitiesViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
    appdelegate.drawerView.centerPanel=nav;
 }
+
+#pragma mark+++++++++++++++++++Open Travelling to View+++++++++++++++++++++++
 -(void)opemTravellingToMenu{
         TravellingToViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"TravellingToViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
     appdelegate.drawerView.centerPanel=nav;
 }
+
+#pragma mark+++++++++++++++++++Open Search View+++++++++++++++++++++++
 -(void)openSearchMenu{
     SearchViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
     appdelegate.drawerView.centerPanel=nav;
 }
+
+#pragma mark+++++++++++++++++++Open Setting View+++++++++++++++++++++++
 -(void)openSettingMenu{
      SettingViewController* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
     appdelegate.drawerView.centerPanel=nav;
 }
+
+#pragma mark+++++++++++++++++++Logout Click+++++++++++++++++++++++
 -(void)logOutClick{
     [UserData setLogOutStatus];
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
@@ -197,12 +213,15 @@
     [imageCache clearDisk];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+#pragma mark+++++++++++++++++++Open Home View+++++++++++++++++++++++
 -(void)openHomeMenu{
     HomeViewController* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
     appdelegate.drawerView.centerPanel=nav;
 }
 
+#pragma mark+++++++++++++++++++Open Notification View+++++++++++++++++++++++
 -(IBAction)OpenNotifications:(id)sender{
     NotificationsViewController* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"NotificationsViewController"];
     vc.fromMenu=YES;
@@ -224,6 +243,7 @@
     view.layer.shadowOpacity = 0.80f;
 }
 
+#pragma mark+++++++++++++++++++Notification Webservice+++++++++++++++++++++++
 -(void)getAllNotifications{
     NSString * userID =[UserData getUserID];
     NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@",URL_CONST,ACTION_GET_NOTIFICATION,userID];
@@ -249,8 +269,6 @@
             NSDictionary * not_Dict=@{@"tip_count":[NSString stringWithFormat:@"%d",totalCount]};
             [[NSNotificationCenter defaultCenter] postNotificationName:throwNotificationStatus object:not_Dict];
         }
-    }else{
-        
     }
 
 }

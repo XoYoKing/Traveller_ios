@@ -98,6 +98,12 @@
     [plistDict writeToFile:[self filePath] atomically:YES];
 }
 
++(void )setDeviceTokenId:(NSString *)DeviceTokenId{
+    NSMutableDictionary * plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filePath]];
+    [plistDict setObject:DeviceTokenId forKey:@"DeviceTokenId"];
+    [plistDict writeToFile:[self filePath] atomically:YES];
+}
+
 #pragma mark======================= Getter Methods======================
 
 +(NSDictionary *) getNotificationDict{
@@ -111,6 +117,13 @@
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
     return [[dict valueForKey:@"NotificationCount"] intValue];
 }
+
++(NSString *) getDeviceTokenId{
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
+    return [dict valueForKey:@"DeviceTokenId"];
+}
+
+
 
 
 +(NSString *) getUserID{

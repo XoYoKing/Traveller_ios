@@ -14,6 +14,8 @@
 
 @implementation NotificationsViewController
 
+#pragma mark+++++++++++++++++++View Life Cycles+++++++++++++++++++++++
+
 -(void)viewWillDisappear:(BOOL)animated{
     self.navigationController.navigationBar.backgroundColor=[UIColor clearColor];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
@@ -62,10 +64,6 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-
-    
-    
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,6 +85,8 @@
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark+++++++++++++++++++Set Up Segment View+++++++++++++++++++++++
 
 -(void)addScrollview {
     
@@ -151,7 +151,7 @@
 }
 
 
-#pragma mark - Header Button Action
+#pragma mark+++++++++++++++++++Segment Selection Method+++++++++++++++++++++++
 -(void)buttonEvent:(UIButton*)sender
 {
     NSInteger index= sender.tag;
@@ -181,9 +181,6 @@
             }
         }
     }
-    
-    
-    
     CGRect frame1 = myScrollView.frame;
     UIButton * bt=(UIButton*)[buttonArray objectAtIndex:index];
     frame1 =bt.frame ;
@@ -191,8 +188,8 @@
     [notificationTableView reloadData];
 }
 
-#pragma mark - Table view data source
 
+#pragma mark+++++++++++++++++++Tableview Data Sources+++++++++++++++++++++++
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (selectedIndex==0) {
@@ -206,8 +203,6 @@
     }
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
     //1. Setup the CATransform3D structure
     CATransform3D rotation;
     rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
@@ -276,6 +271,8 @@
     return cell;
 }
 
+#pragma mark+++++++++++++++++++Get all notifications webservice+++++++++++++++++++++++
+
 -(void)getAllNotifications{
     NSString * userID =[UserData getUserID];
     NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@",URL_CONST,ACTION_GET_NOTIFICATION,userID];
@@ -311,8 +308,7 @@
     [notificationTableView reloadData];
     [self.view hideLoader];
 }
-
-# pragma mark  UITextView Delegates
+#pragma mark+++++++++++++++++++UITextView Delegates+++++++++++++++++++++++
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     if ([textView.text isEqualToString:@"Write Message"]) {
@@ -321,8 +317,6 @@
     }
     [textView becomeFirstResponder];
 }
-
-
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     if ([textView.text isEqualToString:@""]) {
@@ -332,6 +326,7 @@
     [textView resignFirstResponder];
 }
 
+#pragma mark+++++++++++++++++++Reply for ask Tips+++++++++++++++++++++++
 -(void)replyForAskTips:(UIButton *)btn{
     [self.view endEditing:YES];
     itemDelete=[ask_for_tip objectAtIndex:btn.tag];
@@ -356,6 +351,7 @@
 }
 
 
+#pragma mark+++++++++++++++++++Reply for Message+++++++++++++++++++++++
 -(void)replyForMsg:(UIButton *)btn{
     [self.view endEditing:YES];
     itemDelete=[message objectAtIndex:btn.tag];
@@ -371,13 +367,13 @@
         [self performSelectorInBackground:@selector(replyForMessageWebservice) withObject:nil];
     }
 }
-
 -(void)replyForMessageWebservice{
     NSString * userID =[UserData getUserID];
     NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&publicId=%@&type=%@&message=%@&type=phone_message",URL_CONST,ACTION_NOTIFICATION_REPLY,userID,[itemDelete valueForKey:@"mid"],[itemDelete valueForKey:@"type"],msgForService];
     [[WebHandler sharedHandler]getDataFromWebservice:str];
 }
 
+#pragma mark+++++++++++++++++++Delete Notification+++++++++++++++++++++++
 -(void)deleteWebservice{
         NSString * userID =[UserData getUserID];
         NSString * str =[NSString stringWithFormat:@"%@&action=%@&userId=%@&taskId=%@&type=%@",URL_CONST,ACTION_DELETE_NOTIFICATION,userID,[itemDelete valueForKey:@"id"],[itemDelete valueForKey:@"type"]];
@@ -429,14 +425,12 @@
         }
          [self.view makeToast:@"Follow Notification Deleted successfully" duration:toastDuration position:toastPositionBottomUp];
     }
+    
     if (ip) {
         [notificationTableView beginUpdates];
         [notificationTableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
         [notificationTableView endUpdates];
         [notificationTableView reloadData];
-        
-        
-        
         [self performSelectorInBackground:@selector(deleteWebservice) withObject:nil];
     }
 }

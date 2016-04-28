@@ -16,6 +16,8 @@
 
 +(NSString *) getUserID;
 
++(NSString *) getDeviceTokenId;
+
 +(NSString *) getUserCreated_On;
 
 +(NSString *) getUserCity;
@@ -71,6 +73,9 @@
 +(void )setImageUrl:(NSString *)url;
 
 +(void )setPassword:(NSString *)password;
+
++(void )setDeviceTokenId:(NSString *)DeviceTokenId;
+
 
 +(void ) setLogOutStatus;
 @end

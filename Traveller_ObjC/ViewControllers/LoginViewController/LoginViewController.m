@@ -208,6 +208,7 @@
     }
 }
 
+
 -(void)loginForGoogle:(NSDictionary*)googleDict{
     NSString * name=[googleDict valueForKey:@"name"];
     NSString * email=[googleDict valueForKey:@"email"];
@@ -228,13 +229,16 @@
 }
 
 #pragma mark====================Login With Email===============================
+
 - (IBAction)loginClick:(id)sender {
     [self.view endEditing:YES];
+    
 #if DEBUG
     userNameTextField.text=@"nitin@gmail.com";
     passwordTextField.text=@"nitin123";
   #endif
 
+    
     if ([userNameTextField validate]&&[passwordTextField validate]) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(callLoginWebservice) withObject:nil];
@@ -262,7 +266,11 @@
 }
 
 #pragma mark====================Open Home Page===============================
+
 -(void)loginSuccessful{
+    
+    [self registerDeviceId]; // register Device token
+    
       [JTProgressHUD hide];
     JASidePanelController * vc = [[JASidePanelController alloc] init];
     vc.leftPanel = [self.storyboard instantiateViewControllerWithIdentifier:@"MenuViewController"];
@@ -284,6 +292,7 @@
 
 #pragma mark====================Show Hide Password===============================
 
+
 - (IBAction)showHidePasswordClick:(id)sender {
     if( passwordTextField.secureTextEntry==YES){
         passwordTextField.secureTextEntry=NO;
@@ -296,6 +305,7 @@
 
 
 #pragma mark====================Forget Password Click===============================
+
 
 - (IBAction)forgetClick:(id)sender {
     
@@ -312,7 +322,7 @@
     [presentingController setModalPresentationStyle:UIModalPresentationOverCurrentContext];
 }
 
-#pragma mark====================SinUp Click===============================
+#pragma mark====================Sign Up Click===============================
 
 - (IBAction)signUpClick:(id)sender {
     SignUpViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"SignUpViewController"];
@@ -320,10 +330,8 @@
     
 }
 
+#pragma mark - ++++++++++++++++++ Start up View ++++++++++++++++++++++++++
 
-
-
-#pragma mark - ABCIntroViewDelegate Methods
 
 -(void)onDoneButtonPressed{
     [UserData setIntroShown];
@@ -335,12 +343,19 @@
 }
 
 
+#pragma mark +++++++++++++++++++Show Toast Message Method +++++++++++++++++++
+
 -(void)showToastWithMessage:(NSString *)msg{
      [self.view hideLoader];
     [self.view makeToast:msg duration:toastDuration position:toastPositionBottomUp];
 }
 
+#pragma mark+++++++++++++++++++Call register Device Id Service Here+++++++++++++++++++++++
 
+-(void)registerDeviceId{
+#warning TO DO FOR PUSH NOTIFICATION
+    // Pass Device Token id To server For push Notification and till responce come show Loader
+}
 
 
 @end
