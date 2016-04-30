@@ -25,14 +25,14 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1686299901643831</string>
+				<string>fb507151136156295</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2.0.3</string>
 	<key>FacebookAppID</key>
-	<string>1686299901643831</string>
+	<string>507151136156295</string>
 	<key>FacebookDisplayName</key>
 	<string>Traweller</string>
 	<key>LSApplicationCategoryType</key>

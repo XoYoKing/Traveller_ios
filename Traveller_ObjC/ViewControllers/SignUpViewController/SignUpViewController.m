@@ -151,7 +151,7 @@
     cancelBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     updateBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     
-    [userNameTF addRegx:@"[A-Za-z0-9]{3,10}" withMsg: @"Only alpha numeric characters are allowed"];
+    [userNameTF addRegx:@"[A-Za-z]{3,30}" withMsg: @"Username characters limit should be come between 6-20"];
      [emailTF addRegx:@"[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" withMsg: @"Enter valid email"];
      [passwordTF addRegx:@"^.{6,20}$" withMsg: @"Password characters limit should be come between 6-20"];
      [confirmPasswordTF addConfirmValidationTo:passwordTF withMsg:@"Confirm password didn’t match"];

@@ -23,7 +23,7 @@
 #pragma mark====================View Controller Life Cycles===============================
 
 -(void)viewDidAppear:(BOOL)animated{
-    [RFRateMe showRateAlertAfterTimesOpened:30];
+    [RFRateMe showRateAlertAfterTimesOpened:3000];
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
@@ -1098,7 +1098,7 @@
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    NSArray * namesOfMenus =@[@"Feeds",@"Places Visited",@"Wish To",@"Followers",@"Following"];
+    NSArray * namesOfMenus =@[@"Feeds",@"Visited",@"Wish To",@"Followers",@"Following"];
     
      myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
             CGFloat scrollWidth = 0.f;

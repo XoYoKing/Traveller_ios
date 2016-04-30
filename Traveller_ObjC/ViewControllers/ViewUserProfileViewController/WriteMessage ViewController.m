@@ -35,8 +35,17 @@
 }
 
 
+-(void)hideKeybord{
+    [self.view endEditing:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeybord)];
+    tap.cancelsTouchesInView = YES;
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+    
     self.title=@"Send Message";
     [self setUpNavigationBar];
     _descriptionTextView.layer.borderWidth=1;

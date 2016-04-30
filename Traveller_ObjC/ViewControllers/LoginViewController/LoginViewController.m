@@ -65,7 +65,7 @@
     [loginButton addBlackLayerAndCornerRadius:cornerRadius_Button AndWidth:borderWidth_Button];
     [loginButton addShaddow];
     [userNameTextField addRegx:@"^.{3,30}$" withMsg:@"User name charaters limit should be come between 3-30"];
-    [passwordTextField addRegx:@"[A-Za-z0-9]{6,20}" withMsg:@"Password must be alpha numeric"];
+    [passwordTextField addRegx:@"[A-Za-z0-9]{4,20}" withMsg:@"Password charaters limit should be come between 4-20"];
     
 }
 
@@ -133,7 +133,7 @@
                                @"fb_id":fb_id,
                                @"id":[dict valueForKey:@"mid"],
                                @"add_date" : @"",
-                               @"city" : @"pune to",
+                               @"city" : @"",
                                @"country": @"",
                                @"gcm_regid" :@"",
                                @"gender" : @"0",
@@ -234,8 +234,8 @@
     [self.view endEditing:YES];
     
 #if DEBUG
-    userNameTextField.text=@"nitin@gmail.com";
-    passwordTextField.text=@"nitin123";
+//    userNameTextField.text=@"sagar@gmail.com";
+   // passwordTextField.text=@"sagar123";
   #endif
 
     

@@ -86,7 +86,7 @@
 
 -( void)setUpScrollView {
     
-    NSArray * namesOfMenus =@[@"Place",@"Food",@"Accommodation",@"Shopping"];
+    NSArray * namesOfMenus =@[@"Place",@"Food",@"Stay",@"Shop"];
     CGFloat scrollWidth = 0.f;
     buttonArray=[[NSMutableArray alloc]init];
     for ( int j=0; j<namesOfMenus.count; j++)
@@ -318,12 +318,14 @@
     
      if (_EditPostDirectory) {
           [btnSend setTitle:@"Update" forState:UIControlStateNormal];
+         [btnSend addTarget:self action:@selector(updatePost) forControlEvents:UIControlEventTouchUpInside];
+
      }else{
           [btnSend setTitle:@"Post" forState:UIControlStateNormal];
+         [btnSend addTarget:self action:@selector(savePost) forControlEvents:UIControlEventTouchUpInside];
+
      }
     
-   
-    [btnSend addTarget:self action:@selector(savePost) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sendBarBtn = [[UIBarButtonItem alloc] initWithCustomView:btnSend];
 
     NSMutableArray *buttonArrayForNav=[[NSMutableArray alloc]initWithCapacity:2];

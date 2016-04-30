@@ -19,9 +19,18 @@
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     self.navigationController.navigationBar.tintColor=[UIColor whiteColor];
 }
-
+-(void)hideKeybord{
+    [self.view endEditing:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeybord)];
+    tap.cancelsTouchesInView = YES;
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+    
+    
     lbl1.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
     lbl2.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];
     lbl3.font=[UIFont fontWithName:font_bold size:font_size_normal_regular];

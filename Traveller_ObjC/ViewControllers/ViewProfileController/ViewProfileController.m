@@ -1652,8 +1652,7 @@
 #pragma mark====================Get Follower Data Data From Webservice=============================
 -(void)getFollowerData{
     
-    NSString * userID =[UserData getUserID];
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,userID,_userId,followerPage];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_MY_FOLLOW_LIST,_userId,followerPage];
     followerPage=1;
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followerData addObjectsFromArray:[dict valueForKey:@"data"]];
@@ -1680,7 +1679,7 @@
 -(void)getFollowListData{
     
     NSString * userID =[UserData getUserID];
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=&publicId=%@&%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,_userId,followingPage];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d&publicId=%@",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,followingPage,_userId];
     followingPage=1;
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [followingData addObjectsFromArray:[homefeed valueForKey:@"data"]];
@@ -1691,7 +1690,7 @@
 -(void)getFollowListDataForPaging{
     
     NSString * userID =[UserData getUserID];
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=&publicId=%@&%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,userID,_userId,followingPage];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&page=%d",URL_CONST,ACTION_GET_FOLLOWER_LIST,_userId,followingPage];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[homefeed valueForKey:@"data"];
     if (data.count==0) {
