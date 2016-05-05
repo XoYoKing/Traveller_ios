@@ -28,9 +28,25 @@
 				<string>fb507151136156295</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.214469689121-i1abnkkcgt07kuah3o46f5o974s2fikb</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.traweller</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.3</string>
+	<string>2.0.5</string>
 	<key>FacebookAppID</key>
 	<string>507151136156295</string>
 	<key>FacebookDisplayName</key>

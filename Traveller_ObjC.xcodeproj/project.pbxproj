@@ -67,6 +67,7 @@
 		AA3789231CB610D2000F151B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789221CB610D2000F151B /* HomeViewController.m */; };
 		AA3789261CB610E0000F151B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789251CB610E0000F151B /* LoginViewController.m */; };
 		AA37892A1CB62D71000F151B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */; };
+		AA469F161CDB503000673866 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA469F151CDB503000673866 /* GoogleService-Info.plist */; };
 		AA5A77781CC0B96B001355C8 /* WishToVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A77771CC0B96B001355C8 /* WishToVisitViewController.m */; };
 		AA5A777B1CC0B977001355C8 /* InviteToJoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A777A1CC0B977001355C8 /* InviteToJoinViewController.m */; };
 		AA5A777E1CC0B986001355C8 /* AskForTipsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A777D1CC0B986001355C8 /* AskForTipsViewController.m */; };
@@ -205,6 +206,7 @@
 		AA3789251CB610E0000F151B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		AA3789281CB62D71000F151B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		AA3789291CB62D71000F151B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		AA469F151CDB503000673866 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA5A77761CC0B96B001355C8 /* WishToVisitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WishToVisitViewController.h; sourceTree = "<group>"; };
 		AA5A77771CC0B96B001355C8 /* WishToVisitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WishToVisitViewController.m; sourceTree = "<group>"; };
 		AA5A77791CC0B977001355C8 /* InviteToJoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteToJoinViewController.h; sourceTree = "<group>"; };
@@ -622,6 +624,7 @@
 		AA2BC0C41CB4E3230030A0E5 /* ConstantFiles */ = {
 			isa = PBXGroup;
 			children = (
+				AA469F151CDB503000673866 /* GoogleService-Info.plist */,
 				AA2BC0E61CB53FBB0030A0E5 /* TravellerConstants.h */,
 				3904198E1CBC1ACD00879650 /* UserData.plist */,
 				390419901CBC1AEF00879650 /* UserData.h */,
@@ -958,6 +961,7 @@
 				3996914C1CB90F29000A3A4A /* FollowingTableViewCell.xib in Resources */,
 				39F187B31CB7A363001ABFB0 /* Storyboard.storyboard in Resources */,
 				399691481CB90EBA000A3A4A /* WishedToTableViewCell.xib in Resources */,
+				AA469F161CDB503000673866 /* GoogleService-Info.plist in Resources */,
 				AA807B471CBE7AAF00D1E665 /* CountryPicker.bundle in Resources */,
 				3904198F1CBC1ACD00879650 /* UserData.plist in Resources */,
 			);
@@ -1139,7 +1143,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d1144a12-5b71-4418-8803-424eba8a5461";
+				PROVISIONING_PROFILE = "e99ebfb9-5fb0-4689-a9d2-f7ab297bfafd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1180,7 +1184,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "d1144a12-5b71-4418-8803-424eba8a5461";
+				PROVISIONING_PROFILE = "e99ebfb9-5fb0-4689-a9d2-f7ab297bfafd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1201,7 +1205,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1224,7 +1228,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";

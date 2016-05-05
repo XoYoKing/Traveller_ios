@@ -5,7 +5,7 @@
 
 target 'Traveller_ObjC' do
 
-pod 'google-plus-ios-sdk'
+pod 'Google/SignIn'
 pod 'FBSDKLoginKit'
 pod 'FBSDKCoreKit'
 pod 'AFNetworking', '~> 2.5'

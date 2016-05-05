@@ -237,8 +237,8 @@
     [notificationButton addSubview:badgeView];
     badgeView.badgeValue = [UserData getNotificationCount];
     [self addShaddowToView:notificationButton];
-    [self.view addSubview:notificationButton];
-    [self.view bringSubviewToFront:notificationButton];
+ //   [self.view addSubview:notificationButton];
+  //  [self.view bringSubviewToFront:notificationButton];
 }
 -(void)openNotificationView{
     NotificationsViewController* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"NotificationsViewController"];

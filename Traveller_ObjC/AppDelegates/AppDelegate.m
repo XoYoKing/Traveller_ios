@@ -7,11 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import <GooglePlus/GooglePlus.h>
-#import <GoogleOpenSource/GoogleOpenSource.h>
+#import <Google/SignIn.h>
 #import "HomeViewController.h"
 
-@interface AppDelegate ()<GPPSignInDelegate>
+@interface AppDelegate ()<GIDSignInDelegate>
 
 @end
 
@@ -24,8 +23,11 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     // For Google+
-    [[GPPSignIn sharedInstance] setClientID:@"214469689121-i1abnkkcgt07kuah3o46f5o974s2fikb.apps.googleusercontent.com"];
-    [GPPSignIn sharedInstance].delegate = self;
+    NSError* configureError;
+    [[GGLContext sharedInstance] configureWithError: &configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
+    [GIDSignIn sharedInstance].delegate = self;
     [GMSServices provideAPIKey:@"AIzaSyA0Zxe_1JxR0Iemvi8RLel0ZEzWEBNPfqM"];
 
     // For Notifications
@@ -49,6 +51,9 @@
                           stringByReplacingOccurrencesOfString: @" " withString: @""];
     NSLog(@"My token is: %@", devToken);
     [UserData setDeviceTokenId:devToken];
+    
+        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"dev Token "message:[NSString stringWithFormat:@"%@",devToken] delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+        [alert show];
 }
 -(void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 
@@ -59,14 +64,13 @@
 #pragma mark ++++++++++++++++  Push Notification Dictionary will come Here++++++++++++++
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    // As you got notification check dicitionary and open View just remove when you complete notification
-    
-#if DEBUG
-    
+  if ([[UserData getUserLoginStatus]isEqualToString:@"Yes"]) {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     JASidePanelController * vc = [[JASidePanelController alloc] init];
     UIStoryboard * main =[UIStoryboard storyboardMain];
     vc.leftPanel = [main instantiateViewControllerWithIdentifier:@"MenuViewController"];
-    HomeViewController * homeVc = [main instantiateViewControllerWithIdentifier:@"HomeViewController"];
+    NotificationsViewController * homeVc = [main instantiateViewControllerWithIdentifier:@"NotificationsViewController"];
+    homeVc.fromMenu=YES;
     _drawerView=vc;
     _drawerView.panningLimitedToTopViewController=NO;
     _drawerView.recognizesPanGesture=NO;
@@ -78,8 +82,30 @@
     vc.centerPanel = [[UINavigationController alloc] initWithRootViewController:homeVc];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
     self.window.rootViewController=nav;
+  }
+}
+
+
+#pragma mark Google Sign in APIs
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary *)options {
+    return [[GIDSignIn sharedInstance] handleURL:url
+                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
+
+- (void)signIn:(GIDSignIn *)signIn
+didSignInForUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
     
-#endif
+    NSDictionary * dict =@{@"GoogleData":user};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"google" object:dict];
+    
+}
+- (void)signIn:(GIDSignIn *)signIn
+didDisconnectWithUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
     
 }
 
@@ -90,7 +116,9 @@
     NSLog(@"%@",url.scheme);
 #endif
     // Url Scheme for Google
-    return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation] ||[[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    return [[GIDSignIn sharedInstance] handleURL:url
+                               sourceApplication:sourceApplication
+                                      annotation:annotation];
     
        // Url Scheme for Facebook
     return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
@@ -125,8 +153,5 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-#pragma mark = google+ delegate Method
--(void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error{
-}
 
 @end

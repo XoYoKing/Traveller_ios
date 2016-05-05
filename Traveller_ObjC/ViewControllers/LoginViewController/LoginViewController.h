@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ABCIntroView.h"
-#import <GooglePlus/GooglePlus.h>
-#import <GoogleOpenSource/GoogleOpenSource.h>
-@interface LoginViewController : UIViewController<ABCIntroViewDelegate,GPPSignInDelegate>
+#import <Google/SignIn.h>
+@interface LoginViewController : UIViewController<ABCIntroViewDelegate,GIDSignInDelegate,GIDSignInDelegate,GIDSignInUIDelegate>
 {
     IBOutlet UIImageView *logoImage;
     IBOutlet TextFieldValidator *userNameTextField;
@@ -26,6 +25,7 @@
     IBOutlet UIButton *faceBookButton;
     IBOutlet NSLayoutConstraint *aboveConstraint;
     NSDictionary * fbdict;
+    NSDictionary * googleDict;
 }
 @property ABCIntroView *introView;
 

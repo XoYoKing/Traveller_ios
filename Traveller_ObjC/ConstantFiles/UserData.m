@@ -68,7 +68,12 @@
             [plistDict setObject: [userDict valueForKey:@"weburl"]   forKey:@"Weburl"];
             [plistDict setObject: [fromServiceDict valueForKey:@"image"]   forKey:@"ImageUrl"];
             [plistDict setObject: @"Yes" forKey:@"UserLoggedIn"];
-    [plistDict writeToFile:[self filePath] atomically:YES];
+    
+
+   BOOL y =     [plistDict writeToFile:[self filePath] atomically:NO];
+
+
+    y = [plistDict writeToFile:[self filePath] atomically:YES];
   }
 
 

@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     appdelegate =[[UIApplication sharedApplication] delegate];
-    menuArr=@[@"Travelline",@"Cities",@"Travelling To",@"Search",@"Settings",@"LogOut"];
+    menuArr=@[@"Travelline",@"Cities",@"Travelling To",@"Search",@"Notifications",@"Settings",@"LogOut"];
       [self setUpView];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNotificationCount:) name:throwNotificationStatus object:nil];
     menuTableView.backgroundColor=[UIColor whiteColor];
@@ -65,7 +65,9 @@
     imageViewOfUser.clipsToBounds=YES;
     [imageViewOfUser addShaddow];
     notificationView.layer.cornerRadius=20;
+    notificationView.hidden=YES;
      badgeView = [GIBadgeView new];
+    badgeView.hidden=YES;
     [notificationView addSubview:badgeView];
     badgeView.badgeValue = [UserData getNotificationCount];
     
@@ -127,13 +129,12 @@
     }else if (indexPath.row==3){
        cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SEARCH] ;
     }else if (indexPath.row==4){
-       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SETTING] ;
+       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_BELL] ;
     }else if (indexPath.row==5){
-       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SIGNOUT] ;
+       cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SETTING] ;
+    }else if (indexPath.row==6){
+        cell.menuImgLbl.text=[NSString stringWithUTF8String:ICOMOON_SIGNOUT] ;
     }
-
-    
- 
     
     cell.menuTitleLbl.text=[menuArr objectAtIndex:indexPath.row];
     if (iPAD) {
@@ -154,7 +155,9 @@
     }else if (indexPath.row==3){
         [self openSearchMenu];
     }else if (indexPath.row==4){
-        [self openSettingMenu];
+        [self OpenNotifications:nil];
+    }else if (indexPath.row==5){
+         [self openSettingMenu];
     }else if (indexPath.row==5){
         [self logOutClick];
     }

@@ -188,8 +188,8 @@
     [notificationButton addSubview:badgeView];
     badgeView.badgeValue = [UserData getNotificationCount];
     [notificationButton addShaddow];
-    [self.view addSubview:notificationButton];
-    [self.view bringSubviewToFront:notificationButton];
+  //  [self.view addSubview:notificationButton];
+   // [self.view bringSubviewToFront:notificationButton];
 }
 -(void)openNotificationView{
     NotificationsViewController* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"NotificationsViewController"];
@@ -1333,7 +1333,14 @@
                              [self performSelector:@selector(sharePost:) withObject:btn afterDelay:1];
                              [self dismissViewControllerAnimated:YES completion:nil];
                          }];
-        
+    UIAlertAction* remove = [UIAlertAction
+                            actionWithTitle:@"Remove from My Feeds"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                //[self performSelector:@selector(sharePost:) withObject:btn afterDelay:1];
+                                [self dismissViewControllerAnimated:YES completion:nil];
+                            }];
     
       NSString * userID;
 
@@ -1344,6 +1351,7 @@
 
     [view addAction:ok];
     [view addAction:share];
+    [view addAction:remove];
     
     if ([userID isEqualToString:[UserData getUserID]]) {
         [view addAction:edit];

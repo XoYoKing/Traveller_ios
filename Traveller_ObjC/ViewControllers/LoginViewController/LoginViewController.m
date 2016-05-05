@@ -12,6 +12,7 @@
 #import "MenuViewController.h"
 #import "ForgetPasswordViewController.h"
 #import "SignUpViewController.h"
+#import <Google/SignIn.h>
 
 @interface LoginViewController ()
 
@@ -31,8 +32,12 @@
         [self.view addSubview:self.introView];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callLoginWithGoogle:) name:@"google" object:nil];
     [self setUpView];// To set up View Properly
+    
+       [GIDSignIn sharedInstance].uiDelegate = self;
 }
+
 
 #pragma mark====================Set Up View===============================
 
@@ -65,7 +70,7 @@
     [loginButton addBlackLayerAndCornerRadius:cornerRadius_Button AndWidth:borderWidth_Button];
     [loginButton addShaddow];
     [userNameTextField addRegx:@"^.{3,30}$" withMsg:@"User name charaters limit should be come between 3-30"];
-    [passwordTextField addRegx:@"[A-Za-z0-9]{4,20}" withMsg:@"Password charaters limit should be come between 4-20"];
+    [passwordTextField addRegx:@"[A-Za-z0-9]{6,20}" withMsg:@"Password must be alpha numeric"];
     
 }
 
@@ -111,10 +116,8 @@
 }
 // its in developement phase
 -(void)loginForFacebook:(NSDictionary*)FBDict{
-    
     fbdict=FBDict;
     [self performSelectorInBackground:@selector(facebookwebservice) withObject:nil];
-
     }
 
 -(void)facebookwebservice{
@@ -133,7 +136,7 @@
                                @"fb_id":fb_id,
                                @"id":[dict valueForKey:@"mid"],
                                @"add_date" : @"",
-                               @"city" : @"",
+                               @"city" : @"pune to",
                                @"country": @"",
                                @"gcm_regid" :@"",
                                @"gender" : @"0",
@@ -164,65 +167,66 @@
 #pragma mark====================Login With Google===============================
 
 - (IBAction)googleClick:(id)sender {
-    [GPPSignIn sharedInstance].clientID = @"214469689121-i1abnkkcgt07kuah3o46f5o974s2fikb.apps.googleusercontent.com";
-    [GPPSignIn sharedInstance].scopes= [NSArray arrayWithObjects:kGTLAuthScopePlusLogin, nil];
-    [GPPSignIn sharedInstance].shouldFetchGoogleUserID=YES;
-    [GPPSignIn sharedInstance].shouldFetchGoogleUserEmail=YES;
-    [GPPSignIn sharedInstance].shouldFetchGooglePlusUser = YES;
-    [[GPPSignIn sharedInstance] authenticate];
+  [[GIDSignIn sharedInstance] signIn];
 }
 
-- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
-                   error: (NSError *) error {
-    NSLog(@"Received error %@ and auth object %@",error, auth);
-    if (error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Error: %@", [error localizedDescription]);
-            
-        });
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
-            NSLog(@"email %@ ", [NSString stringWithFormat:@"Email: %@",[GPPSignIn sharedInstance].authentication.userEmail]);
-            NSLog(@"Received error %@ and auth object %@",error, auth);
-            GTLServicePlus* plusService = [[GTLServicePlus alloc] init] ;
-            plusService.retryEnabled = YES;
-            [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
-            plusService.apiVersion = @"v1";
-            [plusService executeQuery:query
-                    completionHandler:^(GTLServiceTicket *ticket,
-                                        GTLPlusPerson *person,
-                                        NSError *error) {
-                        if (error) {
-                            
-                        } else {
-                            
-                            NSDictionary *dictOfData = [NSDictionary dictionaryWithObjectsAndKeys:[GPPSignIn sharedInstance].authentication.userEmail,@"email",person.image.url,@"image",person.displayName,@"username",@"",@"DOB",@"",@"place",@"",@"mobile", nil];
-                            [self performSelectorOnMainThread:@selector(loginForGoogle:) withObject:dictOfData waitUntilDone:YES];
-                        }
-                    }];
-            
-        });
-        
-        
+-(void)callLoginWithGoogle:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    GIDGoogleUser * user =[dict valueForKey:@"GoogleData"];
+    NSString * name=(NSString *)user.profile.name;
+    NSString * googleId=(NSString *)user.userID;
+    NSString * emailId=(NSString *)user.profile.email;
+    NSURL *url = [user.profile imageURLWithDimension:300];
+    
+    googleDict=@{
+                 @"name": name,
+                 @"googleId":googleId,
+                 @"email":emailId,
+                 @"image":url
+                 };
+    if (googleDict) {
+        [self.view showLoader];
+        [self performSelectorInBackground:@selector(googlewebservice) withObject:nil];
     }
 }
 
-
--(void)loginForGoogle:(NSDictionary*)googleDict{
+-(void)googlewebservice{
     NSString * name=[googleDict valueForKey:@"name"];
     NSString * email=[googleDict valueForKey:@"email"];
-    NSString * fb_id=[googleDict valueForKey:@"fb_id"];
-    NSString * str =[NSString stringWithFormat:@"%@name=%@&email=%@&password=&mobile=&city=&country=&state=&action=%@&signupType=facebook&fb_id=%@",URL_CONST,name,email,fb_id,ACTION_SIGNUP];
+    NSString * fb_id=[googleDict valueForKey:@"googleId"];
+    NSString * image = [googleDict valueForKey:@"image"];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&fb_id=%@&signupType=google",URL_CONST,ACTION_SIGNUP,name,email,fb_id];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
-        NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
-        if ( [status isEqual: SUCESS]) {
-            [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
-        }else{
-            NSString * msg =[dict valueForKey:@"message"];
-            [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:msg waitUntilDone:YES];
-        }
+        NSDictionary * data =@{
+                               @"name":name,
+                               @"signupType":@"google",
+                               @"user_type":@"google",
+                               @"email":email,
+                               @"fb_id":fb_id,
+                               @"id":[dict valueForKey:@"mid"],
+                               @"add_date" : @"",
+                               @"city" : @"",
+                               @"country": @"",
+                               @"gcm_regid" :@"",
+                               @"gender" : @"0",
+                               @"gp_id" : @"",
+                               @"mobile" : @"",
+                               @"my_status" : @"",
+                               @"next_destination" : @"",
+                               @"state" : @"",
+                               @"status" : @"0",
+                               @"weburl" : @"",
+                               @"password":@""
+                               };
+        NSDictionary * main=  @{
+                                @"data":@[data],
+                                @"image":[NSString stringWithFormat:@"%@",image]
+                                };
+        
+        [UserData saveUserDict:main];
+        [self performSelectorOnMainThread:@selector(loginSuccessful) withObject:nil waitUntilDone:YES];
+        
     }else{
         [self performSelectorOnMainThread:@selector(showToastWithMessage:) withObject:no_internet_message waitUntilDone:YES];
     }
@@ -234,8 +238,8 @@
     [self.view endEditing:YES];
     
 #if DEBUG
-//    userNameTextField.text=@"sagar@gmail.com";
-   // passwordTextField.text=@"sagar123";
+    userNameTextField.text=@"sagar@gmail.com";
+    passwordTextField.text=@"sagar123";
   #endif
 
     
