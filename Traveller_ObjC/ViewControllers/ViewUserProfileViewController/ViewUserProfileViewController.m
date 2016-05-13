@@ -196,7 +196,25 @@
     [buttonArray addObject:sendBarBtn];
     [buttonArray addObject:right];
     self.navigationItem.rightBarButtonItems = buttonArray;
+      }else{
+          UIButton *pwdBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+          [pwdBtn setFrame:CGRectMake(0, 0, 80, 30)];
+          pwdBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
+          pwdBtn.tintColor=[UIColor whiteColor];
+          pwdBtn.backgroundColor =[UIColor blackColor];
+          pwdBtn.layer.cornerRadius=6;
+          [pwdBtn setTitle:@"Block"forState:UIControlStateNormal];
+          [pwdBtn addTarget:self action:@selector(blockUser) forControlEvents:UIControlEventTouchUpInside];
+          UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:pwdBtn];
+          self.navigationItem.rightBarButtonItem = right;
+          NSMutableArray *buttonArray=[[NSMutableArray alloc]init];
+          [buttonArray addObject:right];
+          self.navigationItem.rightBarButtonItems = buttonArray;
       }
+}
+
+-(void)blockUser{
+    
 }
 
 -(void)changePassClick{

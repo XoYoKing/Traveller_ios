@@ -52,8 +52,7 @@
     NSLog(@"My token is: %@", devToken);
     [UserData setDeviceTokenId:devToken];
     
-        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"dev Token "message:[NSString stringWithFormat:@"%@",devToken] delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-        [alert show];
+
 }
 -(void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 

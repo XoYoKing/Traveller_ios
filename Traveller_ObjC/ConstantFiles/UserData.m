@@ -71,9 +71,6 @@
     
 
    BOOL y =     [plistDict writeToFile:[self filePath] atomically:NO];
-
-
-    y = [plistDict writeToFile:[self filePath] atomically:YES];
   }
 
 
