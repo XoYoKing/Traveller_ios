@@ -181,7 +181,7 @@
 }
 +(NSString *) getUserDestimation{
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];
-    return [dict valueForKey:@"next_destination"];
+    return [dict valueForKey:@"Next_destination"];
 }
 +(NSString *) getUserPassword{
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: [self filePath]];

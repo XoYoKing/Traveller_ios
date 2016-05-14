@@ -11,6 +11,7 @@
 #import "FRHyperLabel.h"
 #import "TravellerConstants.h"
 #import "CountryPicker.h"
+#import "SettingViewController.h"
 @interface SignUpViewController : UIViewController<CountryPickerDelegate>
 {
     __weak IBOutlet UITextField *countryTF;

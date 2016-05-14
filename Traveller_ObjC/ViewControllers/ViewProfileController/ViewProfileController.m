@@ -464,7 +464,7 @@
     followButton.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     followButton.layer.borderWidth =1;
     [followButton addShaddow];
-    followButton.hidden=YES;
+    followButton.hidden=NO;
     followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
     followButton.backgroundColor=userShouldDOButoonColor;
     [followButton addTarget:self action:@selector(tappedOnUserImage) forControlEvents:UIControlEventTouchUpInside];
@@ -702,6 +702,16 @@
         
         //mainstr have title and Also Links Managed.
         NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
+        if ([mainTitleStr rangeOfString:@","].location == NSNotFound) {
+            NSLog(@"string does not contain bla");
+        } else {
+            mainTitleStr = [[mainTitleStr componentsSeparatedByString:@","] objectAtIndex:0];
+            
+            mainTitleStr = [NSString stringWithFormat: @"%@  in %@.",mainTitleStr, cityName];
+            //NSSet *aSet = [NSSet setWithArray:[mainTitleStr componentsSeparatedByString:@" "]];
+            //  mainTitleStr = [aSet.allObjects componentsJoinedByString:@" "];
+            
+        }
         
         mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
                                                                 withString:@"to eat 🍕 "];
@@ -1089,8 +1099,11 @@
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    NSArray * namesOfMenus =@[@"Feeds",@"Places Visited",@"Wish To",@"Followers",@"Following"];
+    int val=10;
+    NSLog(@"%dfollowers",val);
+  NSString *  you = [NSString stringWithFormat:@"%d%@", val, @"followerse"];
+   // NSString *follow=[(NSLog(@"%dfollowers",val)];
+    NSArray * namesOfMenus =@[@"Feed",@"Visited",@"WishTo",you,@"Following"];
     
     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;

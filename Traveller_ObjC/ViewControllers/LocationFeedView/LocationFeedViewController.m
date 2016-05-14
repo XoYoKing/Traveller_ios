@@ -724,6 +724,16 @@
         
         //mainstr have title and Also Links Managed.
         NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
+        if ([mainTitleStr rangeOfString:@","].location == NSNotFound) {
+            NSLog(@"string does not contain bla");
+        } else {
+            mainTitleStr = [[mainTitleStr componentsSeparatedByString:@","] objectAtIndex:0];
+            
+            mainTitleStr = [NSString stringWithFormat: @"%@  in %@.",mainTitleStr, cityName];
+            //NSSet *aSet = [NSSet setWithArray:[mainTitleStr componentsSeparatedByString:@" "]];
+            //  mainTitleStr = [aSet.allObjects componentsJoinedByString:@" "];
+            
+        }
         
         mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
                                                                 withString:@"to eat 🍕 "];
@@ -939,7 +949,7 @@
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    NSArray * namesOfMenus =@[@"Place",@"Eat",@"Stay",@"Shopping",@"Visited"];
+    NSArray * namesOfMenus =@[@"Places ",@"Eat ",@"Stay ",@"Shop ",@"Visited By"];
     
     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;

@@ -381,6 +381,7 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     UIButton *btn =  [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0,0,25,25);
+    
     btn.titleLabel.font =[UIFont fontWithName:fontIcomoon size:25];
     [btn setTitle:[NSString stringWithUTF8String:ICOMOON_MENU] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(menuToggle) forControlEvents:UIControlEventTouchUpInside];
@@ -686,6 +687,17 @@
         
          [cell.mainTitle clearActionDictionary];
         NSString * mainTitleStr =[NSString stringWithFormat:@"%@",[dataDict valueForKey:@"activity_title"]];
+       
+        if ([mainTitleStr rangeOfString:@","].location == NSNotFound) {
+            NSLog(@"string does not contain bla");
+        } else {
+            mainTitleStr = [[mainTitleStr componentsSeparatedByString:@","] objectAtIndex:0];
+
+            mainTitleStr = [NSString stringWithFormat: @"%@  in %@.",mainTitleStr, cityName];
+            
+        }
+        
+        
         
         mainTitleStr =  [mainTitleStr stringByReplacingOccurrencesOfString:@"to eat"
                                                                 withString:@"to eat 🍕 "];
@@ -720,11 +732,11 @@
             if (![userName isKindOfClass:[NSNull class]]) {
                 [substringArr addObject:userName];
             }
-            [substringArr addObject:@"to eat 🍕"];
-              [substringArr addObject:@"to visit 🌄  "];
-              [substringArr addObject:@"to shopping 👗 "];
-              [substringArr addObject:@"to stay 🏠 "];
-            [substringArr addObject:@"travelling to ✈️ "];
+//            [substringArr addObject:@"to eat 🍕"];
+//              [substringArr addObject:@"to visit 🌄  "];
+//              [substringArr addObject:@"to shopping 👗 "];
+//              [substringArr addObject:@"to stay 🏠 "];
+//            [substringArr addObject:@"travelling to ✈️ "];
            
             [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
         }

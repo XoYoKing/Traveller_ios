@@ -10,6 +10,8 @@
 #import "GIBadgeView.h"
 #import "NotificationsViewController.h"
 #import "TravellerConstants.h"
+#import "AskForTipsViewController.h"
+
 #import "LocationFeedViewController.h"
 
 @interface TravellingToViewController : UIViewController<UITextFieldDelegate>

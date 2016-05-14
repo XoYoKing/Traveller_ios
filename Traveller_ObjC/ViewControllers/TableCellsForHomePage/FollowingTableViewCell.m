@@ -16,7 +16,7 @@
     _followButton.layer.borderColor=[UIColor lightGrayColor].CGColor;
     _followButton.layer.borderWidth=1;
     [_followButton addShaddow];
-    
+  //  _followButton.hidden=YES;
     _profileImageView.clipsToBounds=YES;
     [_profileImageView addBlackLayerAndCornerRadius:30 AndWidth:1];
     

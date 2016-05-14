@@ -38,6 +38,7 @@
 		39CE42F81CBA1DFD000B371C /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CE42F51CBA1DFD000B371C /* HPGrowingTextView.m */; };
 		39CE42F91CBA1DFD000B371C /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CE42F71CBA1DFD000B371C /* HPTextViewInternal.m */; };
 		39CE42FC1CBA26EC000B371C /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CE42FB1CBA26EC000B371C /* CommentsViewController.m */; };
+		39D94D311CDDBDD000FFA0A0 /* WishToCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D94D301CDDBDD000FFA0A0 /* WishToCityViewController.m */; };
 		39F187B31CB7A363001ABFB0 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39F187B21CB7A363001ABFB0 /* Storyboard.storyboard */; };
 		39F187B51CB7A44D001ABFB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39F187B41CB7A44D001ABFB0 /* LaunchScreen.storyboard */; };
 		39F187B91CB7BCA1001ABFB0 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39F187B81CB7BCA1001ABFB0 /* icomoon.ttf */; };
@@ -152,6 +153,8 @@
 		39CE42F71CBA1DFD000B371C /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		39CE42FA1CBA26EC000B371C /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		39CE42FB1CBA26EC000B371C /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		39D94D2F1CDDBDD000FFA0A0 /* WishToCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WishToCityViewController.h; sourceTree = "<group>"; };
+		39D94D301CDDBDD000FFA0A0 /* WishToCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WishToCityViewController.m; sourceTree = "<group>"; };
 		39F187B21CB7A363001ABFB0 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = Traveller_ObjC/ViewControllers/SplashScreenViewController/Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
 		39F187B41CB7A44D001ABFB0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Traveller_ObjC/ViewControllers/SplashScreenViewController/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		39F187B81CB7BCA1001ABFB0 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
@@ -398,6 +401,15 @@
 			path = GrowTextView;
 			sourceTree = "<group>";
 		};
+		39D94D2E1CDDBDA600FFA0A0 /* citywishtoVc */ = {
+			isa = PBXGroup;
+			children = (
+				39D94D2F1CDDBDD000FFA0A0 /* WishToCityViewController.h */,
+				39D94D301CDDBDD000FFA0A0 /* WishToCityViewController.m */,
+			);
+			name = citywishtoVc;
+			sourceTree = "<group>";
+		};
 		39F187B71CB7BCA1001ABFB0 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +527,7 @@
 		AA2BC0A61CB4E1980030A0E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				39D94D2E1CDDBDA600FFA0A0 /* citywishtoVc */,
 				AA86D35B1CC7469F00667029 /* ChangePasswordViewController */,
 				AABC9AC71CC505A7008483AD /* TermsAndConditionViewController */,
 				AA5A77731CC0B957001355C8 /* WishToVisitViewController */,
@@ -1079,6 +1092,7 @@
 				AA19148F1CBD1FDD0039C2FB /* ForgetPasswordViewController.m in Sources */,
 				AA96D3321CBB9E5500B2CDDA /* JTSImageViewController.m in Sources */,
 				39B73E9E1CC39240007E42D6 /* ViewProfileTableViewCell.m in Sources */,
+				39D94D311CDDBDD000FFA0A0 /* WishToCityViewController.m in Sources */,
 				3996912F1CB8F64C000A3A4A /* Notification1TableViewCell.m in Sources */,
 				AA807B191CBE181600D1E665 /* PlaceDetail.m in Sources */,
 				390419921CBC1AEF00879650 /* UserData.m in Sources */,

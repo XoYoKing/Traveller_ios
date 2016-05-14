@@ -1,8 +1,8 @@
 //
-//  InviteToJoinViewController.h
+//  WishToCityViewController.h
 //  Traveller_ObjC
 //
-//  Created by Sagar Shirbhate on 15/04/16.
+//  Created by Sandip Jadhav on 07/05/16.
 //  Copyright © 2016 Sagar Shirbhate. All rights reserved.
 //
 
@@ -10,24 +10,23 @@
 #import "FollowingTableViewCell.h"
 #import "GIBadgeView.h"
 #import "NotificationsViewController.h"
-@interface InviteToJoinViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+
+@interface WishToCityViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     __weak IBOutlet UITableView *wishToTableView;
     GIBadgeView * badgeView;
     
-    NSString * publicID;
-    
     NSMutableArray * globalArrayToShow;
     NSMutableArray * citiesArray;
     BOOL citiesPagingBoolean;
-    BOOL inviteTojoin;
     int citiesPage;
     
     __weak IBOutlet UITextField *searchTF;
     __weak IBOutlet UIButton *searchBtn;
     
+    NSString * publicId;
+    
 }
 
 @property(strong,nonatomic)NSDictionary * selectedCityDict;
-
 @end

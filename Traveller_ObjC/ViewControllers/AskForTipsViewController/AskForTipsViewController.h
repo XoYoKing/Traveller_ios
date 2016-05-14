@@ -18,6 +18,7 @@
     NSMutableArray * globalArrayToShow;
     NSMutableArray * citiesArray;
     BOOL citiesPagingBoolean;
+    int flag ;
     int citiesPage;
     
     __weak IBOutlet UITextField *searchTF;
@@ -30,6 +31,7 @@
     int selectedIndex;
 }
 
+@property(strong,nonatomic)NSString * ivitepeople;
 @property(strong,nonatomic)NSDictionary * selectedCityDict;
 @property(strong,nonatomic)NSString * forWhichMenu;
 - (IBAction)sendClick:(id)sender;

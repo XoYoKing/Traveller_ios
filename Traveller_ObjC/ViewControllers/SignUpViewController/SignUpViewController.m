@@ -62,7 +62,13 @@
 }
 
 -(void)backClick{
+    [self.navigationController popViewControllerAnimated:YES];SettingViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+
 }
 
 
@@ -151,7 +157,7 @@
     cancelBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     updateBtn.titleLabel.font=[UIFont fontWithName:font_button size:font_size_button];
     
-    [userNameTF addRegx:@"[A-Za-z]{3,30}" withMsg: @"Username characters limit should be come between 6-20"];
+    [userNameTF addRegx:@"[a-zA-Z0-9]{3,30}" withMsg: @"Username characters limit should be come between 6-20"];
      [emailTF addRegx:@"[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" withMsg: @"Enter valid email"];
      [passwordTF addRegx:@"^.{6,20}$" withMsg: @"Password characters limit should be come between 6-20"];
      [confirmPasswordTF addConfirmValidationTo:passwordTF withMsg:@"Confirm password didn’t match"];
@@ -165,10 +171,12 @@
     emailTF.text=[UserData getUserEmail];
     passwordTF.text=[UserData getUserPassword];
     websiteTF.text=[UserData getUserWeburl];
+    
     nextDestinationTF.text=[UserData getUserDestimation];
     cityTF.text=[UserData getUserCity];
     confirmPasswordTF.text=[UserData getUserPassword];
     phoneNoTF.text=[UserData getUserMobile];
+    countryTF.text=[UserData getUserCountry];
     passwordTF.userInteractionEnabled=NO;
     confirmPasswordTF.userInteractionEnabled=NO;
     emailTF.userInteractionEnabled=NO;
@@ -220,7 +228,7 @@
     }
 }
 -(void)updateWebservice{
-    NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&password=%@&mobile=%@&city=%@&country=%@&my_status=%@&weburl=%@&nextDestination=%@&gender=%@",URL_CONST,ACTION_UPDATE_PROFILE,userNameTF.text,emailTF.text,passwordTF.text,phoneNoTF.text,cityTF.text,countryTF.text,statusTF.text,websiteTF.text,nextDestinationTF.text,gender];
+    NSString * str =[NSString stringWithFormat:@"%@&action=%@&name=%@&email=%@&mobile=%@&city=%@&country=%@&my_status=%@&weburl=%@&nextDestination=%@",URL_CONST,ACTION_UPDATE_PROFILE,userNameTF.text,emailTF.text,phoneNoTF.text,cityTF.text,countryTF.text,statusTF.text,websiteTF.text,nextDestinationTF.text];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:str];
     if (dict!=nil) {
         NSNumber *status = [NSNumber numberWithInteger:[[dict valueForKey:@"status"] intValue] ] ;
@@ -239,7 +247,15 @@
 }
 
 -(void)updatedSuccessfully{
-    [self.navigationController popViewControllerAnimated:YES];
+    
+
+    SettingViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    
+    
+      [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+
 }
 
 
@@ -289,7 +305,11 @@
 
 
 - (IBAction)cancelClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];SettingViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 

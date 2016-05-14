@@ -116,13 +116,13 @@
             if ([city isEqualToString:state]) {
                 cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city,country];
             }else {
-                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ , %@ ",city , state,country];
+                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@  ",city ,country];
             }
         }else {
             if ([city isEqualToString:state]) {
                 cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ ",city];
             }else {
-                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city , state];
+                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@  ", state];
             }
         }
     }else{
@@ -188,7 +188,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)openWishedToForm:(UIButton *)btn{
-    WishToVisitViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"WishToVisitViewController"];
+    WishToVisitViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"WishToCityViewController"];
     vc.selectedCityDict=[citiesArray objectAtIndex:btn.tag];
     [self.navigationController pushViewController:vc animated:YES];
 }

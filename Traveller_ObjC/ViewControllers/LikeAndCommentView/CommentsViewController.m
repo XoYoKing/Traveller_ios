@@ -356,7 +356,7 @@
     void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
         if ([substring isEqualToString:username]) {
             [self.view endEditing:YES];
-            [self openUserProfile:userId :username :image];
+          //  [self openUserProfile:userId :username :image];
         }
     };
     [cell.commentLbl setLinksForSubstrings:@[username] withLinkHandler:handler];
@@ -411,14 +411,16 @@
 }
 
 #pragma mark====================Open User Profile=============================
--(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
-    if (![userId isEqualToString:[UserData getUserID]]) {
-        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
-        vc.userId=userId;
-        vc.name=userName;
-        vc.imageUrl=urlStringForProfileImage;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
+//-(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
+//    if (![userId isEqualToString:[UserData getUserID]]) {
+//        ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+//        NSLog(@"%@",userId);
+//        NSLog(@"%@",userName);
+//        vc.userId=userId;
+//        vc.name=userName;
+//        vc.imageUrl=urlStringForProfileImage;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+//}
 
 @end

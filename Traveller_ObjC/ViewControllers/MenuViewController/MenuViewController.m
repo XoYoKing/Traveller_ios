@@ -158,7 +158,7 @@
         [self OpenNotifications:nil];
     }else if (indexPath.row==5){
          [self openSettingMenu];
-    }else if (indexPath.row==5){
+    }else if (indexPath.row==6){
         [self logOutClick];
     }
 }
@@ -182,7 +182,7 @@
 
 #pragma mark+++++++++++++++++++Open Cities View+++++++++++++++++++++++
 -(void)openCitiesMenu{
-    CitiesViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"CitiesViewController"];
+    CitiesViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"CitiesViewController"];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:vc];
    appdelegate.drawerView.centerPanel=nav;
 }

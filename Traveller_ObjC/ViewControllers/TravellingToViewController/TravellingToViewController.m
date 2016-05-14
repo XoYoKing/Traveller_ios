@@ -119,13 +119,15 @@
             if ([city isEqualToString:state]) {
                 cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city,country];
             }else {
-                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ , %@ ",city , state,country];
+                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ ,  %@ ",city ,country];
             }
+            //  cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city , country];
+            //cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ ,",city ];
         }else {
             if ([city isEqualToString:state]) {
                 cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ ",city];
             }else {
-                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ , %@ ",city , state];
+                cell.cityNameLbl.text =[NSString stringWithFormat:@" %@ ",city ];
             }
         }
     }else{
@@ -195,12 +197,16 @@
     vc.selectedCityDict=[globalArrayToShow objectAtIndex:btn.tag];
     vc.forWhichMenu=@"InviteToJoin";
     vc.title=@"Invite To Join";
+
+ //AskForTipsViewController* vc1 =[self.storyboard instantiateViewControllerWithIdentifier:@"AskForTipsViewController"];
+    vc.ivitepeople=@"1";
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)openWishedToForm:(UIButton *)btn{
     AskForTipsViewController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"AskForTipsViewController"];
     vc.selectedCityDict=[globalArrayToShow objectAtIndex:btn.tag];
     vc.forWhichMenu=@"AskForTip";
+    
     vc.title=@"Ask For Tips";
     [self.navigationController pushViewController:vc animated:YES];
 }

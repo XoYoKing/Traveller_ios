@@ -1,18 +1,18 @@
 //
-//  InviteToJoinViewController.m
+//  WishToCityViewController.m
 //  Traveller_ObjC
 //
-//  Created by Sagar Shirbhate on 15/04/16.
+//  Created by Sandip Jadhav on 07/05/16.
 //  Copyright © 2016 Sagar Shirbhate. All rights reserved.
 //
 
-#import "InviteToJoinViewController.h"
+#import "WishToCityViewController.h"
 
-@interface InviteToJoinViewController ()
+@interface WishToCityViewController ()
 
 @end
 
-@implementation InviteToJoinViewController
+@implementation WishToCityViewController
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
@@ -21,10 +21,10 @@
 }
 
 
+
 -(void)viewDidAppear:(BOOL)animated{
     if (badgeView==nil) {
         [self addNotificationView];
-        inviteTojoin=NO;
     }
     if (citiesArray.count==0||citiesArray==nil) {
         [self.view showLoader];
@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
-    self.title=@"Search";
+    self.title=@"Follow Visited User";
     citiesArray=[NSMutableArray new];
     citiesPage=1;
     citiesPagingBoolean=YES;
@@ -46,7 +46,6 @@
     wishToTableView.rowHeight=UITableViewAutomaticDimension;
     [wishToTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     wishToTableView.separatorColor = [UIColor lightGrayColor];
-    wishToTableView.tableFooterView=[UIView new];
 }
 
 -(void)setUpView{
@@ -69,6 +68,7 @@
     self.navigationController.navigationBar.backgroundColor=navigation_background_Color;
     self.navigationController.navigationBar.barTintColor=navigation_background_Color;
     
+    
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btnClose setFrame:CGRectMake(0, 0, 30, 30)];
     
@@ -83,22 +83,32 @@
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
--(void)tappedOnView{
-    [self.view endEditing:YES];
-}
-
--(void)updateNotificationCount:(NSNotification *)notification{
-    NSDictionary * dict =notification.object;
-    int count = [[dict valueForKey:@"tip_count"] intValue];
-    badgeView.badgeValue = count;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return globalArrayToShow.count;
+-(void)followclick:(UIButton*)btn{
+    int index = (int)btn.tag;
+    NSIndexPath * ip =[NSIndexPath indexPathForRow:index inSection:0];
+    FollowingTableViewCell *cell =  [wishToTableView cellForRowAtIndexPath:ip];
+    NSDictionary * dataDict =[globalArrayToShow objectAtIndex:index];
+    publicId = [dataDict valueForKey:@"id"];
+    int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
+    if (showFollow ==1) {
+        [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"0" forKey:@"follow"];
+        [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
+        [self.view makeToast:@"You are not following now"duration:toastDuration position:toastPositionBottomUp];
+        
+    }else{
+        [cell.followButton setTitle:@"following" forState:UIControlStateNormal];
+        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+        [newDict addEntriesFromDictionary:dataDict];
+        [newDict setObject:@"1" forKey:@"follow"];
+        [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
+        [self.view makeToast:@"You are now following an user"duration:toastDuration position:toastPositionBottomUp];
+    }
+    [self performSelectorInBackground:@selector(FollowebserviceCall) withObject:nil];
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -128,6 +138,29 @@
     
 }
 
+-(void)FollowebserviceCall{
+    NSString * ids =[NSString stringWithFormat:@"%@",publicId];
+    NSString * cityId=[_selectedCityDict valueForKey:@"id"];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@&cityId=%@",URL_CONST,ACTION_ADD_FOLLOWER,[UserData getUserID],ids,cityId];
+     NSDictionary * dict= [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+}
+
+
+-(void)tappedOnView{
+    [self.view endEditing:YES];
+}
+
+-(void)updateNotificationCount:(NSNotification *)notification{
+    NSDictionary * dict =notification.object;
+    int count = [[dict valueForKey:@"tip_count"] intValue];
+    badgeView.badgeValue = count;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return globalArrayToShow.count;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UINib *nib = [UINib nibWithNibName:@"FollowingTableViewCell" bundle:nil];
     [wishToTableView registerNib:nib forCellReuseIdentifier:@"FollowingTableViewCell"];
@@ -140,6 +173,8 @@
     if (![city isKindOfClass:[NSNull class]]) {
         if (![city isEqualToString:@""]) {
             cell.addressLbl.text =[NSString stringWithFormat:@" %@ ",city];
+        }else {
+            cell.addressLbl.text =@"City Name Not Available Now";
         }
     }else{
         cell.addressLbl.text =@"City Name Not Available Now";
@@ -148,7 +183,7 @@
     if (![name isKindOfClass:[NSNull class]]) {
         cell.nameLbl.text=name;
     }else {
-        cell.nameLbl.text=@"Country Name Not Available Now";
+        cell.nameLbl.text=@"Name Not Available Now";
     }
     
     //Checked for post Image
@@ -168,14 +203,20 @@
     
     int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
     if (showFollow ==1) {
-        [cell.followButton setTitle:@"Invite" forState:UIControlStateNormal];
-        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
+        
+        [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        cell.followButton.backgroundColor=Uncheck_Color;
     }else{
-        [cell.followButton setTitle:@"UnInvite" forState:UIControlStateNormal];
-        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
+        [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        cell.followButton.backgroundColor=Check_Color;
     }
     cell.followButton.tag=indexPath.row;
-    [cell.followButton addTarget:self action:@selector(inviteClick:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.followButton addTarget:self action:@selector(followclick:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[dataDict valueForKey:@"id"] isEqualToString: [UserData getUserID]]) {
+        cell.followButton.hidden=YES;
+    }else{
+        cell.followButton.hidden=NO;
+    }
     
     return cell;
 }
@@ -201,8 +242,8 @@
     [notificationButton addSubview:badgeView];
     badgeView.badgeValue = [UserData getNotificationCount];
     [self addShaddowToView:notificationButton];
-  //  [self.view addSubview:notificationButton];
-  //  [self.view bringSubviewToFront:notificationButton];
+    //   [self.view addSubview:notificationButton];
+    //  [self.view bringSubviewToFront:notificationButton];
 }
 -(void)openNotificationView{
     NotificationsViewController* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"NotificationsViewController"];
@@ -301,39 +342,7 @@
     }
 }
 
--(void)inviteClick:(UIButton*)btn{
-    int index = (int)btn.tag;
-    NSIndexPath * ip =[NSIndexPath indexPathForRow:index inSection:0];
-    FollowingTableViewCell *cell =  [wishToTableView cellForRowAtIndexPath:ip];
-    NSDictionary * dataDict =[globalArrayToShow objectAtIndex:index];
-    publicID = [dataDict valueForKey:@"id"];
-    int  showFollow  = [[dataDict valueForKey:@"follow"]intValue];
-    if (showFollow ==1) {
-        [cell.followButton setTitle:@"invite" forState:UIControlStateNormal];
-        [cell.followButton setBackgroundColor:userShouldNOTDOButoonColor];
-        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
-        [newDict addEntriesFromDictionary:dataDict];
-        [newDict setObject:@"0" forKey:@"follow"];
-        [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
-        [self.view makeToast:@"You univited the person"duration:toastDuration position:toastPositionBottomUp];
-        
-    }else{
-        [cell.followButton setTitle:@"invited" forState:UIControlStateNormal];
-        [cell.followButton setBackgroundColor:userShouldDOButoonColor];
-        NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
-        [newDict addEntriesFromDictionary:dataDict];
-        [newDict setObject:@"1" forKey:@"follow"];
-        [globalArrayToShow replaceObjectAtIndex:index withObject:newDict];
-        [self.view makeToast:@"You invited the person"duration:toastDuration position:toastPositionBottomUp];
-    }
-    [self performSelectorInBackground:@selector(inviteWebservice) withObject:nil];
-}
 
--(void)inviteWebservice{
-    NSString * ids =[NSString stringWithFormat:@"%@",publicID];
-    NSString * cityId=[_selectedCityDict valueForKey:@"id"];
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&publicId=%@&cityId=%@",URL_CONST,ACTION_INVITE,[UserData getUserID],ids,cityId];
-     [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
-    }
+
 
 @end

@@ -85,7 +85,7 @@
     userNameLbl.text=[userDict valueForKey:@"name"];
     
     follower.text=[NSString stringWithFormat:@"%@",[dict valueForKey:@"follow_count"]];
-    following.text=[NSString stringWithFormat:@"%@",[dict valueForKey:@"follow_count"]];
+    following.text=[NSString stringWithFormat:@"%@",[dict valueForKey:@"following_count"]];
     
     //Checked for post Image
     NSString * urlStringForPostImage =[userDict valueForKey:@"image"];

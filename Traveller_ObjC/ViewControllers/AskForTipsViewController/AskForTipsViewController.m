@@ -8,6 +8,7 @@
 
 #import "AskForTipsViewController.h"
 #import "ViewProfileController.h"
+#import "TravellingToViewController.h"
 @interface AskForTipsViewController ()
 
 @end
@@ -204,7 +205,7 @@
     [cell.followButton addTarget:self action:@selector(followButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    if ([[dataDict valueForKey:@"follow"]integerValue]==1) {
+    if ([[dataDict valueForKey:@"IsInvite"]integerValue]==1) {
         [cell.followButton setTitle:@"Invited" forState:UIControlStateNormal];
         cell.followButton.backgroundColor=Uncheck_Color;
     }else{
@@ -353,20 +354,38 @@
 
 
 
+
+
+-(void)invitTojoin{
+    
+             [self performSelectorOnMainThread:@selector(setupViewAndCallInvitationView) withObject:nil waitUntilDone:YES];
+                    
+    
+          // [self.view makeToast:@"No one Is visited This city yet" duration:0.4 position:toastPositionBottomUp];
+            
+}
+
+
+
 -(void)askFotTips{
   
     NSString * cityId=[_selectedCityDict valueForKey:@"id"];
     NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&userId=%@&description=%@&cityId=%@",URL_CONST,ACTION_ASK_FOR_TIP,[UserData getUserID],textView.text,cityId];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+      [self.view makeToast:@"You have asked for tip successfully" duration:0.4 position:toastPositionBottomUp];
     if (dict) {
         if ([[dict valueForKey:@"status"] intValue]==1) {
-              [self performSelectorOnMainThread:@selector(setupViewAndCallInvitationView) withObject:nil waitUntilDone:YES];
+                  [self.view makeToast:@"You have asked for tip successfully" duration:0.4 position:toastPositionBottomUp];
+                               //   [self performSelectorOnMainThread:@selector(setupViewAndCallInvitationView) withObject:nil waitUntilDone:YES];
+            [self.navigationController popViewControllerAnimated:YES];
+
         }else{
-            
+            [self.view makeToast:@"No one Is visited This city yet" duration:0.4 position:toastPositionBottomUp];
+
         }
     }else {
         
-    }
+ }
 }
 
 -(void)setupViewAndCallInvitationView{
@@ -379,7 +398,7 @@
         textViewHeight.constant=0;
         searchViewaboveConstraint.constant=-60;
         [self.view layoutIfNeeded];
-        [self performSelector:@selector(callMethodLate) withObject:nil afterDelay:2];
+       [self performSelector:@selector(callMethodLate) withObject:nil afterDelay:2];
     }
    }
 -(void)callMethodLate{
@@ -388,21 +407,35 @@
 
 - (IBAction)sendClick:(id)sender {
     [self.view endEditing:YES];
-    if ([textView.text isEqualToString:@"Ask about this place to users who have visited the place"] || textView.text.length<=3) {
-        [self.view makeToast:@"Please enter some message" duration:toastDuration position:toastPositionBottomUp];
-    }else{
-    [self.view showLoader];
-    [self performSelectorInBackground:@selector(askFotTips) withObject:nil];
+    if ([_ivitepeople isEqual:@"1"]) {
+        if ([textView.text isEqualToString:@"Ask about this place to users who have visited the place"] || textView.text.length<=3) {
+            [self.view makeToast:@"Please enter some message" duration:toastDuration position:toastPositionBottomUp];
+        }else{
+            [self.view showLoader];
+            [self performSelectorInBackground:@selector(invitTojoin) withObject:nil];
+        }
     }
+    
+    
+    else {
+        if ([textView.text isEqualToString:@"Ask about this place to users who have visited the place"] || textView.text.length<=3) {
+            [self.view makeToast:@"Please enter some message" duration:toastDuration position:toastPositionBottomUp];
+        }else{
+            //  [self.view showLoader];
+            [self performSelectorInBackground:@selector(askFotTips) withObject:nil];
+        }
+        
+    }
+    
 }
 
 #pragma mark ====================FollowMechanism=============================
 -(void)followButtonClick:(UIButton *)btn{
     selectedIndex =(int)btn.tag;
-    [self.view showLoader];
-    [self performSelectorInBackground:@selector(followWebservice) withObject:nil];
+[self.view showLoader];
+    [self performSelectorInBackground:@selector(invitewebservice) withObject:nil];
 }
--(void)followWebservice{
+-(void)invitewebservice{
     NSDictionary * dataDict ;
     if (selectedIndex==3) {
         dataDict =[citiesArray objectAtIndex:selectedIndex];
@@ -410,9 +443,12 @@
         dataDict =[citiesArray objectAtIndex:selectedIndex];
     }
     
-    NSString * publicId =[dataDict valueForKey:@"mid"];
+    NSString * publicId =[dataDict valueForKey:@"id"];
     NSString * userID =[UserData getUserID];
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
+    //builder.addTextBody("description",
+    NSString *cityid=[_selectedCityDict valueForKey:@"id"];
+    //action,userId,publicId,cityId
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@&cityId=%@&description=%@",URL_CONST,ACTION_INVITE, userID,publicId,cityid,textView.text];
     NSDictionary * homefeed = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     [self performSelectorOnMainThread:@selector(reloadTableRow:) withObject:homefeed waitUntilDone:YES];
 }
@@ -420,18 +456,18 @@
 -(void)reloadTableRow:(NSDictionary *)homefeed{
     NSDictionary * dataDict =[citiesArray objectAtIndex:selectedIndex];
         if (homefeed) {
-            if ([[homefeed valueForKey:@"message"]isEqualToString:@"you are now following the user"]) {
+            if ([[homefeed valueForKey:@"message"]isEqualToString:@"You invited the person successfully"]) {
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
-                [newDict setObject:@"1" forKey:@"follow"];
+              [newDict setObject:@"1" forKey:@"invite"];
                 [citiesArray replaceObjectAtIndex:selectedIndex withObject:newDict];
-                [self.view makeToast:@"You are now following the user"duration:toastDuration position:toastPositionBottomUp];
+                [self.view makeToast:@"You Uninvited the person successfully"duration:toastDuration position:toastPositionBottomUp];
             }else{
                 NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
                 [newDict addEntriesFromDictionary:dataDict];
-                [newDict setObject:@"0" forKey:@"follow"];
+                [newDict setObject:@"0" forKey:@"invited"];
                 [citiesArray replaceObjectAtIndex:selectedIndex withObject:newDict];
-                [self.view makeToast:@"You are NOT following the user now"duration:toastDuration position:toastPositionBottomUp];
+                [self.view makeToast:@"You invited the person successfully"duration:toastDuration position:toastPositionBottomUp];
             }
         }
     NSIndexPath * ip =[NSIndexPath indexPathForRow:selectedIndex inSection:0];
