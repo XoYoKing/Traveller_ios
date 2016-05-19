@@ -1440,13 +1440,13 @@ NSString * str =@"Post is Shared From Traweller App.";
 
 #pragma mark====================Open User Profile=============================
 -(void)openUserProfile:(NSString * )userId :(NSString *)userName :(NSString *)urlStringForProfileImage {
-    if (![userId isEqualToString:[UserData getUserID]]) {
+
         ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
         vc.userId=userId;
         vc.name=userName;
         vc.imageUrl=urlStringForProfileImage;
         [self.navigationController pushViewController:vc animated:YES];
-    }
+    
 }
 
 #pragma mark====================Open Location Feeds=============================

@@ -320,6 +320,7 @@
 		395994D61CB8147B001E2118 /* TravellingToViewController */ = {
 			isa = PBXGroup;
 			children = (
+				395994D71CB8147B001E2118 /* ViewProfileController */,
 				395994E41CB81558001E2118 /* TravellingToViewController.h */,
 				395994E51CB81558001E2118 /* TravellingToViewController.m */,
 			);
@@ -332,7 +333,8 @@
 				395994E71CB8156B001E2118 /* ViewProfileController.h */,
 				395994E81CB8156B001E2118 /* ViewProfileController.m */,
 			);
-			path = ViewProfileController;
+			name = ViewProfileController;
+			path = ../ViewProfileController;
 			sourceTree = "<group>";
 		};
 		397A6E571CB7A174004050F5 /* SplashScreenViewController */ = {
@@ -544,7 +546,6 @@
 				395994D41CB8147B001E2118 /* SettingViewController */,
 				395994D51CB8147B001E2118 /* SignUpViewController */,
 				395994D61CB8147B001E2118 /* TravellingToViewController */,
-				395994D71CB8147B001E2118 /* ViewProfileController */,
 				397A6E571CB7A174004050F5 /* SplashScreenViewController */,
 				AA3789131CB6109A000F151B /* NotificationsViewController */,
 				AA3789141CB6109A000F151B /* MenuViewController */,
@@ -1219,7 +1220,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1242,7 +1243,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Traveller_ObjC/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traweller;
 				PRODUCT_NAME = "$(TARGET_NAME)";

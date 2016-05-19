@@ -28,8 +28,11 @@
     [RFRateMe showRateAlertAfterTimesOpened:30];
     if (firstTimePageOpen==YES) {
         [self.view showLoader];
+        isFollow=YES;
+        [self performSelectorInBackground:@selector(getUserDetailsWebservice) withObject:nil] ;
         [self performSelectorInBackground:@selector(getHomeFeedData) withObject:nil];
     }
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     if (firstTimePageOpen==NO) {
@@ -104,6 +107,8 @@
     int count = [[dict valueForKey:@"tip_count"] intValue];
     badgeView.badgeValue = count;
 }
+
+
 
 -(void)refreshLikeCell:(NSNotification *)notification{
     NSIndexPath * ip =[NSIndexPath indexPathForRow:indexForLikeNotification inSection:0];
@@ -465,10 +470,33 @@
     followButton.layer.borderWidth =1;
     [followButton addShaddow];
     followButton.hidden=NO;
-    followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    followButton.backgroundColor=userShouldDOButoonColor;
-    [followButton addTarget:self action:@selector(tappedOnUserImage) forControlEvents:UIControlEventTouchUpInside];
+    
+     NSDictionary * userDict =[dictforFollowFollowng valueForKey:@"data"];
+    NSString* followStatu =[[userDict valueForKey:@"follow"]lastObject];
+    int followStatus=[followStatu integerValue];
+    if (followStatus ==1) {
+        //following
+        isFollow=NO;
+        followButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        followButton.tintColor=[UIColor whiteColor];
+        [followButton setTitle:[NSString stringWithUTF8String:ICOMOON_USERICON_minus] forState:UIControlStateNormal];
+        [followButton setBackgroundColor:[UIColor redColor]];
+    }else{
+        isFollow=YES;
+        followButton.titleLabel.font=[UIFont fontWithName:fontIcomoon size:logo_Size_Small];
+        followButton.tintColor=[UIColor whiteColor];
+        [followButton setTitle:[NSString stringWithUTF8String:ICOMOON_USER_ICONPlus] forState:UIControlStateNormal];
+        [followButton setBackgroundColor:[UIColor greenColor]];
+    }
+    followButton.tag=1;
+   // followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    //followButton.backgroundColor=userShouldDOButoonColor;
+    [followButton addTarget:self action:@selector(followWebservices:) forControlEvents:UIControlEventTouchUpInside];
     views[@"followButton"] = followButton;
+    NSString*userId=   [[userDict valueForKey:@"id"] lastObject];
+    if ([userId isEqualToString:[UserData getUserID]]) {
+        followButton.hidden=YES;
+    }
     [view addSubview:followButton];
     UILabel* nameLabel = [UILabel new];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -492,6 +520,29 @@
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
     [view addConstraints:constraints];
     return view;
+}
+-(void)followWebservices:(UIButton *)sender{
+    UIButton *button = (UIButton *)sender;
+    NSLog(@"%ld",(long)button.tag);
+    
+    NSString * publicId =[[[dictforFollowFollowng valueForKey:@"data" ]valueForKey:@"id"]lastObject];
+    NSString * userID =[UserData getUserID];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_ADD_FOLLOWER, userID,publicId];
+    NSDictionary *sss=  [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    NSString *msg=[sss valueForKey:@""];
+    //NSLog(@"[sss v]")
+    //    ViewProfileController * vc =[self.storyboard instantiateViewControllerWithIdentifier:@"ViewProfileController"];
+    //    [self.navigationController pushViewController:vc animated:YES];
+    if (isFollow==YES) {
+        [button setTitle:[NSString stringWithUTF8String:ICOMOON_USERICON_minus] forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor redColor]];
+        isFollow=NO;
+    }else{
+        [button setTitle:[NSString stringWithUTF8String:ICOMOON_USER_ICONPlus] forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor greenColor]];
+        isFollow=YES;
+    }
+    
 }
 
 - (UIImage *)blurWithImageAt:(CGFloat)percent
@@ -536,7 +587,6 @@
         self.blurredImageCache[[NSNumber numberWithInt:i]] = [self blurWithImageEffects:_originalBackgroundImage andRadius:(maxBlur * i/10)];
     }
 }
-
 
 #pragma mark====================Tapped On User Profile Image===============================
 
@@ -745,11 +795,7 @@
             if (![userName isKindOfClass:[NSNull class]]) {
                 [substringArr addObject:userName];
             }
-            [substringArr addObject:@"to eat 🍕"];
-            [substringArr addObject:@"to visit 🌄  "];
-            [substringArr addObject:@"to shopping 👗 "];
-            [substringArr addObject:@"to stay 🏠 "];
-            [substringArr addObject:@"travelling to ✈️ "];
+       
             [cell.mainTitle clearActionDictionary];
             [cell.mainTitle setLinksForSubstrings:substringArr withLinkHandler:handler];
         }
@@ -1099,11 +1145,15 @@
 
 #pragma mark====================Set up Segment here===============================
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    int val=10;
-    NSLog(@"%dfollowers",val);
-  NSString *  you = [NSString stringWithFormat:@"%d%@", val, @"followerse"];
+
+    
+    NSString *  follow=[NSString stringWithFormat:@"%@ Followers",[dictforFollowFollowng valueForKey:@"follow_count"]];
+   NSString *  following=[NSString stringWithFormat:@"%@ Following",[dictforFollowFollowng valueForKey:@"following_count"]];
+    
+    
+ // NSString *  you = [NSString stringWithFormat:@"%d %@", val, @"followers"];
    // NSString *follow=[(NSLog(@"%dfollowers",val)];
-    NSArray * namesOfMenus =@[@"Feed",@"Visited",@"WishTo",you,@"Following"];
+    NSArray * namesOfMenus =@[@"Feed",@"Visited",@"WishTo",follow,following];
     
     myScrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 2, self.tableView.frame.size.width, 40)];
     CGFloat scrollWidth = 0.f;
@@ -1632,6 +1682,16 @@
 }
 
 #pragma mark====================Get HomeFeed Data From Webservice=============================
+
+-(void)getUserDetailsWebservice{
+      NSString * userID =[UserData getUserID];
+    NSString*publicid=_userId;
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicId=%@",URL_CONST,ACTION_GET_USER_DETAILS,_userId,userID];
+    dictforFollowFollowng = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+}
+
+
+
 -(void)getHomeFeedData{
     
     NSString * userID =[UserData getUserID];

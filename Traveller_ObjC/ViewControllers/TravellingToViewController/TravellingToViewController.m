@@ -108,7 +108,13 @@
     [cell.wishButton addTarget:self action:@selector(openWishedToForm:) forControlEvents:UIControlEventTouchUpInside];
     [cell.placesButton addTarget:self action:@selector(openPostForm:) forControlEvents:UIControlEventTouchUpInside];
     NSDictionary * dataDict =[globalArrayToShow objectAtIndex:indexPath.row];
-    
+    if (indexPath.row==dataDict.count -3) {
+        if (citiesPagingBoolean==YES) {
+            citiesPage++;
+            [self performSelectorInBackground:@selector(getCitiesDataPaging) withObject:nil];
+        }
+    }
+
     NSString * city =[dataDict valueForKey:@"city"];
     NSString * country =[dataDict valueForKey:@"country"];
     NSString * state =[dataDict valueForKey:@"state"];

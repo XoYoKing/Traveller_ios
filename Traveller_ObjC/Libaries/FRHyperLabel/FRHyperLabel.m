@@ -93,7 +93,8 @@ static UIColor *FRHyperLabelLinkColorHighlight;
 }
 
 - (void)setLinkForSubstring:(NSString *)substring withAttribute:(NSDictionary *)attribute andLinkHandler:(void(^)(FRHyperLabel *label, NSString *substring))handler {
-	NSRange range = [self.attributedText.string rangeOfString:substring];
+    
+	NSRange range = [self.attributedText.string rangeOfString:substring.lastPathComponent];
 	if (range.length) {
 		[self setLinkForRange:range withAttributes:attribute andLinkHandler:^(FRHyperLabel *label, NSRange range){
 			handler(label, [label.attributedText.string substringWithRange:range]);
@@ -101,7 +102,7 @@ static UIColor *FRHyperLabelLinkColorHighlight;
 	}
 }
 
-- (void)setLinkForSubstring:(NSString *)substring withLinkHandler:(void(^)(FRHyperLabel *label, NSString *substring))handler {
+- (void)setLinkForSubstring:(NSString *)substring withLinkHandler:(void(^)(FRHyperLabel *label, NSString *substring ))handler {
 	[self setLinkForSubstring:substring withAttribute:self.linkAttributeDefault andLinkHandler:handler];
 }
 

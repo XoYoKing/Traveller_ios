@@ -206,10 +206,11 @@
                                @"is_my":@"1"
                                };
         [commentArr addObject:dict];
+        [self performSelectorInBackground:@selector(addCommentWebservice) withObject:nil];
         [commentTableView reloadData];
         NSDictionary * not_Dict=@{};
         [[NSNotificationCenter defaultCenter] postNotificationName:throwRefreshComment object:not_Dict];
-        [self performSelectorInBackground:@selector(addCommentWebservice) withObject:nil];
+      
     }
 }
 -(void)addCommentWebservice{
@@ -223,7 +224,7 @@
                                @"image":[UserData getUserImageUrl],
                                @"is_my":@"1"
                                };
-        int index =commentArr.count-1;
+      int index =commentArr.count-1;
         [commentArr replaceObjectAtIndex:index withObject:dict1];
     }
 }
@@ -350,7 +351,7 @@
     NSString * image=[dataDict valueForKey:@"image"];
     int  ismyComment=[[dataDict valueForKey:@"is_my"]intValue];
     
-    NSString *string = [NSString stringWithFormat:@"%@ Commented %@",username,comment];
+    NSString *string = [NSString stringWithFormat:@"%@ : %@",username,comment];
     NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName: [UIFont fontWithName:font_regular size:font_size_normal_regular]};
     cell.commentLbl.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
     void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring){
@@ -379,20 +380,54 @@
 
 -(void)deleteComentBtnClick:(UIButton *)btn{
     commentToDelete=[commentArr objectAtIndex:btn.tag];
+    
     [commentArr removeObjectAtIndex:btn.tag];
     NSIndexPath * ip =[NSIndexPath indexPathForRow:btn.tag inSection:0];
     [commentTableView beginUpdates];
     [commentTableView deleteRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
     [commentTableView endUpdates];
     
+    
     NSDictionary * not_Dict=@{};
     [[NSNotificationCenter defaultCenter] postNotificationName:throwRefreshComment object:not_Dict];
+    [self performSelectorInBackground:@selector(deleteCommentwebservice) withObject:nil];
 }
 -(void)deleteCommentwebservice{
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&publicID=%@&activityId=%@&comment=%@",URL_CONST,ACTION_COMMENT_ADD,[UserData getUserID],_postedById,_activityId,userInputtedMsg];
-    [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+    //action,userId,taskId,type
+ //   parameter.put("userId", mPref.getString(Constant.user_id, ""));
+			//	parameter.put("action", "removeComment");
+			//	parameter.put("commentId", uniqueID);
+    
+    NSString * userid=[UserData getUserID];
+NSString *taskid= [commentToDelete valueForKey:@"id"];
+  
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&userId=%@&commentId=%@",URL_CONST,ACTION_REMOVE_COMMENT,userid,taskid];
+   [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
+        [self.view makeToast:@"Comment succesfully deleted" duration:toastDuration position:toastPositionBottomUp];
 }
+//
+//parameter.put("action", "inviteToJoin");
+//parameter.put("userId", mPref.getString(Constant.user_id, ""));
+//parameter.put("publicId", uniqueID);
+//parameter.put("cityId", cityid);
+//
+//parameter.put("action","editActivities");
+//parameter.put("userId", mPref.getString(Constant.user_id, ""));
+//parameter.put("cityId", uniqueID);
+//parameter.put("activityId", activity_id);
+//parameter.put("activity_type", activity_type);
+////	parameter.put("title", placename2);
+//parameter.put("description", description2);
 
+
+
+
+
+//deletnotification
+//parameter.put("action", "delete");
+//parameter.put("userId", mPref.getString(Constant.user_id, ""));
+//parameter.put("taskId", uniqueID);
+//parameter.put("type", type);
 
 -(void)addShaddowToView:(UIView *)view{
     view.layer.shadowOffset = CGSizeMake(1, 1);

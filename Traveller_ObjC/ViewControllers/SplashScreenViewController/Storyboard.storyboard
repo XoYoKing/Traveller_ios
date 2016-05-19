@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Eg-ps-xN4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Eg-ps-xN4">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -2303,6 +2304,9 @@ END GENERAL CONDITIONS
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.33983173080000001" colorSpace="calibratedWhite"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="urF-74-XqB" secondAttribute="bottom" constant="3" id="1Mn-6R-M7I"/>
+                                                                <constraint firstItem="urF-74-XqB" firstAttribute="leading" secondItem="msh-WO-0vT" secondAttribute="leading" constant="3" id="586-4k-Oyj"/>
+                                                                <constraint firstAttribute="trailing" secondItem="urF-74-XqB" secondAttribute="trailing" constant="3" id="5Ni-yK-KRG"/>
                                                                 <constraint firstItem="5CG-LP-Fuk" firstAttribute="centerX" secondItem="msh-WO-0vT" secondAttribute="centerX" constant="20" id="AEM-CN-mhg"/>
                                                                 <constraint firstItem="urF-74-XqB" firstAttribute="leading" secondItem="msh-WO-0vT" secondAttribute="leading" constant="3" id="CQW-PN-Fa0"/>
                                                                 <constraint firstAttribute="bottom" secondItem="urF-74-XqB" secondAttribute="bottom" constant="3" id="Ctj-YH-3Pk"/>
@@ -2313,12 +2317,14 @@ END GENERAL CONDITIONS
                                                                 <constraint firstAttribute="trailing" secondItem="urF-74-XqB" secondAttribute="trailing" constant="3" id="kHQ-Kt-W22"/>
                                                                 <constraint firstAttribute="height" constant="35" id="mdu-VY-naN"/>
                                                                 <constraint firstItem="urF-74-XqB" firstAttribute="top" secondItem="msh-WO-0vT" secondAttribute="top" constant="3" id="oH7-QV-K9m"/>
+                                                                <constraint firstItem="urF-74-XqB" firstAttribute="top" secondItem="msh-WO-0vT" secondAttribute="top" constant="3" id="qbG-kz-oNn"/>
                                                                 <constraint firstItem="5CG-LP-Fuk" firstAttribute="top" secondItem="msh-WO-0vT" secondAttribute="top" id="up7-ww-uLX"/>
                                                             </constraints>
                                                         </view>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="No_User" translatesAutoresizingMaskIntoConstraints="NO" id="qdE-bg-YjG">
                                                             <rect key="frame" x="119" y="87" width="84" height="84"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="width" secondItem="qdE-bg-YjG" secondAttribute="height" multiplier="1:1" id="1se-mn-uMO"/>
                                                                 <constraint firstAttribute="width" constant="84" id="fa8-pp-jzM">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="100"/>
                                                                 </constraint>
@@ -2338,6 +2344,7 @@ END GENERAL CONDITIONS
                                                         <constraint firstAttribute="trailing" secondItem="1q6-j0-rZw" secondAttribute="trailing" id="QFZ-T3-62F"/>
                                                         <constraint firstItem="1q6-j0-rZw" firstAttribute="leading" secondItem="H8o-aq-cYR" secondAttribute="leading" id="V5G-ef-gkg"/>
                                                         <constraint firstAttribute="bottom" secondItem="msh-WO-0vT" secondAttribute="bottom" id="ZzZ-Ni-hW0"/>
+                                                        <constraint firstItem="msh-WO-0vT" firstAttribute="top" secondItem="qdE-bg-YjG" secondAttribute="bottom" constant="16" id="h5b-Db-E4S"/>
                                                         <constraint firstItem="qdE-bg-YjG" firstAttribute="centerY" secondItem="H8o-aq-cYR" secondAttribute="centerY" constant="18" id="iwy-tL-NJx"/>
                                                         <constraint firstAttribute="trailing" secondItem="msh-WO-0vT" secondAttribute="trailing" id="jt4-EU-nkh"/>
                                                         <constraint firstItem="3cA-jp-Pei" firstAttribute="leading" secondItem="H8o-aq-cYR" secondAttribute="leading" id="zUB-qG-HAl"/>

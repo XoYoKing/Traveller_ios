@@ -139,6 +139,7 @@
 #define ACTION_NOTIFICATION_REPLY @"sendMessage"
 #define ACTION_EDIT_POST @"editActivities"
 #define ACTION_CHANGE_PASSWORD @"changepassword"
+#define ACTION_REMOVE_COMMENT @"removeComment"
 #define ACTION_CHANGE_PROFILE_PIC @"addProfilePic"
 
 #pragma mark --------------------------Color Codes-------------------------------

@@ -41,6 +41,7 @@
     BOOL wishToPageShouldDoPaging;
     BOOL followerPageShouldDoPaging;
     BOOL followingPageShouldDoPaging;
+    BOOL isFollow;
     
     int homeFeedPage;
     int followerPage;
@@ -51,7 +52,7 @@
     int selectedUserIdex;
     int indexForLikeNotification;
     int indexForCommentNotification;
-    
+    NSDictionary * dictforFollowFollowng;
     NSDictionary * forLike;
     NSDictionary * selectedDictForDelete;
     NSIndexPath * ipForFollow;

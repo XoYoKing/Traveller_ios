@@ -74,8 +74,8 @@ if (citiesArray.count==0||citiesArray==nil) {
     btnClose.tintColor=back_btn_Color;
     //  [btnClose setTitle:[FontIcon iconString:ICON_CANCEL] forState:UIControlStateNormal];
     [btnClose addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
-    //self.navigationItem.leftBarButtonItem = leftbarButton;
+    //UIBarButtonItem *leftbarButton = [[UIBarButtonItem alloc] initWithCustomView:btnClose];
+//    self.navigationItem.leftBarButtonItem = leftbarButton;
 }
 
 -(void)backClick{
@@ -165,10 +165,10 @@ if (citiesArray.count==0||citiesArray==nil) {
         cell.followNameLbl.hidden=YES;
         cell.followBackView.hidden=YES;
     }else{
-        cell.followNameLbl.hidden=YES;
-        cell.followLogoLbl.hidden=YES;
-        cell.followNameLbl.hidden=YES;
-        cell.followBackView.hidden=YES;
+        cell.followNameLbl.hidden=NO;
+        cell.followLogoLbl.hidden=NO;
+        cell.followNameLbl.hidden=NO;
+        cell.followBackView.hidden=NO;
     }
     
     
@@ -178,7 +178,7 @@ if (citiesArray.count==0||citiesArray==nil) {
 
 
     // For Paging Mechanism
-    if (indexPath.row==citiesArray.count -3) {
+    if (indexPath.row==dataDict.count -3) {
         if (citiesPagingBoolean==YES) {
             citiesPage++;
             [self performSelectorInBackground:@selector(getCitiesDataPaging) withObject:nil];
@@ -277,7 +277,7 @@ if (citiesArray.count==0||citiesArray==nil) {
 
 -(void)getCitiesDataPaging{
 
-    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&&type=user&page=%d&userId=%@",URL_CONST,ACTION_SEARCH_USER,citiesPage,[UserData getUserID]];
+    NSString *apiURL =  [NSString stringWithFormat:@"%@action=%@&type=user&page=%d",URL_CONST,ACTION_SEARCH_USER,citiesPage];
     NSDictionary * dict = [[WebHandler sharedHandler]getDataFromWebservice:apiURL];
     NSArray * data =[dict valueForKey:@"data"];
     if (data.count==0) {
